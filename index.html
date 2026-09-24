@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Moying · English in Chinese Brush</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <span class="seal-mini">墨</span>
+        <div>
+          <h1>Moying</h1>
+          <p>English · Chinese brush</p>
+        </div>
+      </div>
+      <button id="btnShare" class="ghost" type="button">Export</button>
+    </header>
+
+    <section class="stage-wrap">
+      <canvas id="stage" width="900" height="1200"></canvas>
+      <div id="loading" class="loading">Grinding ink…</div>
+    </section>
+
+    <section class="panel">
+      <label class="field">
+        <span>Your word or name</span>
+        <input id="textInput" type="text" maxlength="16" value="Peace" placeholder="Peace, Emma, Love…" autocomplete="off" />
+      </label>
+
+      <div class="seg seg-wide" data-name="fmt" id="fmtBar">
+        <button type="button" data-v="png" class="on">PNG</button>
+        <button type="button" data-v="jpg">JPG</button>
+        <button type="button" data-v="webp">WebP</button>
+        <button type="button" data-v="alpha">Clear</button>
+        <button type="button" data-v="svg">SVG</button>
+        <button type="button" data-v="pdf">PDF</button>
+      </div>
+      <div class="actions">
+        <button id="btnDraw" class="primary" type="button">Write</button>
+        <button id="btnPng" class="secondary" type="button">Save preview</button>
+      </div>
+      <button id="btnPay" class="pay" type="button">Remove watermark · $1.99</button>
+      <p class="hint">Free preview is watermarked. $1.99 unlocks a clean HD download.</p>
+
+      <div class="seg seg-wide" data-name="style">
+        <button type="button" data-v="gong">Neat</button>
+        <button type="button" data-v="kai" class="on">Regular</button>
+        <button type="button" data-v="xing">Flowing</button>
+        <button type="button" data-v="cao">Grass</button>
+        <button type="button" data-v="kuang">Wild</button>
+      </div>
+      <div class="row">
+        <div class="seg" data-name="dir">
+          <button type="button" data-v="h" class="on">Horizontal</button>
+          <button type="button" data-v="v">Vertical</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="seg" data-name="paper">
+          <button type="button" data-v="xuan" class="on">Rice</button>
+          <button type="button" data-v="aged">Aged</button>
+          <button type="button" data-v="night">Night</button>
+        </div>
+        <div class="seg" data-name="ink">
+          <button type="button" data-v="black" class="on">Ink</button>
+          <button type="button" data-v="cinnabar">Cinnabar</button>
+        </div>
+      </div>
+
+      <label class="slider">
+        <span>Size</span>
+        <input id="size" type="range" min="90" max="260" value="196" />
+      </label>
+      <label class="slider">
+        <span>Space</span>
+        <input id="track" type="range" min="0" max="80" value="38" />
+      </label>
+      <label class="slider">
+        <span>Dry</span>
+        <input id="dry" type="range" min="0" max="80" value="22" />
+      </label>
+
+      <label class="check">
+        <input id="sealOn" type="checkbox" checked />
+        <span>Red seal</span>
+      </label>
+
+      <p class="hint muted">Short words look best. Paper and ink options are below the preview.</p>
+    </section>
+  </div>
+  <script src="vendor/opentype.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
