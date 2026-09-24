@@ -163,7 +163,9 @@
   }
   async function getFont(style) {
     if (loaded[style]) return loaded[style];
-    loaded[style] = opentype.parse(await fetch(FONTS[style]).then((r) => r.arrayBuffer()));
+    const res = await fetch(FONTS[style]);
+    if (!res.ok) throw new Error("font " + res.status);
+    loaded[style] = opentype.parse(await res.arrayBuffer());
     return loaded[style];
   }
   async function draw(opts = {}) {
@@ -228,7 +230,7 @@
       lastLayout = { w, h, text, ink, placed, seal, paper: state.paper, style: state.style, font };
     } catch (err) {
       ctx.fillStyle = "#7a1f16"; ctx.font = "28px serif";
-      ctx.fillText("Font failed to load.", 40, h / 2); console.error(err);
+      ctx.fillText("Font failed to load", 40, h / 2); console.error(err);
     }
     if (!opts.silent) ui.loading.classList.add("hide"); pen = ctx;
   }
