@@ -254,7 +254,26 @@
       parts.push(`<text x="0" y="${-s*0.08}" text-anchor="middle" font-size="${s*0.42}" fill="${col}" font-family="serif">墨</text>`);
       parts.push(`<text x="0" y="${s*0.32}" text-anchor="middle" font-size="${s*0.42}" fill="${col}" font-family="serif">英</text></g>`);
     }
+    parts.push(svgWatermark(L.w, L.h, L.paper === "night"));
     parts.push("</svg>"); return parts.join("");
+  }
+  function svgWatermark(w, h, night) {
+    const ink = night ? "rgba(232,214,180,0.16)" : "rgba(90,62,36,0.16)";
+    const strong = night ? "rgba(232,214,180,0.28)" : "rgba(70,48,28,0.28)";
+    const bar = night ? "rgba(0,0,0,0.45)" : "rgba(244,234,212,0.72)";
+    const barText = night ? "rgba(232,214,180,0.9)" : "rgba(70,48,28,0.88)";
+    const tiles = [];
+    for (let y = -h; y <= h; y += 210) {
+      for (let x = -w; x <= w; x += 340) {
+        tiles.push(`<text x="${x}" y="${y}" fill="${ink}" font-size="92" font-weight="700" font-family="serif" text-anchor="middle">墨英</text>`);
+      }
+    }
+    return [
+      `<g transform="translate(${w / 2} ${h / 2}) rotate(-24)">${tiles.join("")}</g>`,
+      `<text x="${w / 2}" y="${h * 0.56}" fill="${strong}" font-size="64" font-weight="700" font-family="serif" text-anchor="middle" transform="rotate(-10 ${w / 2} ${h * 0.56})">墨英 · MOYING</text>`,
+      `<rect x="0" y="${h - 64}" width="${w}" height="64" fill="${bar}"/>`,
+      `<text x="${w / 2}" y="${h - 22}" fill="${barText}" font-size="22" font-family="sans-serif" text-anchor="middle">PREVIEW  ·  $1.99 remove watermark</text>`,
+    ].join("");
   }
   function exportSvg() { saveBlob(new Blob([buildSvg()], { type: "image/svg+xml" }), `${stem()}.svg`, "image/svg+xml"); }
   async function exportPdf() {
