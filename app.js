@@ -47,7 +47,9 @@
     return { bg: ["#f4ead4", "#e8d7b4"], fiber: "#cbb892" };
   }
   function inkColor() {
-    return state.ink === "cinnabar" ? { r: 152, g: 36, b: 28 } : { r: 32, g: 24, b: 18 };
+    const night = state.paper === "night";
+    if (state.ink === "cinnabar") return night ? { r: 232, g: 92, b: 74 } : { r: 152, g: 36, b: 28 };
+    return night ? { r: 236, g: 226, b: 206 } : { r: 28, g: 20, b: 14 };
   }
   function paintPaper(w, h) {
     const c = paperColors(state.paper);
@@ -71,47 +73,21 @@
     const rod = state.paper === "night" ? "rgba(90,70,50,0.45)" : "rgba(90,62,36,0.18)";
     pen.fillStyle = rod; pen.fillRect(0, 0, w, h * 0.028); pen.fillRect(0, h * 0.972, w, h * 0.028);
   }
-  function pathToPolylines(path, step) {
-    const lines = []; let cur = []; let cx = 0, cy = 0, sx = 0, sy = 0;
-    const push = (x, y) => cur.push({ x, y });
-    const flush = () => { if (cur.length > 1) lines.push(cur); cur = []; };
-    const sampleQuad = (x1, y1, x2, y2, x3, y3) => {
-      const n = Math.max(2, Math.hypot(x3 - x1, y3 - y1) / step);
-      for (let i = 1; i <= n; i++) {
-        const t = i / n, u = 1 - t;
-        push(u * u * x1 + 2 * u * t * x2 + t * t * x3, u * u * y1 + 2 * u * t * y2 + t * t * y3);
-      }
-    };
-    const sampleCubic = (x1, y1, x2, y2, x3, y3, x4, y4) => {
-      const n = Math.max(3, Math.hypot(x4 - x1, y4 - y1) / step);
-      for (let i = 1; i <= n; i++) {
-        const t = i / n, u = 1 - t;
-        push(u ** 3 * x1 + 3 * u ** 2 * t * x2 + 3 * u * t ** 2 * x3 + t ** 3 * x4, u ** 3 * y1 + 3 * u ** 2 * t * y2 + 3 * u * t ** 2 * y3 + t ** 3 * y4);
-      }
-    };
-    for (const c of path.commands) {
-      if (c.type === "M") { flush(); cx = sx = c.x; cy = sy = c.y; push(cx, cy); }
-      else if (c.type === "L") { cx = c.x; cy = c.y; push(cx, cy); }
-      else if (c.type === "Q") { sampleQuad(cx, cy, c.x1, c.y1, c.x, c.y); cx = c.x; cy = c.y; }
-      else if (c.type === "C") { sampleCubic(cx, cy, c.x1, c.y1, c.x2, c.y2, c.x, c.y); cx = c.x; cy = c.y; }
-      else if (c.type === "Z") { push(sx, sy); flush(); cx = sx; cy = sy; }
+  function scratchDry(ctx, path, dry) {
+    if (dry < 6) return;
+    const bb = path.getBoundingBox();
+    const w = Math.max(1, bb.x2 - bb.x1);
+    const h = Math.max(1, bb.y2 - bb.y1);
+    ctx.save();
+    ctx.clip(new Path2D(path.toPathData(1)));
+    ctx.globalCompositeOperation = "destination-out";
+    const rows = 6 + Math.floor(dry / 7);
+    for (let i = 0; i < rows; i++) {
+      ctx.globalAlpha = 0.18 + (dry / 100) * 0.45;
+      const y = bb.y1 + ((i + 0.35) * h) / rows;
+      ctx.fillRect(bb.x1 - 2, y, w + 4, 0.7 + (dry / 100) * 1.6);
     }
-    flush(); return lines;
-  }
-  function drawBrushLine(ctx, pts, width, ink, dry) {
-    if (pts.length < 2) return;
-    const n = pts.length - 1;
-    for (let i = 0; i < n; i++) {
-      const a = pts[i], b = pts[i + 1];
-      const press = 0.55 + 0.45 * Math.sin(Math.PI * (i / n));
-      const w = Math.max(1.2, width * press + (Math.random() - 0.5) * width * 0.08);
-      const ang = Math.atan2(b.y - a.y, b.x - a.x);
-      ctx.save(); ctx.translate((a.x + b.x) / 2, (a.y + b.y) / 2); ctx.rotate(ang);
-      ctx.globalAlpha = Math.random() < (dry / 100) * 0.35 ? 0.2 : 0.8;
-      ctx.fillStyle = `rgb(${ink.r},${ink.g},${ink.b})`;
-      ctx.beginPath(); ctx.ellipse(0, 0, Math.hypot(b.x - a.x, b.y - a.y) * 0.65 + w * 0.15, w * 0.52, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    }
+    ctx.restore();
   }
   function drawSeal(x, y, size, night) {
     pen.save(); pen.translate(x, y); pen.rotate(-0.18);
@@ -154,12 +130,12 @@
       pen.translate(cx, cy); pen.rotate((-14 + ((idx || 0) * 11) % 28) * Math.PI / 180); pen.translate(-cx, -cy);
     }
     const p = font.getPath(ch, x, y, size);
-    const step = state.style === "gong" ? 2.6 : state.style === "kai" ? 2.3 : 1.7;
-    const lines = pathToPolylines(p, step);
-    const baseW = state.style === "gong" ? size * 0.028 : state.style === "kai" ? size * 0.05 : state.style === "xing" ? size * 0.058 : state.style === "kuang" ? size * 0.074 : size * 0.066;
-    if (state.style !== "gong") lines.forEach((ln) => drawBrushLine(pen, ln, baseW, ink, dry));
-    pen.save(); pen.globalAlpha = state.style === "gong" ? 0.96 : state.style === "kai" ? 0.22 : 0.38;
-    pen.fillStyle = `rgb(${ink.r},${ink.g},${ink.b})`; p.draw(pen); pen.restore(); pen.restore(); return p;
+    p.fill = `rgb(${ink.r},${ink.g},${ink.b})`;
+    pen.globalAlpha = state.style === "gong" ? 0.96 : 0.94;
+    p.draw(pen);
+    const fleck = state.style === "gong" ? dry * 0.25 : state.style === "kuang" ? Math.min(90, dry + 28) : dry;
+    scratchDry(pen, p, fleck);
+    pen.restore(); return p;
   }
   async function getFont(style) {
     if (loaded[style]) return loaded[style];
