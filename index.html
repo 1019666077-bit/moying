@@ -3,101 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Moying · English in Chinese Brush</title>
+  <title>Moying · English names in Chinese brush calligraphy</title>
+  <meta name="description" content="Render an English name or short word in Chinese brush-calligraphy style. Free watermarked preview. A one-time purchase unlocks a clean high-resolution download." />
+  <link rel="canonical" href="https://mymoying.com/" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#efe4cc" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Moying" />
+  <meta property="og:url" content="https://mymoying.com/" />
+  <meta property="og:title" content="Moying · English names in Chinese brush calligraphy" />
+  <meta property="og:description" content="Render an English name or short word in Chinese brush-calligraphy style. Free watermarked preview." />
+  <meta property="og:image" content="https://mymoying.com/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The word Peace drawn in Chinese brush-calligraphy style on rice paper" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Moying · English names in Chinese brush calligraphy" />
+  <meta name="twitter:description" content="Render an English name or short word in Chinese brush-calligraphy style. Free watermarked preview." />
+  <meta name="twitter:image" content="https://mymoying.com/og.png" />
+  <meta name="twitter:image:alt" content="The word Peace drawn in Chinese brush-calligraphy style on rice paper" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app">
+  <div class="app studio">
     <header class="top">
       <div class="brand">
-        <span class="seal-mini">墨</span>
+        <span class="seal-mini" aria-hidden="true">墨</span>
         <div>
           <h1>Moying</h1>
-          <p>English · Chinese brush</p>
+          <p>English in brush style</p>
         </div>
       </div>
-      <button id="btnShare" class="ghost" type="button">Export</button>
     </header>
 
-    <section class="stage-wrap">
-      <canvas id="stage" width="900" height="1200"></canvas>
-      <div id="loading" class="loading">Grinding ink…</div>
-    </section>
+    <div class="workspace">
+      <section class="stage-wrap">
+        <canvas id="stage" width="900" height="1200"></canvas>
+        <div id="loading" class="loading" role="status">Loading brush…</div>
+      </section>
 
-    <section class="panel">
-      <label class="field">
-        <span>Your word or name</span>
-        <input id="textInput" type="text" maxlength="16" value="Peace" placeholder="Peace, Emma, Love…" autocomplete="off" />
-      </label>
-
-      <div class="seg seg-wide" data-name="fmt" id="fmtBar">
-        <button type="button" data-v="png" class="on">PNG</button>
-        <button type="button" data-v="jpg">JPG</button>
-        <button type="button" data-v="webp">WebP</button>
-        <button type="button" data-v="alpha">Clear</button>
-        <button type="button" data-v="svg">SVG</button>
-        <button type="button" data-v="pdf">PDF</button>
-      </div>
-      <div class="actions">
-        <button id="btnDraw" class="primary" type="button">Write</button>
-        <button id="btnPng" class="secondary" type="button">Save preview</button>
-      </div>
-      <button id="btnPay" class="pay" type="button">Remove watermark · $1.99</button>
-      <p class="hint">Free: watermarked preview. $1.99 one-time: clean high-resolution download of your design. No subscription.</p>
-
-      <div class="seg seg-wide" data-name="style">
-        <button type="button" data-v="gong">Neat</button>
-        <button type="button" data-v="kai" class="on">Regular</button>
-        <button type="button" data-v="xing">Flowing</button>
-        <button type="button" data-v="cao">Grass</button>
-        <button type="button" data-v="kuang">Wild</button>
-      </div>
-      <div class="row">
-        <div class="seg" data-name="dir">
-          <button type="button" data-v="h" class="on">Horizontal</button>
-          <button type="button" data-v="v">Vertical</button>
+      <section class="panel">
+        <div class="lead">
+          <label class="field">
+            <span class="field-head">
+              <span>Your word or name</span>
+              <span id="charCount" aria-live="polite">5/16</span>
+            </span>
+            <input id="textInput" type="text" value="Peace" placeholder="Peace, Emma, Love…" autocomplete="off" enterkeyhint="done" />
+          </label>
+          <p id="charHint" class="hint warn" hidden></p>
+          <p id="limitHint" class="hint" hidden>16 character limit.</p>
+          <button id="btnPay" class="pay" type="button">Remove watermark · $1.99</button>
+          <p class="hint price">Free watermarked preview. $1.99 once for a clean high-resolution download. No subscription.</p>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="seg" data-name="paper">
-          <button type="button" data-v="xuan" class="on">Rice</button>
-          <button type="button" data-v="aged">Aged</button>
-          <button type="button" data-v="night">Night</button>
+        <div class="more">
+        <div class="seg seg-wide" data-name="fmt" id="fmtBar" role="group" aria-label="Export format">
+          <button type="button" data-v="png" class="on">PNG</button>
+          <button type="button" data-v="jpg">JPG</button>
+          <button type="button" data-v="webp">WebP</button>
+          <button type="button" data-v="alpha">Transparent PNG</button>
+          <button type="button" data-v="svg">SVG</button>
+          <button type="button" data-v="pdf">PDF</button>
         </div>
-        <div class="seg" data-name="ink">
-          <button type="button" data-v="black" class="on">Ink</button>
-          <button type="button" data-v="cinnabar">Cinnabar</button>
+        <button id="btnExport" class="secondary" type="button">Export</button>
+        <p class="hint">Free downloads: 900×1200 watermarked preview</p>
+
+        <div class="seg seg-wide" data-name="style" role="group" aria-label="Brush style">
+          <button type="button" data-v="gong">Neat</button>
+          <button type="button" data-v="kai" class="on">Regular</button>
+          <button type="button" data-v="xing">Flowing</button>
+          <button type="button" data-v="cao">Grass</button>
+          <button type="button" data-v="kuang">Wild</button>
         </div>
-      </div>
+        <div class="row">
+          <div class="seg" data-name="dir" role="group" aria-label="Direction">
+            <button type="button" data-v="h" class="on">Horizontal</button>
+            <button type="button" data-v="v">Vertical</button>
+          </div>
+        </div>
 
-      <label class="slider">
-        <span>Size</span>
-        <input id="size" type="range" min="90" max="260" value="196" />
-      </label>
-      <label class="slider">
-        <span>Space</span>
-        <input id="track" type="range" min="0" max="80" value="38" />
-      </label>
-      <label class="slider">
-        <span>Dry</span>
-        <input id="dry" type="range" min="0" max="80" value="22" />
-      </label>
+        <div class="row">
+          <div class="seg" data-name="paper" role="group" aria-label="Paper">
+            <button type="button" data-v="xuan" class="on">Rice</button>
+            <button type="button" data-v="aged">Aged</button>
+            <button type="button" data-v="night">Night</button>
+          </div>
+          <div class="seg" data-name="ink" role="group" aria-label="Ink">
+            <button type="button" data-v="black" class="on">Ink</button>
+            <button type="button" data-v="cinnabar">Cinnabar</button>
+          </div>
+        </div>
 
-      <label class="check">
-        <input id="sealOn" type="checkbox" checked />
-        <span>Red seal</span>
-      </label>
+        <label class="slider">
+          <span>Size</span>
+          <input id="size" type="range" min="90" max="260" value="196" />
+        </label>
+        <label class="slider">
+          <span>Space</span>
+          <input id="track" type="range" min="0" max="80" value="38" />
+        </label>
+        <label class="slider">
+          <span>Dry</span>
+          <input id="dry" type="range" min="0" max="80" value="22" />
+        </label>
 
-      <p class="hint muted">Short words look best. Paper and ink options are below the preview.</p>
-    </section>
+        <label class="check">
+          <input id="sealOn" type="checkbox" checked />
+          <span>Red seal</span>
+        </label>
+
+        <p class="hint muted">Short words look best.</p>
+        </div>
+      </section>
+    </div>
     <footer class="legal">
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="mailto:508892116@qq.com">508892116@qq.com</a>
     </footer>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+  <script src="vendor/opentype.min.js"></script>
   <script src="app.js"></script>
+  <script data-goatcounter="https://mymoying.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
