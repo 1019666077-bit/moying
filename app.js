@@ -31,8 +31,7 @@
     count: document.getElementById("charCount"),
     charHint: document.getElementById("charHint"),
     limitHint: document.getElementById("limitHint"),
-    btnPng: document.getElementById("btnPng"),
-    btnShare: document.getElementById("btnShare"),
+    btnExport: document.getElementById("btnExport"),
   };
   const state = { style: "kai", dir: "h", paper: "xuan", ink: "black", fmt: "png" };
   let previewGen = 0;
@@ -52,14 +51,15 @@
       if (seg.dataset.name !== "fmt") drawPreview();
     });
   });
-  ui.text.addEventListener("input", drawPreview);
+  ui.text.addEventListener("input", () => {
+    if (ui.text.value.length > MAX_LEN) ui.text.value = clampText(ui.text.value);
+    drawPreview();
+  });
   ui.size.addEventListener("input", drawPreview);
   ui.track.addEventListener("input", drawPreview);
   ui.dry.addEventListener("input", drawPreview);
   ui.seal.addEventListener("change", drawPreview);
-  document.getElementById("btnDraw").onclick = () => drawPreview();
-  ui.btnPng.onclick = () => exportCurrent();
-  ui.btnShare.onclick = () => exportCurrent();
+  ui.btnExport.onclick = () => exportCurrent();
   document.getElementById("btnPay").onclick = () => {
     if (WAFFO_PURCHASE_URL) {
       location.href = WAFFO_PURCHASE_URL;
@@ -104,16 +104,60 @@
     };
   }
 
-  function analyze(raw) {
+  // Letters that do not decompose under NFD.
+  const ASCII_FOLD = {
+    æ: "ae", Æ: "Ae", œ: "oe", Œ: "Oe",
+    ø: "o", Ø: "O", ł: "l", Ł: "L",
+    đ: "d", Đ: "D", ð: "d", Ð: "D",
+    þ: "th", Þ: "Th", ß: "ss",
+    ı: "i", İ: "I", ŋ: "n", Ŋ: "N",
+  };
+
+  function foldToAscii(ch) {
+    if (ASCII_FOLD[ch]) return ASCII_FOLD[ch];
+    const stripped = ch.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!stripped || stripped === ch) return "";
+    let out = "";
+    for (const part of stripped) {
+      const cp = part.codePointAt(0);
+      if (cp >= 0x20 && cp <= 0x7e) out += part;
+      else if (ASCII_FOLD[part]) out += ASCII_FOLD[part];
+      else return "";
+    }
+    return out;
+  }
+
+  function clampText(raw) {
     const value = String(raw || "");
+    if (value.length <= MAX_LEN) return value;
+    let end = MAX_LEN;
+    const unit = value.charCodeAt(end - 1);
+    if (unit >= 0xD800 && unit <= 0xDBFF) end -= 1;
+    return value.slice(0, end);
+  }
+
+  function analyze(raw) {
+    // Same 16-unit cap as the input maxlength (UTF-16 code units).
+    const value = clampText(raw);
     let unsupported = false;
+    let changed = false;
     let kept = "";
     for (const ch of value) {
       const cp = ch.codePointAt(0);
-      if (cp >= 0x20 && cp <= 0x7e) kept += ch;
-      else unsupported = true;
+      if (cp >= 0x20 && cp <= 0x7e) {
+        kept += ch;
+        continue;
+      }
+      const folded = foldToAscii(ch);
+      if (folded) {
+        kept += folded;
+        changed = true;
+      } else {
+        unsupported = true;
+      }
     }
-    return { text: kept.replace(/\s+/g, " ").trim(), unsupported };
+    const text = kept.replace(/\s+/g, " ").trim().slice(0, MAX_LEN);
+    return { text, unsupported, changed };
   }
 
   function filterGlyphs(font, text) {
@@ -136,6 +180,7 @@
     return {
       text: parsed.text,
       unsupported: parsed.unsupported,
+      changed: parsed.changed,
       style: state.style,
       dir: state.dir,
       paper: state.paper,
@@ -148,15 +193,17 @@
     };
   }
 
-  function syncControls(unsupported, drawable) {
-    const len = ui.text.value.length;
+  function syncControls(flags, drawable) {
+    const len = Math.min(ui.text.value.length, MAX_LEN);
     ui.count.textContent = `${len}/${MAX_LEN}`;
     ui.count.classList.toggle("at-limit", len >= MAX_LEN);
-    ui.limitHint.hidden = len < MAX_LEN;
-    ui.charHint.hidden = !unsupported;
-    const on = drawable.length > 0;
-    ui.btnPng.disabled = !on;
-    ui.btnShare.disabled = !on;
+    ui.limitHint.hidden = ui.text.value.length < MAX_LEN;
+    const notes = [];
+    if (flags.changed) notes.push("Accents are drawn as plain letters.");
+    if (flags.unsupported) notes.push("Some characters cannot be drawn. Use English letters, numbers, and simple punctuation.");
+    ui.charHint.hidden = notes.length === 0;
+    ui.charHint.textContent = notes.join(" ");
+    ui.btnExport.disabled = drawable.length === 0;
   }
 
   function showLoading(msg) {
@@ -568,7 +615,7 @@
   async function drawPreview() {
     const gen = ++previewGen;
     const snap = snapshot();
-    syncControls(snap.unsupported, snap.text);
+    syncControls(snap, snap.text);
     preparePreview();
     if (!snap.text) {
       paintScene(canvas, snap, null, null, {});
@@ -583,7 +630,7 @@
       const [font, sealFont] = await Promise.all([loadFont(snap.style), loadFont("seal").catch(() => null)]);
       if (gen !== previewGen) return;
       const filtered = filterGlyphs(font, snap.text);
-      syncControls(snap.unsupported || filtered.dropped, filtered.text);
+      syncControls({ unsupported: snap.unsupported || filtered.dropped, changed: snap.changed }, filtered.text);
       paintScene(canvas, { ...snap, text: filtered.text, unsupported: snap.unsupported || filtered.dropped }, font, sealFont, {});
     } catch (err) {
       if (gen !== previewGen) return;
@@ -752,7 +799,7 @@
   }
 
   const q = new URLSearchParams(location.search);
-  if (q.get("text")) ui.text.value = [...q.get("text")].slice(0, MAX_LEN).join("");
+  if (q.has("text")) ui.text.value = clampText(q.get("text"));
   if (q.get("style") && FONTS[q.get("style")] && q.get("style") !== "seal") {
     state.style = q.get("style");
     document.querySelectorAll('[data-name="style"] button').forEach((b) => {

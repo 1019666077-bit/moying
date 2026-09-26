@@ -36,7 +36,6 @@
           <p>English in brush style</p>
         </div>
       </div>
-      <button id="btnShare" class="ghost" type="button">Export</button>
     </header>
 
     <div class="workspace">
@@ -46,16 +45,20 @@
       </section>
 
       <section class="panel">
-        <label class="field">
-          <span class="field-head">
-            <span>Your word or name</span>
-            <span id="charCount" aria-live="polite">5/16</span>
-          </span>
-          <input id="textInput" type="text" maxlength="16" value="Peace" placeholder="Peace, Emma, Love…" autocomplete="off" enterkeyhint="done" />
-        </label>
-        <p id="charHint" class="hint warn" hidden>Some characters cannot be drawn in this brush. Use English letters, numbers, and simple punctuation.</p>
-        <p id="limitHint" class="hint" hidden>16 character limit.</p>
-
+        <div class="lead">
+          <label class="field">
+            <span class="field-head">
+              <span>Your word or name</span>
+              <span id="charCount" aria-live="polite">5/16</span>
+            </span>
+            <input id="textInput" type="text" maxlength="16" value="Peace" placeholder="Peace, Emma, Love…" autocomplete="off" enterkeyhint="done" />
+          </label>
+          <p id="charHint" class="hint warn" hidden></p>
+          <p id="limitHint" class="hint" hidden>16 character limit.</p>
+          <button id="btnPay" class="pay" type="button">Remove watermark · $1.99</button>
+          <p class="hint price">Free watermarked preview. $1.99 once for a clean high-resolution download. No subscription.</p>
+        </div>
+        <div class="more">
         <div class="seg seg-wide" data-name="fmt" id="fmtBar" role="group" aria-label="Export format">
           <button type="button" data-v="png" class="on">PNG</button>
           <button type="button" data-v="jpg">JPG</button>
@@ -64,12 +67,7 @@
           <button type="button" data-v="svg">SVG</button>
           <button type="button" data-v="pdf">PDF</button>
         </div>
-        <div class="actions">
-          <button id="btnDraw" class="primary" type="button">Write</button>
-          <button id="btnPng" class="secondary" type="button">Save preview</button>
-        </div>
-        <button id="btnPay" class="pay" type="button">Remove watermark · $1.99</button>
-        <p class="hint">Free: watermarked preview. $1.99 one-time: clean high-resolution download of your design. No subscription.</p>
+        <button id="btnExport" class="secondary" type="button">Export</button>
 
         <div class="seg seg-wide" data-name="style" role="group" aria-label="Brush style">
           <button type="button" data-v="gong">Neat</button>
@@ -116,6 +114,7 @@
         </label>
 
         <p class="hint muted">Short words look best.</p>
+        </div>
       </section>
     </div>
     <footer class="legal">
