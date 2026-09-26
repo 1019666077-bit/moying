@@ -27,5 +27,5 @@ Brush fonts are small Latin subsets in `fonts/`. opentype.js is vendored. Nothin
 - Ink / cinnabar
 - Size, space, dry brush, red seal
 - Free export: PNG, JPG, WebP, transparent PNG, SVG, PDF
-- Every free file is a watermarked 1800×2400 image. SVG only embeds that bitmap. PDF is a real PDF of the same image.
+- Every free file is a watermarked 900×1200 preview. SVG only embeds that bitmap. PDF is a real PDF of the same image. Clean HD (1800×2400) is reserved for the paid download.
 - The $1.99 button is a placeholder. Set `WAFFO_PURCHASE_URL` in `app.js` when the Waffo link is ready. Payment is not connected.

@@ -5,9 +5,15 @@
 
   const BASE_W = 900;
   const BASE_H = 1200;
-  const EXPORT_W = 1800;
-  const EXPORT_H = 2400;
+  // Free watermarked downloads. Paid Clean HD stays 1800×2400 and is not used here.
+  const FREE_W = 900;
+  const FREE_H = 1200;
+  const CLEAN_HD_W = 1800;
+  const CLEAN_HD_H = 2400;
   const MAX_LEN = 16;
+  const segmenter = (typeof Intl !== "undefined" && Intl.Segmenter)
+    ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+    : null;
 
   const FONTS = {
     gong: "fonts/zcoolxiaowei-latin.ttf",
@@ -52,7 +58,13 @@
     });
   });
   ui.text.addEventListener("input", () => {
-    if (ui.text.value.length > MAX_LEN) ui.text.value = clampText(ui.text.value);
+    const next = clampText(ui.text.value);
+    if (next !== ui.text.value) {
+      const at = ui.text.selectionStart;
+      ui.text.value = next;
+      const pos = Math.min(at == null ? next.length : at, next.length);
+      ui.text.setSelectionRange(pos, pos);
+    }
     drawPreview();
   });
   ui.size.addEventListener("input", drawPreview);
@@ -137,17 +149,20 @@
     return out;
   }
 
+  function graphemes(value) {
+    const s = String(value || "");
+    if (segmenter) return Array.from(segmenter.segment(s), (part) => part.segment);
+    return Array.from(s);
+  }
+
   function clampText(raw) {
-    const value = String(raw || "");
-    if (value.length <= MAX_LEN) return value;
-    let end = MAX_LEN;
-    const unit = value.charCodeAt(end - 1);
-    if (unit >= 0xD800 && unit <= 0xDBFF) end -= 1;
-    return value.slice(0, end);
+    const parts = graphemes(raw);
+    if (parts.length <= MAX_LEN) return parts.join("");
+    return parts.slice(0, MAX_LEN).join("");
   }
 
   function analyze(raw) {
-    // Same 16-unit cap as the input maxlength (UTF-16 code units).
+    // Same 16-grapheme cap as the counter. One emoji counts as one character.
     const value = clampText(raw);
     let unsupported = false;
     let changed = false;
@@ -204,10 +219,10 @@
   }
 
   function syncControls(flags, drawable) {
-    const len = Math.min(ui.text.value.length, MAX_LEN);
+    const len = graphemes(ui.text.value).length;
     ui.count.textContent = `${len}/${MAX_LEN}`;
     ui.count.classList.toggle("at-limit", len >= MAX_LEN);
-    ui.limitHint.hidden = ui.text.value.length < MAX_LEN;
+    ui.limitHint.hidden = len < MAX_LEN;
     const notes = [];
     if (flags.changed) notes.push("Accents are drawn as plain letters.");
     if (flags.unsupported) notes.push("Some characters cannot be drawn. Use English letters, numbers, and simple punctuation.");
@@ -346,16 +361,6 @@
     return total;
   }
 
-  function sealRunWidth(font, text, size) {
-    const gap = size * 0.06;
-    let w = 0;
-    [...text].forEach((ch, i) => {
-      const bb = font.getPath(ch, 0, 0, size).getBoundingBox();
-      w += Math.max(1, bb.x2 - bb.x1) + (i ? gap : 0);
-    });
-    return w;
-  }
-
   function drawSeal(ctx, sealFont, x, y, size, night) {
     ctx.save();
     ctx.translate(x, y);
@@ -374,47 +379,58 @@
     ctx.restore();
   }
 
-  function drawWatermark(ctx, sealFont, w, h, night) {
-    const ink = night ? "rgb(232,214,180)" : "rgb(90,62,36)";
-    const strong = night ? "rgb(232,214,180)" : "rgb(70,48,28)";
-    ctx.save();
-    ctx.translate(w / 2, h / 2);
-    ctx.rotate(-0.42);
-    ctx.globalAlpha = night ? 0.2 : 0.16;
-    if (sealFont) {
-      for (let y = -h; y <= h; y += 210) {
-        for (let x = -w; x <= w; x += 340) drawSealRun(ctx, sealFont, "墨英", x, y, 92, ink);
+  function cutRgb(snap) {
+    if (snap.paper === "night") return [16, 12, 9];
+    if (snap.paper === "aged") return [246, 237, 216];
+    return [244, 234, 212];
+  }
+
+  // Paper-coloured diagonal bands, written into existing ink pixels only.
+  // Alpha is left untouched, so a threshold cannot peel the mark off the strokes.
+  function cutInkWatermark(layer, snap) {
+    const ctx = layer.getContext("2d");
+    const w = layer.width;
+    const h = layer.height;
+    const img = ctx.getImageData(0, 0, w, h);
+    const data = img.data;
+    const color = cutRgb(snap);
+    const scale = w / BASE_W;
+    const band = 18 * scale;
+    const period = 40 * scale;
+    const ang = -Math.PI / 5;
+    const cos = Math.cos(ang);
+    const sin = Math.sin(ang);
+    const cx = w / 2;
+    const cy = h / 2;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const i = (y * w + x) * 4;
+        if (data[i + 3] === 0) continue;
+        const dx = x - cx;
+        const dy = y - cy;
+        let along = dx * sin + dy * cos;
+        along %= period;
+        if (along < 0) along += period;
+        if (along < band) {
+          data[i] = color[0];
+          data[i + 1] = color[1];
+          data[i + 2] = color[2];
+        }
       }
     }
-    ctx.restore();
+    ctx.putImageData(img, 0, 0);
+  }
+
+  function drawFreeCaption(ctx, w, h, night) {
     ctx.save();
-    ctx.translate(w / 2, h * 0.56);
-    ctx.rotate(-0.18);
-    ctx.globalAlpha = night ? 0.34 : 0.28;
-    ctx.font = "700 46px sans-serif";
-    ctx.textAlign = "left";
-    ctx.textBaseline = "middle";
-    const cjk = "墨英";
-    const latin = "  ·  MOYING";
-    const cjkSize = 64;
-    const cjkW = sealFont ? sealRunWidth(sealFont, cjk, cjkSize) : 0;
-    const latW = ctx.measureText(latin).width;
-    let x = -(cjkW + latW) / 2;
-    if (sealFont) {
-      drawSealRun(ctx, sealFont, cjk, x + cjkW / 2, 0, cjkSize, strong);
-      x += cjkW;
-    }
-    ctx.fillStyle = strong;
-    ctx.fillText(latin, x, 2);
-    ctx.restore();
-    ctx.save();
-    ctx.fillStyle = night ? "rgba(0,0,0,0.45)" : "rgba(244,234,212,0.72)";
-    ctx.fillRect(0, h - 64, w, 64);
-    ctx.fillStyle = night ? "rgba(232,214,180,0.9)" : "rgba(70,48,28,0.88)";
-    ctx.font = "22px sans-serif";
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = night ? "#100c09" : "#f4ead4";
+    ctx.fillRect(0, h - 48, w, 48);
+    ctx.fillStyle = night ? "#e8d6b4" : "#46301c";
+    ctx.font = "20px sans-serif";
     ctx.textAlign = "center";
-    ctx.textBaseline = "alphabetic";
-    ctx.fillText("PREVIEW  ·  $1.99 remove watermark", w / 2, h - 26);
+    ctx.textBaseline = "middle";
+    ctx.fillText("MOYING  ·  free preview", w / 2, h - 24);
     ctx.restore();
   }
 
@@ -572,9 +588,9 @@
   function paintScene(target, snap, font, sealFont, opts) {
     const ctx = target.getContext("2d");
     const paperRng = mulberry32(hashString(seedKey(snap) + "|paper"));
-    const inkRng = mulberry32(hashString(seedKey(snap) + "|ink"));
+    const transparent = !!opts.transparent;
     withLogical(ctx, target, () => {
-      if (opts.transparent) {
+      if (transparent) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, target.width, target.height);
         ctx.setTransform(target.width / BASE_W, 0, 0, target.width / BASE_W, 0, 0);
@@ -589,14 +605,27 @@
         ctx.textBaseline = "middle";
         ctx.fillText(snap.unsupported ? "Those characters cannot be drawn" : "Type a name or short word", BASE_W / 2, BASE_H / 2);
         ctx.restore();
-        return;
       }
-      const fitted = paintWords(ctx, font, snap, inkColor(snap), inkRng);
+    });
+    if (!snap.text || !font) return;
+
+    const layer = document.createElement("canvas");
+    layer.width = target.width;
+    layer.height = target.height;
+    const inkRng = mulberry32(hashString(seedKey(snap) + "|ink"));
+    const lctx = layer.getContext("2d");
+    withLogical(lctx, layer, () => {
+      const fitted = paintWords(lctx, font, snap, inkColor(snap), inkRng);
       if (snap.seal) {
         const size = Math.min(68, fitted * 0.38);
-        drawSeal(ctx, sealFont, BASE_W * 0.82, BASE_H * 0.88, size, snap.paper === "night");
+        drawSeal(lctx, sealFont, BASE_W * 0.82, BASE_H * 0.88, size, snap.paper === "night");
       }
-      drawWatermark(ctx, sealFont, BASE_W, BASE_H, snap.paper === "night");
+    });
+    cutInkWatermark(layer, snap);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(layer, 0, 0);
+    withLogical(ctx, target, () => {
+      drawFreeCaption(ctx, BASE_W, BASE_H, snap.paper === "night");
     });
   }
 
@@ -629,6 +658,7 @@
     preparePreview();
     if (!snap.text) {
       paintScene(canvas, snap, null, null, {});
+      if (gen === previewGen && exportCount === 0) ui.loading.classList.add("hide");
       return;
     }
     const waiting = !fontReady[snap.style] || !fontReady.seal;
@@ -657,11 +687,15 @@
     return slug ? `moying-${slug}` : "moying-mark";
   }
 
+  function isMobileShare() {
+    return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
+  }
+
   function saveBlob(blob, filename, mime) {
     const file = new File([blob], filename, { type: mime || blob.type });
     const send = async () => {
       try {
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        if (isMobileShare() && navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({ files: [file], title: "Moying" });
           return;
         }
@@ -686,8 +720,8 @@
 
   function exportCanvas() {
     const out = document.createElement("canvas");
-    out.width = EXPORT_W;
-    out.height = EXPORT_H;
+    out.width = FREE_W;
+    out.height = FREE_H;
     return out;
   }
 
@@ -716,12 +750,12 @@
     if (!rendered) return;
     const blob = await canvasBlob(rendered.canvas, "image/png");
     const b64 = bytesToBase64(new Uint8Array(await blob.arrayBuffer()));
-    const svg = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${EXPORT_W}" height="${EXPORT_H}" viewBox="0 0 ${EXPORT_W} ${EXPORT_H}">\n<image width="${EXPORT_W}" height="${EXPORT_H}" href="data:image/png;base64,${b64}"/>\n</svg>\n`;
+    const svg = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${FREE_W}" height="${FREE_H}" viewBox="0 0 ${FREE_W} ${FREE_H}">\n<image width="${FREE_W}" height="${FREE_H}" href="data:image/png;base64,${b64}"/>\n</svg>\n`;
     saveBlob(new Blob([svg], { type: "image/svg+xml" }), `${fileStem(rendered.text)}.svg`, "image/svg+xml");
     return true;
   }
 
-  // Real PDF: one 1800×2400 watermarked JPEG on a 6×8 in page (300 dpi). No text layer.
+  // Real PDF: one 900×1200 watermarked JPEG (300 dpi, 3×4 in). No text layer.
   function buildPdf(jpegBytes, imgW, imgH) {
     const pageW = (imgW / 300) * 72;
     const pageH = (imgH / 300) * 72;
@@ -772,7 +806,7 @@
     if (!rendered) return;
     const jpeg = await canvasBlob(rendered.canvas, "image/jpeg", 0.92);
     const bytes = new Uint8Array(await jpeg.arrayBuffer());
-    const pdf = buildPdf(bytes, EXPORT_W, EXPORT_H);
+    const pdf = buildPdf(bytes, FREE_W, FREE_H);
     saveBlob(new Blob([pdf], { type: "application/pdf" }), `${fileStem(rendered.text)}.pdf`, "application/pdf");
     return true;
   }
@@ -802,7 +836,15 @@
       else if (fmt === "alpha") saved = await exportRaster(snap, "image/png", "png", 1, true);
       else if (fmt === "svg") saved = await exportSvg(snap);
       else if (fmt === "pdf") saved = await exportPdf(snap);
-      if (saved && (fmt === "png" || fmt === "svg" || fmt === "pdf")) track("export-" + fmt);
+      const eventName = {
+        png: "export-png",
+        jpg: "export-jpg",
+        webp: "export-webp",
+        alpha: "export-transparent",
+        svg: "export-svg",
+        pdf: "export-pdf",
+      }[fmt];
+      if (saved && eventName) track(eventName);
     } catch (err) {
       console.error(err);
       alert("Could not finish the export. Please try again.");
