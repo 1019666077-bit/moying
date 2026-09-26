@@ -883,7 +883,9 @@
   }
 
   const q = new URLSearchParams(location.search);
-  if (q.has("text")) ui.text.value = clampText(q.get("text"));
+  // Pin links use ?name=. Keep ?text= when name is absent.
+  if (q.has("name")) ui.text.value = clampText(q.get("name"));
+  else if (q.has("text")) ui.text.value = clampText(q.get("text"));
   if (q.get("style") && FONTS[q.get("style")] && q.get("style") !== "seal") {
     state.style = q.get("style");
     document.querySelectorAll('[data-name="style"] button').forEach((b) => {
