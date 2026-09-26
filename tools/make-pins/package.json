@@ -1,0 +1,9 @@
+{
+  "name": "moying-make-pins",
+  "private": true,
+  "type": "module",
+  "description": "Render Pinterest pins with the site's brush-calligraphy renderer.",
+  "dependencies": {
+    "puppeteer-core": "^24.15.0"
+  }
+}
