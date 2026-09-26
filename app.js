@@ -379,58 +379,84 @@
     ctx.restore();
   }
 
-  function cutRgb(snap) {
-    if (snap.paper === "night") return [16, 12, 9];
-    if (snap.paper === "aged") return [246, 237, 216];
-    return [244, 234, 212];
+  // Short irregular nicks, about 20–25% of the ink. Not a repeating stripe.
+  function cutHere(lx, ly) {
+    const wx = lx + Math.sin(ly * 0.023 + 0.4) * 17 + Math.sin(lx * 0.011 + ly * 0.007) * 9;
+    const wy = ly + Math.sin(lx * 0.019 + 1.1) * 15 + Math.sin(ly * 0.013 + 0.6) * 8;
+    const cell = 28;
+    const gx = Math.floor(wx / cell);
+    const gy = Math.floor(wy / cell);
+    const fx = wx / cell - gx;
+    const fy = wy / cell - gy;
+    function hash(a, b, s) {
+      const n = Math.sin(a * 127.1 + b * 311.7 + s * 74.7) * 43758.5453;
+      return n - Math.floor(n);
+    }
+    for (let k = 0; k < 2; k++) {
+      const h1 = hash(gx, gy, k + 1.3);
+      const h2 = hash(gx, gy, k + 8.1);
+      const h3 = hash(gx, gy, k + 19.4);
+      const dx = fx - (0.12 + 0.76 * h1);
+      const dy = fy - (0.12 + 0.76 * h2);
+      const ang = h3 * Math.PI;
+      const ca = Math.cos(ang);
+      const sa = Math.sin(ang);
+      const u = dx * ca + dy * sa;
+      const v = -dx * sa + dy * ca;
+      const halfL = 0.18 + 0.10 * h1;
+      const halfW = 0.115 + 0.04 * h2;
+      if (Math.abs(u) < halfL && Math.abs(v) < halfW) return true;
+    }
+    return false;
   }
 
-  // Paper-coloured diagonal bands, written into existing ink pixels only.
-  // Alpha is left untouched, so a threshold cannot peel the mark off the strokes.
-  function cutInkWatermark(layer, snap) {
+  // Opaque files copy the paper under each scratch. Transparent files punch alpha out.
+  function cutInkWatermark(layer, paper, transparent) {
     const ctx = layer.getContext("2d");
     const w = layer.width;
     const h = layer.height;
     const img = ctx.getImageData(0, 0, w, h);
     const data = img.data;
-    const color = cutRgb(snap);
+    const paperData = transparent ? null : paper.getContext("2d").getImageData(0, 0, w, h).data;
     const scale = w / BASE_W;
-    const band = 18 * scale;
-    const period = 40 * scale;
-    const ang = -Math.PI / 5;
-    const cos = Math.cos(ang);
-    const sin = Math.sin(ang);
-    const cx = w / 2;
-    const cy = h / 2;
     for (let y = 0; y < h; y++) {
+      const ly = y / scale;
       for (let x = 0; x < w; x++) {
         const i = (y * w + x) * 4;
         if (data[i + 3] === 0) continue;
-        const dx = x - cx;
-        const dy = y - cy;
-        let along = dx * sin + dy * cos;
-        along %= period;
-        if (along < 0) along += period;
-        if (along < band) {
-          data[i] = color[0];
-          data[i + 1] = color[1];
-          data[i + 2] = color[2];
+        if (!cutHere(x / scale, ly)) continue;
+        if (transparent) {
+          data[i] = 0;
+          data[i + 1] = 0;
+          data[i + 2] = 0;
+          data[i + 3] = 0;
+        } else {
+          data[i] = paperData[i];
+          data[i + 1] = paperData[i + 1];
+          data[i + 2] = paperData[i + 2];
+          data[i + 3] = 255;
         }
       }
     }
     ctx.putImageData(img, 0, 0);
   }
 
-  function drawFreeCaption(ctx, w, h, night) {
+  function drawPreviewMark(ctx, w, h, night) {
+    const label = "mymoying.com preview";
     ctx.save();
     ctx.globalAlpha = 1;
-    ctx.fillStyle = night ? "#100c09" : "#f4ead4";
-    ctx.fillRect(0, h - 48, w, 48);
-    ctx.fillStyle = night ? "#e8d6b4" : "#46301c";
-    ctx.font = "20px sans-serif";
+    ctx.font = "600 16px sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("MOYING  ·  free preview", w / 2, h - 24);
+    const tw = ctx.measureText(label).width;
+    const bw = tw + 20;
+    const bh = 26;
+    const x = (w - bw) / 2;
+    const y = h - 46;
+    ctx.fillStyle = night ? "rgba(16,12,9,0.9)" : "rgba(244,234,212,0.92)";
+    ctx.fillRect(x, y, bw, bh);
+    ctx.fillStyle = night ? "#f3ead6" : "#3a2a1c";
+    ctx.fillText(label, w / 2, y + bh / 2 + 0.5);
     ctx.restore();
   }
 
@@ -614,18 +640,19 @@
     layer.height = target.height;
     const inkRng = mulberry32(hashString(seedKey(snap) + "|ink"));
     const lctx = layer.getContext("2d");
+    let fitted = baseSize(snap);
     withLogical(lctx, layer, () => {
-      const fitted = paintWords(lctx, font, snap, inkColor(snap), inkRng);
-      if (snap.seal) {
-        const size = Math.min(68, fitted * 0.38);
-        drawSeal(lctx, sealFont, BASE_W * 0.82, BASE_H * 0.88, size, snap.paper === "night");
-      }
+      fitted = paintWords(lctx, font, snap, inkColor(snap), inkRng);
     });
-    cutInkWatermark(layer, snap);
+    cutInkWatermark(layer, target, transparent);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.drawImage(layer, 0, 0);
     withLogical(ctx, target, () => {
-      drawFreeCaption(ctx, BASE_W, BASE_H, snap.paper === "night");
+      if (snap.seal) {
+        const size = Math.min(68, fitted * 0.38);
+        drawSeal(ctx, sealFont, BASE_W * 0.82, BASE_H * 0.88, size, snap.paper === "night");
+      }
+      drawPreviewMark(ctx, BASE_W, BASE_H, snap.paper === "night");
     });
   }
 
@@ -643,8 +670,8 @@
 
   function preparePreview() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = Math.round(BASE_W * dpr);
-    const h = Math.round(BASE_H * dpr);
+    const w = Math.min(FREE_W, Math.round(BASE_W * dpr));
+    const h = Math.min(FREE_H, Math.round(BASE_H * dpr));
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w;
       canvas.height = h;
