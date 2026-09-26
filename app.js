@@ -61,12 +61,22 @@
   ui.seal.addEventListener("change", drawPreview);
   ui.btnExport.onclick = () => exportCurrent();
   document.getElementById("btnPay").onclick = () => {
+    track("buy-click");
     if (WAFFO_PURCHASE_URL) {
       location.href = WAFFO_PURCHASE_URL;
       return;
     }
     alert("Clean HD is $1.99. Payment is not connected yet.");
   };
+
+  function track(name) {
+    try {
+      const gc = window.goatcounter;
+      if (gc && typeof gc.count === "function") gc.count({ path: name, event: true });
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   function loadFont(key) {
     if (!fontPromises[key]) {
@@ -708,6 +718,7 @@
     const b64 = bytesToBase64(new Uint8Array(await blob.arrayBuffer()));
     const svg = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${EXPORT_W}" height="${EXPORT_H}" viewBox="0 0 ${EXPORT_W} ${EXPORT_H}">\n<image width="${EXPORT_W}" height="${EXPORT_H}" href="data:image/png;base64,${b64}"/>\n</svg>\n`;
     saveBlob(new Blob([svg], { type: "image/svg+xml" }), `${fileStem(rendered.text)}.svg`, "image/svg+xml");
+    return true;
   }
 
   // Real PDF: one 1800×2400 watermarked JPEG on a 6×8 in page (300 dpi). No text layer.
@@ -763,6 +774,7 @@
     const bytes = new Uint8Array(await jpeg.arrayBuffer());
     const pdf = buildPdf(bytes, EXPORT_W, EXPORT_H);
     saveBlob(new Blob([pdf], { type: "application/pdf" }), `${fileStem(rendered.text)}.pdf`, "application/pdf");
+    return true;
   }
 
   async function exportRaster(snap, mime, ext, quality, transparent) {
@@ -771,6 +783,7 @@
     const blob = await canvasBlob(rendered.canvas, mime, quality);
     const name = transparent ? `${fileStem(rendered.text)}-transparent.${ext}` : `${fileStem(rendered.text)}.${ext}`;
     saveBlob(blob, name, blob.type || mime);
+    return true;
   }
 
   async function exportCurrent() {
@@ -782,12 +795,14 @@
     showLoading("Exporting…");
     try {
       const fmt = snap.fmt || "png";
-      if (fmt === "png") await exportRaster(snap, "image/png", "png", 1, false);
-      else if (fmt === "jpg") await exportRaster(snap, "image/jpeg", "jpg", 0.92, false);
-      else if (fmt === "webp") await exportRaster(snap, "image/webp", "webp", 0.92, false);
-      else if (fmt === "alpha") await exportRaster(snap, "image/png", "png", 1, true);
-      else if (fmt === "svg") await exportSvg(snap);
-      else if (fmt === "pdf") await exportPdf(snap);
+      let saved = false;
+      if (fmt === "png") saved = await exportRaster(snap, "image/png", "png", 1, false);
+      else if (fmt === "jpg") saved = await exportRaster(snap, "image/jpeg", "jpg", 0.92, false);
+      else if (fmt === "webp") saved = await exportRaster(snap, "image/webp", "webp", 0.92, false);
+      else if (fmt === "alpha") saved = await exportRaster(snap, "image/png", "png", 1, true);
+      else if (fmt === "svg") saved = await exportSvg(snap);
+      else if (fmt === "pdf") saved = await exportPdf(snap);
+      if (saved && (fmt === "png" || fmt === "svg" || fmt === "pdf")) track("export-" + fmt);
     } catch (err) {
       console.error(err);
       alert("Could not finish the export. Please try again.");
