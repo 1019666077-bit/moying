@@ -32,15 +32,15 @@
     });
   });
   ["text", "size", "track", "dry", "seal"].forEach((k) => {
+    if (!ui[k]) return;
     ui[k].addEventListener("input", () => draw());
     ui[k].addEventListener("change", () => draw());
   });
-  document.getElementById("btnDraw").onclick = () => draw();
-  document.getElementById("btnPng").onclick = exportCurrent;
-  document.getElementById("btnShare").onclick = exportCurrent;
-  document.getElementById("btnPay").onclick = () => {
-    alert("Clean HD is $1.99. Payment is not connected yet.");
-  };
+  const bind = (id, fn) => { const el = document.getElementById(id); if (el) el.onclick = fn; };
+  bind("btnDraw", () => draw());
+  bind("btnPng", exportCurrent);
+  bind("btnShare", exportCurrent);
+  bind("btnPay", () => alert("Clean HD is $1.99. Payment is not connected yet."));
   function paperColors(kind) {
     if (kind === "aged") return { bg: ["#e4c992", "#c9a56a"], fiber: "#b08950" };
     if (kind === "night") return { bg: ["#1b1713", "#0e0c0a"], fiber: "#3a3228" };
@@ -148,20 +148,20 @@
     const target = opts.canvas || canvas; pen = target.getContext("2d");
     const w = target.width, h = target.height;
     if (opts.transparent) pen.clearRect(0, 0, w, h); else paintPaper(w, h);
-    const text = (ui.text.value || "").slice(0, 16).replace(/[^\S\n]+/g, " ").trim();
-    if (!opts.silent) { ui.loading.textContent = opts.exporting ? "Exporting…" : "Grinding ink…"; ui.loading.classList.remove("hide"); }
+    const text = ((ui.text ? ui.text.value : "") || document.body.dataset.text || "").slice(0, 16).replace(/[^\S\n]+/g, " ").trim();
+    if (!opts.silent && ui.loading) { ui.loading.textContent = opts.exporting ? "Exporting…" : "Grinding ink…"; ui.loading.classList.remove("hide"); }
     if (!text) {
       pen.save(); pen.fillStyle = state.paper === "night" ? "rgba(230,210,180,0.45)" : "rgba(90,74,52,0.45)";
       pen.font = "36px serif"; pen.textAlign = "center"; pen.textBaseline = "middle";
       pen.fillText("Type a name or short word", w / 2, h / 2); pen.restore();
-      lastLayout = null; if (!opts.silent) ui.loading.classList.add("hide"); pen = ctx; return;
+      lastLayout = null; if (!opts.silent && ui.loading) ui.loading.classList.add("hide"); pen = ctx; return;
     }
     try {
-      const font = await getFont(state.style); const dry = Number(ui.dry.value); const ink = inkColor();
+      const font = await getFont(state.style); const dry = ui.dry ? Number(ui.dry.value) : 22; const ink = inkColor();
       const chars = [...text]; const vertical = state.dir === "v";
       const lines = (!vertical && chars.length > 8) ? [chars.slice(0, Math.ceil(chars.length / 2)), chars.slice(Math.ceil(chars.length / 2))] : [chars];
-      let size = Number(ui.size.value) * (state.style === "cao" || state.style === "kuang" ? 1.12 : 1.06);
-      const trackRatio = Number(ui.track.value) / 100;
+      let size = (ui.size ? Number(ui.size.value) : 196) * (state.style === "cao" || state.style === "kuang" ? 1.12 : 1.06);
+      const trackRatio = (ui.track ? Number(ui.track.value) : 38) / 100;
       const trackBias = state.style === "gong" ? 0.14 : 0.06;
       const measure = (arr, fontSize) => arr.map((ch) => {
         const path = font.getPath(ch === " " ? " " : ch, 0, 0, fontSize); const bb = path.getBoundingBox();
@@ -200,7 +200,7 @@
           y0 += lineHs[li] + lineGap;
         });
       }
-      const seal = ui.seal.checked ? { x: w * 0.82, y: h * 0.88, size: Math.min(68, size * 0.38), night: state.paper === "night" } : null;
+      const seal = (!ui.seal || ui.seal.checked) ? { x: w * 0.82, y: h * 0.88, size: Math.min(68, size * 0.38), night: state.paper === "night" } : null;
       if (seal) drawSeal(seal.x, seal.y, seal.size, seal.night);
       if (!opts.clean) drawWatermark(w, h, state.paper === "night");
       lastLayout = { w, h, text, ink, placed, seal, paper: state.paper, style: state.style, font };
@@ -208,7 +208,7 @@
       ctx.fillStyle = "#7a1f16"; ctx.font = "28px serif";
       ctx.fillText("Font failed to load", 40, h / 2); console.error(err);
     }
-    if (!opts.silent) ui.loading.classList.add("hide"); pen = ctx;
+    if (!opts.silent && ui.loading) ui.loading.classList.add("hide"); pen = ctx;
   }
   function stem() {
     return `moying-${(ui.text.value || "peace").replace(/[^\w\u4e00-\u9fff]+/g, "-").replace(/^-|-$/g, "") || "piece"}`;
@@ -291,10 +291,11 @@
     if (f === "pdf") return exportPdf();
   }
   const q = new URLSearchParams(location.search);
-  if (q.get("text")) ui.text.value = q.get("text");
+  if (ui.text && q.get("text")) ui.text.value = q.get("text");
   if (q.get("style") && FONTS[q.get("style")]) {
     state.style = q.get("style");
     document.querySelectorAll('[data-name="style"] button').forEach((b) => b.classList.toggle("on", b.dataset.v === state.style));
   }
+  if (document.body.dataset.style && FONTS[document.body.dataset.style]) state.style = document.body.dataset.style;
   draw();
 })();
