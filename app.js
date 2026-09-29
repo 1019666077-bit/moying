@@ -39,6 +39,13 @@
     btnRestore: document.getElementById("btnRestore"),
     exportHint: document.getElementById("exportHint"),
   };
+  // Landing pages ship only <canvas id="stage"> plus <body data-text="…">, so every
+  // control is optional: missing ones fall back to the generator's default value.
+  const DEFAULT_SIZE = 196;
+  const DEFAULT_TRACK = 38;
+  const DEFAULT_DRY = 22;
+  const textSource = () => (ui.text ? ui.text.value : (document.body.dataset.text || ""));
+  const valueOf = (el, fallback) => (el ? Number(el.value) : fallback);
   const state = { style: "kai", dir: "h", paper: "xuan", ink: "black", fmt: "png" };
   let previewGen = 0;
   let previewWaiting = 0;
@@ -67,23 +74,26 @@
       if (seg.dataset.name !== "fmt") drawPreview();
     });
   });
-  ui.text.addEventListener("input", () => {
-    const next = clampText(ui.text.value);
-    if (next !== ui.text.value) {
-      const at = ui.text.selectionStart;
-      ui.text.value = next;
-      const pos = Math.min(at == null ? next.length : at, next.length);
-      ui.text.setSelectionRange(pos, pos);
-    }
-    drawPreview();
+  if (ui.text) {
+    ui.text.addEventListener("input", () => {
+      const next = clampText(ui.text.value);
+      if (next !== ui.text.value) {
+        const at = ui.text.selectionStart;
+        ui.text.value = next;
+        const pos = Math.min(at == null ? next.length : at, next.length);
+        ui.text.setSelectionRange(pos, pos);
+      }
+      drawPreview();
+    });
+  }
+  [ui.size, ui.track, ui.dry].forEach((el) => {
+    if (!el) return;
+    el.addEventListener("input", drawPreview);
   });
-  ui.size.addEventListener("input", drawPreview);
-  ui.track.addEventListener("input", drawPreview);
-  ui.dry.addEventListener("input", drawPreview);
-  ui.seal.addEventListener("change", drawPreview);
-  ui.btnExport.onclick = () => exportCurrent();
-  ui.btnPay.onclick = () => startCheckout();
-  ui.btnRestore.onclick = () => {
+  if (ui.seal) ui.seal.addEventListener("change", drawPreview);
+  if (ui.btnExport) ui.btnExport.onclick = () => exportCurrent();
+  if (ui.btnPay) ui.btnPay.onclick = () => startCheckout();
+  if (ui.btnRestore) ui.btnRestore.onclick = () => {
     if (paidDesign) applyDesign(paidDesign);
   };
 
@@ -137,10 +147,13 @@
   }
 
   function setPayNote(message) {
+    if (!ui.payNote) return;
     ui.payNote.textContent = message || "";
   }
 
   function updatePayUi() {
+    // Landing pages have no checkout UI, so there is nothing to update there.
+    if (!ui.btnPay) return;
     const snap = snapshot();
     const match = cleanNow(snap);
     if (match) {
@@ -168,11 +181,12 @@
   }
 
   function applyDesign(design) {
-    ui.text.value = design.text;
-    ui.size.value = String(design.size);
-    ui.track.value = String(design.track);
-    ui.dry.value = String(design.dry);
-    ui.seal.checked = !!design.seal;
+    // Only the generator has these controls; a landing page just re-renders.
+    if (ui.text) ui.text.value = design.text;
+    if (ui.size) ui.size.value = String(design.size);
+    if (ui.track) ui.track.value = String(design.track);
+    if (ui.dry) ui.dry.value = String(design.dry);
+    if (ui.seal) ui.seal.checked = !!design.seal;
     ["style", "dir", "paper", "ink"].forEach((name) => {
       state[name] = design[name];
       document.querySelectorAll(`[data-name="${name}"] button`).forEach((btn) => {
@@ -432,7 +446,7 @@
   }
 
   function snapshot() {
-    const parsed = analyze(ui.text.value);
+    const parsed = analyze(textSource());
     return {
       text: parsed.text,
       unsupported: parsed.unsupported,
@@ -442,33 +456,38 @@
       paper: state.paper,
       ink: state.ink,
       fmt: state.fmt,
-      size: Number(ui.size.value),
-      track: Number(ui.track.value),
-      dry: Number(ui.dry.value),
-      seal: ui.seal.checked,
+      size: valueOf(ui.size, DEFAULT_SIZE),
+      track: valueOf(ui.track, DEFAULT_TRACK),
+      dry: valueOf(ui.dry, DEFAULT_DRY),
+      seal: !ui.seal || ui.seal.checked,
     };
   }
 
   function syncControls(flags, drawable) {
-    const len = graphemes(ui.text.value).length;
-    ui.count.textContent = `${len}/${MAX_LEN}`;
-    ui.count.classList.toggle("at-limit", len >= MAX_LEN);
-    ui.limitHint.hidden = len < MAX_LEN;
+    const len = graphemes(textSource()).length;
+    if (ui.count) {
+      ui.count.textContent = `${len}/${MAX_LEN}`;
+      ui.count.classList.toggle("at-limit", len >= MAX_LEN);
+    }
+    if (ui.limitHint) ui.limitHint.hidden = len < MAX_LEN;
     const notes = [];
     if (flags.changed) notes.push("Accents are drawn as plain letters.");
     if (flags.unsupported) notes.push("Some characters cannot be drawn. Use English letters, numbers, and simple punctuation.");
-    ui.charHint.hidden = notes.length === 0;
-    ui.charHint.textContent = notes.join(" ");
-    ui.btnExport.disabled = drawable.length === 0;
+    if (ui.charHint) {
+      ui.charHint.hidden = notes.length === 0;
+      ui.charHint.textContent = notes.join(" ");
+    }
+    if (ui.btnExport) ui.btnExport.disabled = drawable.length === 0;
   }
 
   function showLoading(msg) {
+    if (!ui.loading) return;
     ui.loading.textContent = msg;
     ui.loading.classList.remove("hide");
   }
 
   function hideLoadingIfIdle() {
-    if (exportCount === 0 && previewWaiting === 0) ui.loading.classList.add("hide");
+    if (ui.loading && exportCount === 0 && previewWaiting === 0) ui.loading.classList.add("hide");
   }
 
   function paperColors(kind) {
@@ -918,7 +937,7 @@
     preparePreview();
     if (!snap.text) {
       paintScene(canvas, snap, null, null, { watermark: !cleanNow(snap) });
-      if (gen === previewGen && exportCount === 0) ui.loading.classList.add("hide");
+      if (ui.loading && gen === previewGen && exportCount === 0) ui.loading.classList.add("hide");
       return;
     }
     const waiting = !fontReady[snap.style] || !fontReady.seal;
@@ -1128,8 +1147,13 @@
     history.replaceState(null, "", next ? `${location.pathname}?${next}` : location.pathname);
   }
   // Pin links use ?name=. Keep ?text= when name is absent.
-  if (q.has("name")) ui.text.value = clampText(q.get("name"));
-  else if (q.has("text")) ui.text.value = clampText(q.get("text"));
+  const queryText = q.has("name") ? q.get("name") : (q.has("text") ? q.get("text") : null);
+  if (queryText != null) {
+    // On the generator this fills the input; a landing page has no input, so it
+    // overrides the name baked into <body data-text>.
+    if (ui.text) ui.text.value = clampText(queryText);
+    else document.body.dataset.text = clampText(queryText);
+  }
   if (q.get("style") && FONTS[q.get("style")] && q.get("style") !== "seal") {
     state.style = q.get("style");
     document.querySelectorAll('[data-name="style"] button').forEach((b) => {
@@ -1138,6 +1162,8 @@
       b.setAttribute("aria-pressed", on ? "true" : "false");
     });
   }
+  // Landing pages pick a brush style with <body data-style="cao">.
+  if (document.body.dataset.style && FONTS[document.body.dataset.style]) state.style = document.body.dataset.style;
   document.querySelectorAll(".seg button").forEach((b) => {
     if (!b.hasAttribute("aria-pressed")) b.setAttribute("aria-pressed", b.classList.contains("on") ? "true" : "false");
   });
