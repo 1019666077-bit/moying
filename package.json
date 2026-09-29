@@ -1,0 +1,12 @@
+{
+  "name": "moying",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev . --kv PURCHASES --compatibility-date=2026-09-01",
+    "test:payments": "node scripts/test-payments.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.142.0"
+  }
+}

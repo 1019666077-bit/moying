@@ -57,7 +57,9 @@
           <p id="charHint" class="hint warn" hidden></p>
           <p id="limitHint" class="hint" hidden>16 character limit.</p>
           <button id="btnPay" class="pay" type="button">Remove watermark · $1.99</button>
-          <p class="hint price">Free watermarked preview. $1.99 once for a clean high-resolution download. No subscription.</p>
+          <p id="payNote" class="hint pay-note" role="status" aria-live="polite"></p>
+          <button id="btnRestore" class="hint-btn" type="button" hidden>Show the paid design</button>
+          <p class="hint price">Free watermarked preview. $1.99 once for a clean high-resolution download of this design. No subscription.</p>
         </div>
         <div class="more">
         <div class="seg seg-wide" data-name="fmt" id="fmtBar" role="group" aria-label="Export format">
@@ -69,7 +71,7 @@
           <button type="button" data-v="pdf">PDF</button>
         </div>
         <button id="btnExport" class="secondary" type="button">Export</button>
-        <p class="hint">Free downloads: 900×1200 watermarked preview</p>
+        <p id="exportHint" class="hint">Free downloads: 900×1200 watermarked preview</p>
 
         <div class="seg seg-wide" data-name="style" role="group" aria-label="Brush style">
           <button type="button" data-v="gong">Neat</button>
