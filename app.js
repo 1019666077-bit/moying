@@ -1,11 +1,7 @@
 (() => {
-  // Plug the Waffo Pancake checkout URL here after merchant review.
-  // Leave it empty: the buy button stays a placeholder and does not charge anyone.
-  const WAFFO_PURCHASE_URL = "";
-
   const BASE_W = 900;
   const BASE_H = 1200;
-  // Free watermarked downloads. Paid Clean HD stays 1800×2400 and is not used here.
+  // Free downloads stay 900×1200 and watermarked. A paid design exports 1800×2400 with no watermark.
   const FREE_W = 900;
   const FREE_H = 1200;
   const CLEAN_HD_W = 1800;
@@ -38,6 +34,10 @@
     charHint: document.getElementById("charHint"),
     limitHint: document.getElementById("limitHint"),
     btnExport: document.getElementById("btnExport"),
+    btnPay: document.getElementById("btnPay"),
+    payNote: document.getElementById("payNote"),
+    btnRestore: document.getElementById("btnRestore"),
+    exportHint: document.getElementById("exportHint"),
   };
   // Landing pages ship only <canvas id="stage"> plus <body data-text="…">, so every
   // control is optional: missing ones fall back to the generator's default value.
@@ -51,6 +51,16 @@
   let previewWaiting = 0;
   let exportCount = 0;
   let exporting = false;
+  let paidDesign = null;
+  let payBusy = false;
+  let payError = "";
+  let waitingForPayment = false;
+  let expectReturn = false;
+  let appliedReturn = false;
+  let pollTimer = 0;
+  let pollAttempts = 0;
+  let memoryToken = "";
+  const UNLOCK_KEY = "moying-unlock";
 
   document.querySelectorAll(".seg").forEach((seg) => {
     seg.addEventListener("click", (e) => {
@@ -82,15 +92,239 @@
   });
   if (ui.seal) ui.seal.addEventListener("change", drawPreview);
   if (ui.btnExport) ui.btnExport.onclick = () => exportCurrent();
-  const btnPay = document.getElementById("btnPay");
-  if (btnPay) btnPay.onclick = () => {
-    track("buy-click");
-    if (WAFFO_PURCHASE_URL) {
-      location.href = WAFFO_PURCHASE_URL;
+  if (ui.btnPay) ui.btnPay.onclick = () => startCheckout();
+  if (ui.btnRestore) ui.btnRestore.onclick = () => {
+    if (paidDesign) applyDesign(paidDesign);
+  };
+
+  function designPayload(snap) {
+    return {
+      text: snap.text,
+      style: snap.style,
+      dir: snap.dir,
+      paper: snap.paper,
+      ink: snap.ink,
+      size: snap.size,
+      track: snap.track,
+      dry: snap.dry,
+      seal: !!snap.seal,
+    };
+  }
+
+  function designsMatch(paid, current) {
+    if (!paid || !current) return false;
+    return paid.text === current.text
+      && paid.style === current.style
+      && paid.dir === current.dir
+      && paid.paper === current.paper
+      && paid.ink === current.ink
+      && Number(paid.size) === Number(current.size)
+      && Number(paid.track) === Number(current.track)
+      && Number(paid.dry) === Number(current.dry)
+      && !!paid.seal === !!current.seal;
+  }
+
+  function cleanNow(snap) {
+    return designsMatch(paidDesign, designPayload(snap));
+  }
+
+  function isToken(value) {
+    return typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
+  }
+
+  function rememberToken(token) {
+    memoryToken = token;
+    try { localStorage.setItem(UNLOCK_KEY, token); } catch (_) { /* private mode */ }
+  }
+
+  function currentToken() {
+    try { return localStorage.getItem(UNLOCK_KEY) || memoryToken; } catch (_) { return memoryToken; }
+  }
+
+  function forgetToken() {
+    memoryToken = "";
+    try { localStorage.removeItem(UNLOCK_KEY); } catch (_) { /* private mode */ }
+  }
+
+  function setPayNote(message) {
+    if (!ui.payNote) return;
+    ui.payNote.textContent = message || "";
+  }
+
+  function updatePayUi() {
+    // Landing pages have no checkout UI, so there is nothing to update there.
+    if (!ui.btnPay) return;
+    const snap = snapshot();
+    const match = cleanNow(snap);
+    if (match) {
+      ui.btnPay.textContent = "Watermark removed";
+      ui.btnPay.disabled = true;
+      ui.btnPay.classList.add("paid");
+      ui.btnRestore.hidden = true;
+      setPayNote("Watermark removed for this design. Export is a clean 1800×2400 file.");
+      ui.exportHint.textContent = "Clean download: 1800×2400, no watermark";
       return;
     }
-    alert("Clean HD is $1.99. Payment is not connected yet.");
-  };
+    ui.btnPay.classList.remove("paid");
+    ui.btnPay.disabled = payBusy;
+    ui.btnPay.textContent = payBusy ? "Starting checkout…" : "Remove watermark · $1.99";
+    ui.exportHint.textContent = "Free downloads: 900×1200 watermarked preview";
+    if (paidDesign) {
+      ui.btnRestore.hidden = false;
+      setPayNote(`A clean download is saved for “${paidDesign.text}”.`);
+      return;
+    }
+    ui.btnRestore.hidden = true;
+    if (payError) setPayNote(payError);
+    else if (waitingForPayment) setPayNote("Waiting for payment confirmation…");
+    else setPayNote("");
+  }
+
+  function applyDesign(design) {
+    // Only the generator has these controls; a landing page just re-renders.
+    if (ui.text) ui.text.value = design.text;
+    if (ui.size) ui.size.value = String(design.size);
+    if (ui.track) ui.track.value = String(design.track);
+    if (ui.dry) ui.dry.value = String(design.dry);
+    if (ui.seal) ui.seal.checked = !!design.seal;
+    ["style", "dir", "paper", "ink"].forEach((name) => {
+      state[name] = design[name];
+      document.querySelectorAll(`[data-name="${name}"] button`).forEach((btn) => {
+        const on = btn.dataset.v === design[name];
+        btn.classList.toggle("on", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    });
+    drawPreview();
+  }
+
+  function schedulePoll(limit) {
+    clearTimeout(pollTimer);
+    pollTimer = setTimeout(() => refreshUnlock(limit), 2000);
+  }
+
+  async function refreshUnlock(limit) {
+    const token = currentToken();
+    if (!isToken(token)) {
+      paidDesign = null;
+      waitingForPayment = false;
+      updatePayUi();
+      return;
+    }
+    let response;
+    try {
+      response = await fetch(`/api/status?token=${token}`, { cache: "no-store" });
+    } catch (_) {
+      updatePayUi();
+      return;
+    }
+    if (response.status === 503 || response.status === 404) {
+      payError = "Payments are unavailable right now. You can still download a free watermarked preview.";
+      waitingForPayment = false;
+      updatePayUi();
+      return;
+    }
+    if (!response.ok) {
+      updatePayUi();
+      return;
+    }
+    let data;
+    try {
+      data = await response.json();
+    } catch (_) {
+      updatePayUi();
+      return;
+    }
+    if (data.status === "paid" && data.design) {
+      const firstConfirm = !paidDesign;
+      paidDesign = data.design;
+      waitingForPayment = false;
+      payError = "";
+      if (expectReturn && firstConfirm) track("purchase-confirmed");
+      if (expectReturn && !appliedReturn) {
+        appliedReturn = true;
+        applyDesign(data.design);
+        return;
+      }
+      updatePayUi();
+      drawPreview();
+      return;
+    }
+    if (data.status === "refunded") {
+      paidDesign = null;
+      waitingForPayment = false;
+      forgetToken();
+      payError = "This purchase was refunded. The watermark is back.";
+      updatePayUi();
+      drawPreview();
+      return;
+    }
+    if (data.status === "unknown") {
+      paidDesign = null;
+      waitingForPayment = false;
+      forgetToken();
+      updatePayUi();
+      return;
+    }
+    if (data.status === "pending") {
+      pollAttempts += 1;
+      if (expectReturn && !appliedReturn && data.design) {
+        appliedReturn = true;
+        applyDesign(data.design);
+      }
+      if (pollAttempts >= limit) {
+        waitingForPayment = false;
+        if (expectReturn) payError = "Payment is not confirmed yet. If you paid, refresh this page in a moment.";
+        updatePayUi();
+        return;
+      }
+      waitingForPayment = expectReturn;
+      schedulePoll(limit);
+      updatePayUi();
+      return;
+    }
+    updatePayUi();
+  }
+
+  async function startCheckout() {
+    track("buy-click");
+    if (payBusy || cleanNow(snapshot())) return;
+    const snap = snapshot();
+    if (!snap.text) {
+      payError = "Type a word or name first.";
+      updatePayUi();
+      return;
+    }
+    payBusy = true;
+    payError = "";
+    updatePayUi();
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ design: designPayload(snap) }),
+      });
+      if (response.status === 404 || response.status === 503) {
+        payError = "Payments are unavailable right now. You can still download a free watermarked preview.";
+        return;
+      }
+      let data = null;
+      try { data = await response.json(); } catch (_) { data = null; }
+      if (!response.ok || !data || !data.checkoutUrl || !isToken(data.token)) {
+        payError = data && data.error === "bad_design"
+          ? "That design cannot be checked out. Use English letters, numbers, and simple punctuation."
+          : "Could not start checkout. Please try again in a moment.";
+        return;
+      }
+      rememberToken(data.token);
+      location.href = data.checkoutUrl;
+    } catch (_) {
+      payError = "Payments are unavailable right now. You can still download a free watermarked preview.";
+    } finally {
+      payBusy = false;
+      updatePayUi();
+    }
+  }
 
   function track(name) {
     try {
@@ -630,7 +864,8 @@
   function paintScene(target, snap, font, sealFont, opts) {
     const ctx = target.getContext("2d");
     const paperRng = mulberry32(hashString(seedKey(snap) + "|paper"));
-    const transparent = !!opts.transparent;
+    const transparent = !!(opts && opts.transparent);
+    const watermark = !opts || opts.watermark !== false;
     withLogical(ctx, target, () => {
       if (transparent) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -660,7 +895,7 @@
     withLogical(lctx, layer, () => {
       fitted = paintWords(lctx, font, snap, inkColor(snap), inkRng);
     });
-    cutInkWatermark(layer, target, transparent);
+    if (watermark) cutInkWatermark(layer, target, transparent);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.drawImage(layer, 0, 0);
     withLogical(ctx, target, () => {
@@ -668,7 +903,7 @@
         const size = Math.min(68, fitted * 0.38);
         drawSeal(ctx, sealFont, BASE_W * 0.82, BASE_H * 0.88, size, snap.paper === "night");
       }
-      drawPreviewMark(ctx, BASE_W, BASE_H, snap.paper === "night");
+      if (watermark) drawPreviewMark(ctx, BASE_W, BASE_H, snap.paper === "night");
     });
   }
 
@@ -698,9 +933,10 @@
     const gen = ++previewGen;
     const snap = snapshot();
     syncControls(snap, snap.text);
+    updatePayUi();
     preparePreview();
     if (!snap.text) {
-      paintScene(canvas, snap, null, null, {});
+      paintScene(canvas, snap, null, null, { watermark: !cleanNow(snap) });
       if (ui.loading && gen === previewGen && exportCount === 0) ui.loading.classList.add("hide");
       return;
     }
@@ -714,7 +950,8 @@
       if (gen !== previewGen) return;
       const filtered = filterGlyphs(font, snap.text);
       syncControls({ unsupported: snap.unsupported || filtered.dropped, changed: snap.changed }, filtered.text);
-      paintScene(canvas, { ...snap, text: filtered.text, unsupported: snap.unsupported || filtered.dropped }, font, sealFont, {});
+      const scene = { ...snap, text: filtered.text, unsupported: snap.unsupported || filtered.dropped };
+      paintScene(canvas, scene, font, sealFont, { watermark: !cleanNow(snap) });
     } catch (err) {
       if (gen !== previewGen) return;
       console.error(err);
@@ -761,19 +998,17 @@
     });
   }
 
-  function exportCanvas() {
-    const out = document.createElement("canvas");
-    out.width = FREE_W;
-    out.height = FREE_H;
-    return out;
-  }
-
-  async function renderExport(snap, transparent) {
+  async function renderExport(snap, transparent, clean) {
     const [font, sealFont] = await Promise.all([loadFont(snap.style), loadFont("seal").catch(() => null)]);
     const filtered = filterGlyphs(font, snap.text);
     if (!filtered.text) return null;
-    const out = exportCanvas();
-    paintScene(out, { ...snap, text: filtered.text }, font, sealFont, { transparent: !!transparent });
+    const out = document.createElement("canvas");
+    out.width = clean ? CLEAN_HD_W : FREE_W;
+    out.height = clean ? CLEAN_HD_H : FREE_H;
+    paintScene(out, { ...snap, text: filtered.text }, font, sealFont, {
+      transparent: !!transparent,
+      watermark: !clean,
+    });
     return { canvas: out, text: filtered.text };
   }
 
@@ -786,19 +1021,22 @@
     return btoa(binary);
   }
 
-  // Free SVG contains only the watermarked bitmap. Outlines are never written,
-  // so deleting elements cannot produce a clean vector.
-  async function exportSvg(snap) {
-    const rendered = await renderExport(snap, false);
+  // SVG embeds the same painted canvas as PNG. There is no outline layer, so
+  // deleting elements cannot produce a clean vector. Unpaid files include the
+  // ink nicks and the preview label; a paid design omits both.
+  async function exportSvg(snap, clean) {
+    const rendered = await renderExport(snap, false, clean);
     if (!rendered) return;
     const blob = await canvasBlob(rendered.canvas, "image/png");
     const b64 = bytesToBase64(new Uint8Array(await blob.arrayBuffer()));
-    const svg = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${FREE_W}" height="${FREE_H}" viewBox="0 0 ${FREE_W} ${FREE_H}">\n<image width="${FREE_W}" height="${FREE_H}" href="data:image/png;base64,${b64}"/>\n</svg>\n`;
+    const w = rendered.canvas.width;
+    const h = rendered.canvas.height;
+    const svg = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">\n<image width="${w}" height="${h}" href="data:image/png;base64,${b64}"/>\n</svg>\n`;
     saveBlob(new Blob([svg], { type: "image/svg+xml" }), `${fileStem(rendered.text)}.svg`, "image/svg+xml");
     return true;
   }
 
-  // Real PDF: one 900×1200 watermarked JPEG (300 dpi, 3×4 in). No text layer.
+  // Real PDF of the same painted image (300 dpi). No text layer.
   function buildPdf(jpegBytes, imgW, imgH) {
     const pageW = (imgW / 300) * 72;
     const pageH = (imgH / 300) * 72;
@@ -844,18 +1082,18 @@
     return out;
   }
 
-  async function exportPdf(snap) {
-    const rendered = await renderExport(snap, false);
+  async function exportPdf(snap, clean) {
+    const rendered = await renderExport(snap, false, clean);
     if (!rendered) return;
     const jpeg = await canvasBlob(rendered.canvas, "image/jpeg", 0.92);
     const bytes = new Uint8Array(await jpeg.arrayBuffer());
-    const pdf = buildPdf(bytes, FREE_W, FREE_H);
+    const pdf = buildPdf(bytes, rendered.canvas.width, rendered.canvas.height);
     saveBlob(new Blob([pdf], { type: "application/pdf" }), `${fileStem(rendered.text)}.pdf`, "application/pdf");
     return true;
   }
 
-  async function exportRaster(snap, mime, ext, quality, transparent) {
-    const rendered = await renderExport(snap, transparent);
+  async function exportRaster(snap, mime, ext, quality, transparent, clean) {
+    const rendered = await renderExport(snap, transparent, clean);
     if (!rendered) return;
     const blob = await canvasBlob(rendered.canvas, mime, quality);
     const name = transparent ? `${fileStem(rendered.text)}-transparent.${ext}` : `${fileStem(rendered.text)}.${ext}`;
@@ -872,13 +1110,14 @@
     showLoading("Exporting…");
     try {
       const fmt = snap.fmt || "png";
+      const clean = cleanNow(snap);
       let saved = false;
-      if (fmt === "png") saved = await exportRaster(snap, "image/png", "png", 1, false);
-      else if (fmt === "jpg") saved = await exportRaster(snap, "image/jpeg", "jpg", 0.92, false);
-      else if (fmt === "webp") saved = await exportRaster(snap, "image/webp", "webp", 0.92, false);
-      else if (fmt === "alpha") saved = await exportRaster(snap, "image/png", "png", 1, true);
-      else if (fmt === "svg") saved = await exportSvg(snap);
-      else if (fmt === "pdf") saved = await exportPdf(snap);
+      if (fmt === "png") saved = await exportRaster(snap, "image/png", "png", 1, false, clean);
+      else if (fmt === "jpg") saved = await exportRaster(snap, "image/jpeg", "jpg", 0.92, false, clean);
+      else if (fmt === "webp") saved = await exportRaster(snap, "image/webp", "webp", 0.92, false, clean);
+      else if (fmt === "alpha") saved = await exportRaster(snap, "image/png", "png", 1, true, clean);
+      else if (fmt === "svg") saved = await exportSvg(snap, clean);
+      else if (fmt === "pdf") saved = await exportPdf(snap, clean);
       const eventName = {
         png: "export-png",
         jpg: "export-jpg",
@@ -899,6 +1138,14 @@
   }
 
   const q = new URLSearchParams(location.search);
+  const unlockParam = q.get("unlock");
+  if (isToken(unlockParam)) {
+    rememberToken(unlockParam);
+    expectReturn = true;
+    q.delete("unlock");
+    const next = q.toString();
+    history.replaceState(null, "", next ? `${location.pathname}?${next}` : location.pathname);
+  }
   // Pin links use ?name=. Keep ?text= when name is absent.
   const queryText = q.has("name") ? q.get("name") : (q.has("text") ? q.get("text") : null);
   if (queryText != null) {
@@ -922,4 +1169,5 @@
   });
   preparePreview();
   drawPreview();
+  if (isToken(currentToken())) refreshUnlock(expectReturn ? 90 : 15);
 })();
