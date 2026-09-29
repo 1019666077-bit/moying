@@ -5,6 +5,7 @@ import { onRequestPost as checkout } from "../functions/api/checkout.js";
 import { onRequestGet as status } from "../functions/api/status.js";
 import { onRequestPost as webhook } from "../functions/api/webhook.js";
 import { canonicalDesign } from "../functions/lib/design.js";
+import { eventKey } from "../functions/lib/purchases.js";
 import { signRequest, verifyWebhook } from "../functions/lib/waffo.js";
 
 let failed = 0;
@@ -379,6 +380,96 @@ const tests = [
       env: envFor(pkcs8),
     });
     assert.equal(bad.status, 400);
+  }),
+
+  check("dedupe keys never collapse to an empty tail", () => {
+    const withoutId = (token, orderId) => {
+      const event = orderEvent(token);
+      delete event.eventId;
+      delete event.id;
+      event.data.orderId = orderId;
+      return event;
+    };
+    const one = withoutId("9a".repeat(32), "ORD_one");
+    const two = withoutId("9b".repeat(32), "ORD_two");
+    assert.notEqual(eventKey(one), eventKey(two));
+    assert.equal(eventKey(one), eventKey(withoutId("9a".repeat(32), "ORD_one")));
+    assert.doesNotMatch(eventKey(one), /:$/);
+    const sameId = (token) => {
+      const event = withoutId(token, "ORD_three");
+      event.eventId = "PAY_same";
+      return event;
+    };
+    assert.equal(eventKey(sameId("9c".repeat(32))), eventKey(sameId("9d".repeat(32))));
+    assert.equal(eventKey(orderEvent("9e".repeat(32))), eventKey(orderEvent("9e".repeat(32))));
+  }),
+
+  check("two id-less order.completed events still unlock both buyers", async () => {
+    const env = envFor(pkcs8);
+    const buyers = [["aa".repeat(32), "ORD_one"], ["ab".repeat(32), "ORD_two"]];
+    for (const [token] of buyers) await seedPending(env, token);
+    for (const [token, orderId] of buyers) {
+      const event = orderEvent(token);
+      delete event.eventId;
+      delete event.id;
+      event.data.orderId = orderId;
+      const { raw, header } = signedEvent(pkcs8.privateKey, event);
+      assert.equal((await webhookRequest(raw, header, env)).status, 200);
+    }
+    for (const [token] of buyers) {
+      const payload = await (await status({
+        request: new Request(`https://mymoying.com/api/status?token=${token}`),
+        env,
+      })).json();
+      assert.equal(payload.status, "paid", `${token.slice(0, 4)} was left locked`);
+    }
+  }),
+
+  check("the internal-file guard hides repo files and blocks no page asset", async () => {
+    const { onRequest } = await import("../functions/_middleware.js");
+    const { readdirSync } = await import("node:fs");
+    const context = (path) => ({
+      request: new Request(`https://mymoying.com${path}`),
+      next: async () => new Response("asset", { status: 200 }),
+    });
+    for (const path of [
+      "/DEPLOY.md",
+      "/SEO_REPORT.md",
+      "/README.md",
+      "/CLAUDE.md",
+      "/package.json",
+      "/package-lock.json",
+      "/scripts/test-payments.mjs",
+      "/tools/make-pins/make-pins.mjs",
+      "/pins/batch1.csv",
+      "/.dev.vars",
+      "/DEPLOY.md/",
+    ]) {
+      const response = await onRequest(context(path));
+      assert.equal(response.status, 404, `${path} is still served`);
+      assert.match(response.headers.get("x-robots-tag") || "", /noindex/);
+    }
+    for (const path of ["/", "/index.html", "/emma", "/robots.txt", "/sitemap.xml", "/pins/emma.jpg", "/api/webhook", "/404.html"]) {
+      assert.equal((await onRequest(context(path))).status, 200, `${path} was blocked`);
+    }
+    const root = new URL("../", import.meta.url);
+    const pages = readdirSync(root, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".html"))
+      .map((entry) => entry.name);
+    assert.ok(pages.length >= 19, `only ${pages.length} html files found`);
+    const assets = new Set();
+    for (const page of pages) {
+      const html = readFileSync(new URL(page, root), "utf8");
+      for (const match of html.matchAll(/(?:src|href)="([^"#:]+)"/g)) {
+        const clean = match[1].replace(/^\.\//, "");
+        if (!clean || clean === "/") continue;
+        assets.add(clean.startsWith("/") ? clean : `/${clean}`);
+      }
+    }
+    assert.ok(assets.size > 20, `only ${assets.size} local assets found`);
+    for (const asset of assets) {
+      assert.equal((await onRequest(context(asset))).status, 200, `${asset} is loaded by a page but blocked`);
+    }
   }),
 
   check("unpaid SVG and PNG share the watermarked paint path", () => {
