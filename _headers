@@ -1,0 +1,26 @@
+# Nothing listed here is part of the public site: build notes, the audit report, the
+# pin list and the tooling all live in the repo root, which is also the deploy root.
+# functions/_middleware.js answers 404 for these paths; these rules keep them out of
+# search results as well, and cover any path the middleware does not name.
+/DEPLOY.md
+  X-Robots-Tag: noindex, nofollow
+/SEO_REPORT.md
+  X-Robots-Tag: noindex, nofollow
+/README.md
+  X-Robots-Tag: noindex, nofollow
+/CLAUDE.md
+  X-Robots-Tag: noindex, nofollow
+/package.json
+  X-Robots-Tag: noindex, nofollow
+/package-lock.json
+  X-Robots-Tag: noindex, nofollow
+/.dev.vars
+  X-Robots-Tag: noindex, nofollow
+/.dev.vars.example
+  X-Robots-Tag: noindex, nofollow
+/scripts/*
+  X-Robots-Tag: noindex, nofollow
+/tools/*
+  X-Robots-Tag: noindex, nofollow
+/pins/batch1.csv
+  X-Robots-Tag: noindex, nofollow
