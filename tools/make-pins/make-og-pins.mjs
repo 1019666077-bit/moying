@@ -10,7 +10,9 @@
  *   cd tools/make-pins && npm install
  *   node tools/make-pins/make-og-pins.mjs
  *
- * Output: PNG files in /pins/, named after the landing page slug.
+ * Output: JPEG files in /pins/, named after the landing page slug. JPEG because
+ * a 1000x1500 sheet of rice paper as PNG is ~1.1MB; at quality 85 it is a
+ * fraction of that and Pinterest takes it (limit is 20MB either way).
  * Requires Microsoft Edge or Google Chrome (EDGE_PATH / CHROME_PATH override).
  */
 import fs from "node:fs";
@@ -24,6 +26,9 @@ const ROOT = path.resolve(__dirname, "../..");
 const PIN_W = 1000;
 const PIN_H = 1500;
 const SLIDER_MAX = 260;
+const PIN_QUALITY = 0.85;
+const PIN_QUALITY_FALLBACK = 0.8;
+const MAX_BYTES = 1024 * 1024;
 
 // Site defaults: Regular brush, horizontal, rice paper, black ink, seal, dry 22.
 const LOOK = {
@@ -39,6 +44,14 @@ const LOOK = {
 // group: pins in the same group share one letter size, so a board of pins looks
 // like one set. Names and phrases are measured separately (a phrase is far longer
 // than a name, and sharing across the two would shrink every name).
+//
+// text must be the word the landing page itself draws: every page ships
+// <body data-text="..."> and a caption naming that same word, and the page's
+// canvas is what a visitor sees. A pin that says something else is a mismatch.
+//   name-in-chinese-calligraphy   data-text="Emma"
+//   chinese-calligraphy-tattoo-ideas data-text="Strength"
+//   meaning-of-chinese-characters data-text="Love"
+//   custom-chinese-name-gift      data-text="Family"
 const PINS = [
   { slug: "emma", text: "Emma", group: "names" },
   { slug: "michael", text: "Michael", group: "names" },
@@ -52,10 +65,10 @@ const PINS = [
   { slug: "peace", text: "Peace", group: "names" },
   { slug: "hope", text: "Hope", group: "names" },
   { slug: "dream", text: "Dream", group: "names" },
-  { slug: "name-in-chinese-calligraphy", text: "Your Name", group: "guides" },
-  { slug: "chinese-calligraphy-tattoo-ideas", text: "Tattoo Ideas", group: "guides" },
-  { slug: "meaning-of-chinese-characters", text: "Meaning", group: "guides" },
-  { slug: "custom-chinese-name-gift", text: "A Gift", group: "guides" },
+  { slug: "name-in-chinese-calligraphy", text: "Emma", group: "guides" },
+  { slug: "chinese-calligraphy-tattoo-ideas", text: "Strength", group: "guides" },
+  { slug: "meaning-of-chinese-characters", text: "Love", group: "guides" },
+  { slug: "custom-chinese-name-gift", text: "Family", group: "guides" },
 ];
 
 /**
@@ -89,16 +102,19 @@ function buildRuntime() {
   if (at < 0) throw new Error("Could not find the app.js startup. app.js changed.");
   const head = src.slice(0, at);
   const tail = `
+  // The mark is the only thing on the sheet that advertises the site, so it has
+  // to be legible at Pinterest thumbnail size. Bold and 28px, darker than the
+  // first pass, but still well under the brush word it sits beneath.
   function drawPinMark(ctx, w, h, night) {
     const label = "mymoying.com";
     ctx.save();
-    ctx.globalAlpha = night ? 0.62 : 0.5;
-    ctx.fillStyle = night ? "#f3ead6" : "#5c4636";
-    ctx.font = "500 20px serif";
+    ctx.globalAlpha = night ? 0.82 : 0.72;
+    ctx.fillStyle = night ? "#f7f0de" : "#463527";
+    ctx.font = "700 28px serif";
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
-    if ("letterSpacing" in ctx) ctx.letterSpacing = "0.28em";
-    ctx.fillText(label, w * 0.94, h * 0.952);
+    if ("letterSpacing" in ctx) ctx.letterSpacing = "0.26em";
+    ctx.fillText(label, w * 0.94, h * 0.948);
     ctx.restore();
   }
 
@@ -131,7 +147,7 @@ function buildRuntime() {
     return { size: layout.size, text: filtered.text };
   }
 
-  async function renderPin(raw) {
+  async function renderPin(raw, quality) {
     const snap = pinSnap(raw);
     const [font, sealFont] = await Promise.all([
       loadFont(snap.style),
@@ -143,7 +159,8 @@ function buildRuntime() {
     target.width = BASE_W;
     target.height = BASE_H;
     paintScene(target, { ...snap, text: filtered.text }, font, sealFont, { pin: true });
-    return { dataUrl: target.toDataURL("image/png"), width: target.width, height: target.height };
+    const q = typeof quality === "number" ? quality : 0.85;
+    return { dataUrl: target.toDataURL("image/jpeg", q), width: target.width, height: target.height };
   }
 
   // Proof the pin is a real drawing and not an empty sheet: the paper is a light
@@ -255,13 +272,26 @@ function startServer(runtimeJs) {
   });
 }
 
-// PNG header: 8-byte signature, then an IHDR chunk whose first two fields are
-// width and height. Read straight from the bytes we are about to write.
-function pngSize(buf) {
-  const sig = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
-  if (!buf.subarray(0, 8).equals(sig)) throw new Error("not a png");
-  if (buf.toString("ascii", 12, 16) !== "IHDR") throw new Error("no IHDR");
-  return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+// JPEG size: walk the marker segments from the SOI until a Start-Of-Frame, whose
+// payload is precision (1 byte), height (2 bytes), width (2 bytes). Read straight
+// from the bytes we are about to write, same as the PNG version did.
+function jpegSize(buf) {
+  if (buf[0] !== 0xff || buf[1] !== 0xd8) throw new Error("not a jpeg");
+  let i = 2;
+  while (i + 9 < buf.length) {
+    if (buf[i] !== 0xff) throw new Error("bad jpeg marker at " + i);
+    const marker = buf[i + 1];
+    if (marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) {
+      i += 2;
+      continue;
+    }
+    if (marker === 0xd9 || marker === 0xda) break; // EOI or start of scan
+    const len = buf.readUInt16BE(i + 2);
+    const isSof = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+    if (isSof) return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    i += 2 + len;
+  }
+  throw new Error("no SOF marker");
 }
 
 function browserPath() {
@@ -320,7 +350,7 @@ async function contactSheet(page, rows, port) {
 }
 
 async function main() {
-  const rows = PINS.map((pin) => ({ ...pin, file: `${pin.slug}.png` }));
+  const rows = PINS.map((pin) => ({ ...pin, file: `${pin.slug}.jpg` }));
   const outDir = path.join(ROOT, "pins");
   fs.mkdirSync(outDir, { recursive: true });
 
@@ -355,15 +385,23 @@ async function main() {
       console.log(`  ${measured.map((m) => `${m.slug}:${m.size.toFixed(1)}`).join(" ")}`);
     }
 
+    const renderAt = (row, quality) => page.evaluate(async (job) => {
+      const out = await window.renderPin(job, job.quality);
+      return { ...out, stats: window.pinStats(2) };
+    }, { text: row.text, size: sliderFor[row.group], quality });
+
     const results = [];
     for (const row of rows) {
-      const rendered = await page.evaluate(async (job) => {
-        const out = await window.renderPin(job);
-        return { ...out, stats: window.pinStats(2) };
-      }, { text: row.text, size: sliderFor[row.group] });
-
-      const buf = Buffer.from(rendered.dataUrl.split(",")[1], "base64");
-      const dims = pngSize(buf);
+      let rendered = await renderAt(row, PIN_QUALITY);
+      let quality = PIN_QUALITY;
+      let buf = Buffer.from(rendered.dataUrl.split(",")[1], "base64");
+      if (buf.length > MAX_BYTES) {
+        // Only kick in if a pin ever gets busy enough to blow past 1MB.
+        rendered = await renderAt(row, PIN_QUALITY_FALLBACK);
+        quality = PIN_QUALITY_FALLBACK;
+        buf = Buffer.from(rendered.dataUrl.split(",")[1], "base64");
+      }
+      const dims = jpegSize(buf);
       if (dims.width !== PIN_W || dims.height !== PIN_H) {
         throw new Error(`${row.file} is ${dims.width}x${dims.height}, expected ${PIN_W}x${PIN_H}`);
       }
@@ -378,10 +416,13 @@ async function main() {
       if (rendered.stats.sd < 8) {
         throw new Error(`${row.file} is a flat image (sd ${rendered.stats.sd.toFixed(1)}) - blank sheet?`);
       }
+      if (buf.length > MAX_BYTES) {
+        console.warn(`${row.file} is still ${(buf.length / 1024).toFixed(0)}KB at quality ${quality}`);
+      }
       fs.writeFileSync(path.join(outDir, row.file), buf);
-      results.push({ ...row, bytes: buf.length, ...rendered.stats });
+      results.push({ ...row, bytes: buf.length, quality, ...rendered.stats });
       console.log(
-        `${row.file} ${dims.width}x${dims.height} ${(buf.length / 1024).toFixed(0)}KB ` +
+        `${row.file} q${Math.round(quality * 100)} ${dims.width}x${dims.height} ${(buf.length / 1024).toFixed(0)}KB ` +
         `ink ${(rendered.stats.darkRatio * 100).toFixed(2)}% paper ${(rendered.stats.lightRatio * 100).toFixed(1)}% ` +
         `mean ${rendered.stats.mean.toFixed(1)} sd ${rendered.stats.sd.toFixed(1)}`
       );
@@ -397,7 +438,7 @@ async function main() {
     }
 
     const total = results.reduce((s, r) => s + r.bytes, 0);
-    console.log(`\n${results.length} pins, ${(total / 1024 / 1024).toFixed(2)}MB total`);
+    console.log(`\n${results.length} jpeg pins, ${(total / 1024 / 1024).toFixed(2)}MB total`);
     console.log(`largest ${(Math.max(...results.map((r) => r.bytes)) / 1024).toFixed(0)}KB, smallest ${(Math.min(...results.map((r) => r.bytes)) / 1024).toFixed(0)}KB`);
   } finally {
     await browser.close();
