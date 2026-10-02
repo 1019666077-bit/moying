@@ -395,12 +395,14 @@ const tests = [
     assert.notEqual(eventKey(one), eventKey(two));
     assert.equal(eventKey(one), eventKey(withoutId("9a".repeat(32), "ORD_one")));
     assert.doesNotMatch(eventKey(one), /:$/);
-    const sameId = (token) => {
-      const event = withoutId(token, "ORD_three");
+    const sameId = (token, orderId) => {
+      const event = withoutId(token, orderId);
       event.eventId = "PAY_same";
       return event;
     };
-    assert.equal(eventKey(sameId("9c".repeat(32))), eventKey(sameId("9d".repeat(32))));
+    // A shared event id does not mean a shared event: different tokens/orders
+    // must not collapse onto one key or the second buyer is silently dropped.
+    assert.notEqual(eventKey(sameId("9c".repeat(32), "ORD_three")), eventKey(sameId("9d".repeat(32), "ORD_four")));
     assert.equal(eventKey(orderEvent("9e".repeat(32))), eventKey(orderEvent("9e".repeat(32))));
   }),
 
@@ -423,6 +425,88 @@ const tests = [
       })).json();
       assert.equal(payload.status, "paid", `${token.slice(0, 4)} was left locked`);
     }
+  }),
+
+  check("two buyers sharing one Waffo event id both unlock", async () => {
+    const env = envFor(pkcs8);
+    const buyers = [["ca".repeat(32), "ORD_a"], ["cb".repeat(32), "ORD_b"]];
+    for (const [token] of buyers) await seedPending(env, token);
+    for (const [token, orderId] of buyers) {
+      const event = orderEvent(token);
+      event.data.orderId = orderId;
+      // Sandbox sends the same id for every order; the orders still differ.
+      assert.equal(event.eventId, "PAY_test");
+      const { raw, header } = signedEvent(pkcs8.privateKey, event);
+      assert.equal((await webhookRequest(raw, header, env)).status, 200);
+    }
+    for (const [token] of buyers) {
+      const payload = await (await status({
+        request: new Request(`https://mymoying.com/api/status?token=${token}`),
+        env,
+      })).json();
+      assert.equal(payload.status, "paid", `${token.slice(0, 4)} was left locked`);
+    }
+  }),
+
+  check("a replayed signed webhook is handled once and leaves the record alone", async () => {
+    const env = envFor(pkcs8);
+    const token = "cc".repeat(32);
+    await seedPending(env, token);
+    const { put } = env.PURCHASES;
+    let puts = 0;
+    env.PURCHASES.put = async (key, value, options) => {
+      puts += 1;
+      return put.call(env.PURCHASES, key, value, options);
+    };
+    const { raw, header } = signedEvent(pkcs8.privateKey, orderEvent(token));
+    assert.equal((await webhookRequest(raw, header, env)).status, 200);
+    assert.equal(env.PURCHASES.store.has(eventKey(orderEvent(token))), true);
+    const first = JSON.parse(env.PURCHASES.store.get(`purchase:${token}`));
+    const writesAfterFirst = puts;
+    assert.ok(writesAfterFirst > 0, "the first delivery should write");
+    assert.equal((await webhookRequest(raw, header, env)).status, 200);
+    assert.equal(puts, writesAfterFirst, "the replay wrote again");
+    assert.deepEqual(JSON.parse(env.PURCHASES.store.get(`purchase:${token}`)), first);
+  }),
+
+  check("a refund carrying a shared event id revokes only its own order", async () => {
+    const env = envFor(pkcs8);
+    const buyers = [["da".repeat(32), "ORD_a"], ["db".repeat(32), "ORD_b"]];
+    for (const [token] of buyers) await seedPending(env, token);
+    for (const [token, orderId] of buyers) {
+      const event = orderEvent(token);
+      event.data.orderId = orderId;
+      const { raw, header } = signedEvent(pkcs8.privateKey, event);
+      assert.equal((await webhookRequest(raw, header, env)).status, 200);
+    }
+    const refund = {
+      id: "PAY_test",
+      timestamp: "2026-09-28T02:00:00.000Z",
+      eventType: "refund.succeeded",
+      eventId: "PAY_test",
+      mode: "test",
+      data: {
+        orderId: "ORD_a",
+        currency: "USD",
+        refundedAmount: "1.99",
+        amount: "1.99",
+        orderMerchantExternalId: buyers[0][0],
+        orderMetadata: { unlock: buyers[0][0] },
+        buyerEmail: "buyer@example.com",
+      },
+    };
+    const { raw, header } = signedEvent(pkcs8.privateKey, refund);
+    assert.equal((await webhookRequest(raw, header, env)).status, 200);
+    const refunded = await (await status({
+      request: new Request(`https://mymoying.com/api/status?token=${buyers[0][0]}`),
+      env,
+    })).json();
+    assert.equal(refunded.status, "refunded");
+    const kept = await (await status({
+      request: new Request(`https://mymoying.com/api/status?token=${buyers[1][0]}`),
+      env,
+    })).json();
+    assert.equal(kept.status, "paid");
   }),
 
   check("the internal-file guard hides repo files and blocks no page asset", async () => {

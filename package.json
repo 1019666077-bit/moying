@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler pages dev . --kv PURCHASES --compatibility-date=2026-09-01",
+    "test": "node scripts/test-payments.mjs",
     "test:payments": "node scripts/test-payments.mjs"
   },
   "devDependencies": {

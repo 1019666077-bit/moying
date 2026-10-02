@@ -21,26 +21,26 @@ export function revokedKey(token) {
   return `revoked:${token}`;
 }
 
-// Waffo sends an id, but a missing one must not collapse the key to a bare
-// `event:order.completed:`. That empty tail would make the first event of a type
-// dedupe every later one for the whole 30-day window, so a second buyer would stay
-// locked and refunds would be swallowed. Fall back to what the event is about.
+// Waffo's event id is not guaranteed unique across orders (sandbox events may all
+// share `PAY_test`), so an id-only key would dedupe a second buyer's event against
+// the first and swallow refunds. Always combine the event type with every
+// per-order identifier present; only with none at all fall back to timestamp and
+// body. A replayed body yields the same key; distinct orders yield distinct keys.
 export function eventKey(event) {
   const source = event && typeof event === "object" ? event : {};
-  const explicit = source.eventId || source.id;
-  if (typeof explicit === "string" && explicit) {
-    return `event:${source.eventType}:${explicit}`;
-  }
   const data = source.data && typeof source.data === "object" ? source.data : {};
   const parts = [
+    source.eventId || source.id,
     data.orderId,
     data.paymentId,
     tokenFromEvent(data),
-    source.timestamp,
   ].filter((part) => typeof part === "string" && part);
-  // A replayed body keeps the same key. An event with nothing identifiable is
-  // impossible in practice, but its body still has to keep two events apart.
-  return `event:${source.eventType}:${parts.length ? parts.join(":") : JSON.stringify(data)}`;
+  if (!parts.length) {
+    parts.push(
+      [source.timestamp, JSON.stringify(data)].filter((part) => typeof part === "string" && part).join(":"),
+    );
+  }
+  return `event:${source.eventType}:${parts.join(":")}`;
 }
 
 export function tokenFromEvent(data) {
