@@ -4,8 +4,15 @@ import assert from "node:assert/strict";
 import { onRequestPost as checkout } from "../functions/api/checkout.js";
 import { onRequestGet as status } from "../functions/api/status.js";
 import { onRequestPost as webhook } from "../functions/api/webhook.js";
+import { onRequestGet as config } from "../functions/api/config.js";
 import { canonicalDesign } from "../functions/lib/design.js";
-import { eventKey } from "../functions/lib/purchases.js";
+import {
+  MIN_USD_CENTS,
+  eventKey,
+  unlockWord,
+  unlocksText,
+} from "../functions/lib/purchases.js";
+import { PRICE_LABEL, PRICE_USD_CENTS } from "../functions/lib/pricing.js";
 import { signRequest, verifyWebhook } from "../functions/lib/waffo.js";
 
 let failed = 0;
@@ -108,7 +115,7 @@ function webhookRequest(raw, header, env) {
   });
 }
 
-function orderEvent(token, amount = "1.99") {
+function orderEvent(token, amount = "4.99") {
   return {
     id: "PAY_test",
     timestamp: "2026-09-28T00:00:00.000Z",
@@ -136,6 +143,7 @@ async function seedPending(env, token) {
   await env.PURCHASES.put(`purchase:${token}`, JSON.stringify({
     status: "pending",
     design: design(),
+    word: design().text,
     orderId: null,
     createdAt: "2026-09-28T00:00:00.000Z",
   }));
@@ -202,6 +210,7 @@ const tests = [
       const stored = JSON.parse(env.PURCHASES.store.get(`purchase:${body.token}`));
       assert.equal(stored.status, "pending");
       assert.deepEqual(stored.design, design());
+      assert.equal(stored.word, design().text);
       assert.equal(captured.url, `https://api.waffo.ai${path}`);
     } finally {
       globalThis.fetch = original;
@@ -225,7 +234,7 @@ const tests = [
     const { raw, header } = signedEvent(pkcs8.privateKey, event);
     const parsed = await verifyWebhook(raw, header, pkcs8.publicKey);
     assert.equal(parsed.eventType, "order.completed");
-    const forged = await verifyWebhook(raw.replace("1.99", "0.01"), header, pkcs8.publicKey);
+    const forged = await verifyWebhook(raw.replace("4.99", "0.01"), header, pkcs8.publicKey);
     assert.equal(forged, null);
     const stale = await verifyWebhook(raw, header, pkcs8.publicKey, Date.now() + 46 * 60 * 1000);
     assert.equal(stale, null);
@@ -247,6 +256,7 @@ const tests = [
     const payload = await statusResponse.json();
     assert.equal(payload.status, "paid");
     assert.deepEqual(payload.design, design());
+    assert.equal(payload.word, design().text);
     assert.equal(payload.buyerEmail, undefined);
     const record = JSON.parse(env.PURCHASES.store.get(`purchase:${token}`));
     assert.equal(record.buyerEmail, "buyer@example.com");
@@ -280,7 +290,7 @@ const tests = [
     assert.equal((await webhookRequest(zero.raw, zero.header, env)).status, 200);
     const bad = await webhookRequest(zero.raw, "t=1,v1=aaaa", env);
     assert.equal(bad.status, 401);
-    const prod = orderEvent(token, "1.99");
+    const prod = orderEvent(token, "4.99");
     prod.mode = "prod";
     prod.eventId = "PAY_prod";
     prod.id = "PAY_prod";
@@ -320,8 +330,8 @@ const tests = [
       data: {
         orderId: "ORD_test",
         currency: "USD",
-        refundedAmount: "1.99",
-        amount: "1.99",
+        refundedAmount: "4.99",
+        amount: "4.99",
         orderMerchantExternalId: token,
         orderMetadata: { unlock: token },
         buyerEmail: "buyer@example.com",
@@ -488,8 +498,8 @@ const tests = [
       data: {
         orderId: "ORD_a",
         currency: "USD",
-        refundedAmount: "1.99",
-        amount: "1.99",
+        refundedAmount: "4.99",
+        amount: "4.99",
         orderMerchantExternalId: buyers[0][0],
         orderMetadata: { unlock: buyers[0][0] },
         buyerEmail: "buyer@example.com",
@@ -566,6 +576,76 @@ const tests = [
     assert.match(src, /if \(watermark\) drawPreviewMark/);
     assert.match(src, /const clean = cleanNow\(snap\)/);
     assert.equal(src.includes("WAFFO_PURCHASE_URL"), false);
+  }),
+
+  check("the price lives in one place and every surface agrees", async () => {
+    assert.equal(PRICE_USD_CENTS, 499);
+    assert.equal(PRICE_LABEL, "$4.99");
+    assert.equal(MIN_USD_CENTS, PRICE_USD_CENTS);
+    const payload = await (await config()).json();
+    assert.deepEqual(payload, { priceCents: 499, priceLabel: "$4.99" });
+    const index = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+    const terms = readFileSync(new URL("../terms.html", import.meta.url), "utf8");
+    const app = readFileSync(new URL("../app.js", import.meta.url), "utf8");
+    for (const [name, src] of [["index.html", index], ["terms.html", terms]]) {
+      assert.ok(src.includes("$4.99"), `${name} does not show $4.99`);
+      assert.equal(src.includes("$1.99"), false, `${name} still shows $1.99`);
+    }
+    assert.match(app, /let priceLabel = "\$4\.99"/);
+    assert.equal(app.includes("$1.99"), false, "app.js still shows $1.99");
+  }),
+
+  check("a charge below the price does not unlock, the exact price does", async () => {
+    const env = envFor(pkcs8);
+    const low = "1a".repeat(32);
+    const exact = "1b".repeat(32);
+    await seedPending(env, low);
+    await seedPending(env, exact);
+    const cheap = signedEvent(pkcs8.privateKey, orderEvent(low, "4.98"));
+    assert.equal((await webhookRequest(cheap.raw, cheap.header, env)).status, 200);
+    const ok = signedEvent(pkcs8.privateKey, orderEvent(exact, "4.99"));
+    assert.equal((await webhookRequest(ok.raw, ok.header, env)).status, 200);
+    const lowStatus = await (await status({
+      request: new Request(`https://mymoying.com/api/status?token=${low}`),
+      env,
+    })).json();
+    assert.equal(lowStatus.status, "pending");
+    const okStatus = await (await status({
+      request: new Request(`https://mymoying.com/api/status?token=${exact}`),
+      env,
+    })).json();
+    assert.equal(okStatus.status, "paid");
+  }),
+
+  check("a purchase unlocks the word across styles, not a new word", () => {
+    const record = { status: "paid", design: design(), word: "Peace" };
+    assert.equal(unlockWord(record), "Peace");
+    assert.equal(unlocksText(record, "Peace"), true);
+    assert.equal(unlocksText(record, "peace"), false);
+    assert.equal(unlocksText(record, "Emma"), false);
+    // A record written before the per-word field still unlocks via its design.
+    assert.equal(unlockWord({ design: design() }), "Peace");
+    const app = readFileSync(new URL("../app.js", import.meta.url), "utf8");
+    assert.match(app, /paidDesign\.word === snap\.text/);
+    assert.equal(/paidDesign\.style ===/.test(app), false, "the unlock still compares the style");
+  }),
+
+  check("the name table is valid, large enough, and fully populated", () => {
+    const table = JSON.parse(readFileSync(new URL("../data/names-zh.json", import.meta.url), "utf8"));
+    assert.equal(typeof table._note, "string");
+    assert.ok(table._note.length > 20, "the _note is too short");
+    const entries = Object.entries(table).filter(([key]) => key !== "_note");
+    assert.ok(entries.length >= 100, `only ${entries.length} names`);
+    for (const [key, value] of entries) {
+      assert.match(key, /^[A-Za-z][A-Za-z'’-]*$/, `${key} is not a Latin name`);
+      assert.equal(typeof value, "string");
+      assert.match(value, /^[一-鿿]+$/, `${key} is not all Chinese characters`);
+    }
+    assert.equal(table.Emma, "艾玛");
+    assert.equal(table.Michael, "迈克尔");
+    const font = readFileSync(new URL("../fonts/mashanzheng-hanzi.ttf", import.meta.url));
+    assert.ok(font.length > 1000, "the hanzi subset font is missing");
+    assert.equal(font.subarray(0, 4).toString("latin1"), "\u0000\u0001\u0000\u0000", "the hanzi font is not a TTF");
   }),
 ];
 

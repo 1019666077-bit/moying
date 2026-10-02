@@ -57,6 +57,8 @@ async function grant(env, event) {
 
   const record = await readPurchase(env, token);
   if (!record || record.status === "refunded" || record.status === "paid") return;
+  // Records written before the per-word unlock shipped only have the design.
+  if (!record.word && record.design && typeof record.design.text === "string") record.word = record.design.text;
 
   record.status = "paid";
   record.orderId = typeof data.orderId === "string" ? data.orderId : null;
