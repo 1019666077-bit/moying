@@ -25,6 +25,17 @@ Copy `.dev.vars.example` to `.dev.vars` and fill in test-mode values. See [DEPLO
 
 Brush fonts are small Latin subsets in `fonts/`. opentype.js is vendored. Nothing is loaded from a third-party CDN.
 
+## Search engines (IndexNow)
+
+`33c72895dbdf859026c968b8dd38331e.txt` at the repository root is the IndexNow key file. The deploy root serves it at https://mymoying.com/33c72895dbdf859026c968b8dd38331e.txt, which proves the site owns the URLs it submits. The key is public by design; it is not a secret.
+
+```bash
+npm run indexnow              # submit every URL in sitemap.xml
+npm run indexnow -- --dry-run # print the payload without sending
+```
+
+Bing, Yandex, Seznam and Naver share submissions, so a new or edited page is crawled without waiting for the next organic pass. The key file has to be live before the first run, or the API answers 403. See [scripts/indexnow.mjs](scripts/indexnow.mjs).
+
 ## Cloudflare Pages
 
 The Pages project is connected to this repo's `main` branch, with no build step and the output directory set to the repo root. `/functions` is the server side (checkout, webhook, payment status). Payment secrets and the KV binding are configured in the Cloudflare dashboard, not in this repo. The steps are in [DEPLOY.md](DEPLOY.md).
