@@ -115,7 +115,7 @@ function webhookRequest(raw, header, env) {
   });
 }
 
-function orderEvent(token, amount = "4.99") {
+function orderEvent(token, amount = "1.99") {
   return {
     id: "PAY_test",
     timestamp: "2026-09-28T00:00:00.000Z",
@@ -234,7 +234,7 @@ const tests = [
     const { raw, header } = signedEvent(pkcs8.privateKey, event);
     const parsed = await verifyWebhook(raw, header, pkcs8.publicKey);
     assert.equal(parsed.eventType, "order.completed");
-    const forged = await verifyWebhook(raw.replace("4.99", "0.01"), header, pkcs8.publicKey);
+    const forged = await verifyWebhook(raw.replace("1.99", "0.01"), header, pkcs8.publicKey);
     assert.equal(forged, null);
     const stale = await verifyWebhook(raw, header, pkcs8.publicKey, Date.now() + 46 * 60 * 1000);
     assert.equal(stale, null);
@@ -290,7 +290,7 @@ const tests = [
     assert.equal((await webhookRequest(zero.raw, zero.header, env)).status, 200);
     const bad = await webhookRequest(zero.raw, "t=1,v1=aaaa", env);
     assert.equal(bad.status, 401);
-    const prod = orderEvent(token, "4.99");
+    const prod = orderEvent(token, "1.99");
     prod.mode = "prod";
     prod.eventId = "PAY_prod";
     prod.id = "PAY_prod";
@@ -330,8 +330,8 @@ const tests = [
       data: {
         orderId: "ORD_test",
         currency: "USD",
-        refundedAmount: "4.99",
-        amount: "4.99",
+        refundedAmount: "1.99",
+        amount: "1.99",
         orderMerchantExternalId: token,
         orderMetadata: { unlock: token },
         buyerEmail: "buyer@example.com",
@@ -498,8 +498,8 @@ const tests = [
       data: {
         orderId: "ORD_a",
         currency: "USD",
-        refundedAmount: "4.99",
-        amount: "4.99",
+        refundedAmount: "1.99",
+        amount: "1.99",
         orderMerchantExternalId: buyers[0][0],
         orderMetadata: { unlock: buyers[0][0] },
         buyerEmail: "buyer@example.com",
@@ -592,20 +592,20 @@ const tests = [
   }),
 
   check("the price lives in one place and every surface agrees", async () => {
-    assert.equal(PRICE_USD_CENTS, 499);
-    assert.equal(PRICE_LABEL, "$4.99");
+    assert.equal(PRICE_USD_CENTS, 199);
+    assert.equal(PRICE_LABEL, "$1.99");
     assert.equal(MIN_USD_CENTS, PRICE_USD_CENTS);
     const payload = await (await config()).json();
-    assert.deepEqual(payload, { priceCents: 499, priceLabel: "$4.99" });
+    assert.deepEqual(payload, { priceCents: 199, priceLabel: "$1.99" });
     const index = readFileSync(new URL("../index.html", import.meta.url), "utf8");
     const terms = readFileSync(new URL("../terms.html", import.meta.url), "utf8");
     const app = readFileSync(new URL("../app.js", import.meta.url), "utf8");
     for (const [name, src] of [["index.html", index], ["terms.html", terms]]) {
-      assert.ok(src.includes("$4.99"), `${name} does not show $4.99`);
-      assert.equal(src.includes("$1.99"), false, `${name} still shows $1.99`);
+      assert.ok(src.includes("$1.99"), `${name} does not show $1.99`);
+      assert.equal(src.includes("$4.99"), false, `${name} still shows $4.99`);
     }
-    assert.match(app, /let priceLabel = "\$4\.99"/);
-    assert.equal(app.includes("$1.99"), false, "app.js still shows $1.99");
+    assert.match(app, /let priceLabel = "\$1\.99"/);
+    assert.equal(app.includes("$4.99"), false, "app.js still shows $4.99");
   }),
 
   check("a charge below the price does not unlock, the exact price does", async () => {
@@ -614,9 +614,9 @@ const tests = [
     const exact = "1b".repeat(32);
     await seedPending(env, low);
     await seedPending(env, exact);
-    const cheap = signedEvent(pkcs8.privateKey, orderEvent(low, "4.98"));
+    const cheap = signedEvent(pkcs8.privateKey, orderEvent(low, "1.98"));
     assert.equal((await webhookRequest(cheap.raw, cheap.header, env)).status, 200);
-    const ok = signedEvent(pkcs8.privateKey, orderEvent(exact, "4.99"));
+    const ok = signedEvent(pkcs8.privateKey, orderEvent(exact, "1.99"));
     assert.equal((await webhookRequest(ok.raw, ok.header, env)).status, 200);
     const lowStatus = await (await status({
       request: new Request(`https://mymoying.com/api/status?token=${low}`),
@@ -697,7 +697,7 @@ const tests = [
         `${slug}.html canonical is wrong`,
       );
       assert.ok(html.includes(`?text=${name}`), `${slug}.html does not link to the generator`);
-      assert.ok(html.includes("$4.99"), `${slug}.html does not show the price`);
+      assert.ok(html.includes("$1.99"), `${slug}.html does not show the price`);
     }
     // The eight name pages that were already indexed keep their exact URL,
     // canonical and og:url — they are patched in place, never regenerated.

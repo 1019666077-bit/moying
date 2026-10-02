@@ -68,7 +68,7 @@
   let pollAttempts = 0;
   let memoryToken = "";
   let namesMap = null; // lowercased English name -> Chinese transliteration
-  let priceLabel = "$4.99"; // matches functions/lib/pricing.js; refreshed from /api/config
+  let priceLabel = "$1.99"; // matches functions/lib/pricing.js; refreshed from /api/config
   const UNLOCK_KEY = "moying-unlock";
 
   document.querySelectorAll(".seg").forEach((seg) => {
