@@ -17,6 +17,7 @@ import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer-core";
+import { pinFile } from "./pin-file.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
@@ -227,7 +228,7 @@ function buildCsv(rows) {
 
 function planRows() {
   return BATCH.names.map((entry, index) => {
-    const file = `${entry.name.toLowerCase()}.jpg`;
+    const file = pinFile(entry.name);
     const link = `https://mymoying.com/?utm_source=pinterest&utm_medium=pin&utm_campaign=${BATCH.id}&name=${encodeURIComponent(entry.name)}`;
     return {
       ...entry,

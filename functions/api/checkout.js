@@ -35,6 +35,8 @@ export async function onRequestPost({ request, env }) {
   const record = {
     status: "pending",
     design,
+    // The word alone is what gets unlocked, not the checkout-time settings.
+    word: design.text,
     orderId: null,
     createdAt: new Date().toISOString(),
   };

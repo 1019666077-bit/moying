@@ -1,0 +1,970 @@
+{
+  "_note": "Transliterations are the conventional written forms (通行音译) commonly used for these names in mainland China. They are chosen by sound, not by meaning, and are given for reference only. Have a person review them before any permanent use such as a tattoo. This table is fixed data; no AI generation happens at request time.",
+  "_pinyinNote": "The pinyin field is derived from the Chinese characters with tone marks and is given for reference only. A person must review it before any permanent use such as a tattoo, because some characters have more than one reading.",
+  "names": {
+    "Michael": {
+      "zh": "迈克尔",
+      "pinyin": "Mài kè ěr"
+    },
+    "James": {
+      "zh": "詹姆斯",
+      "pinyin": "Zhān mǔ sī"
+    },
+    "John": {
+      "zh": "约翰",
+      "pinyin": "Yuē hàn"
+    },
+    "Robert": {
+      "zh": "罗伯特",
+      "pinyin": "Luó bó tè"
+    },
+    "David": {
+      "zh": "戴维",
+      "pinyin": "Dài wéi"
+    },
+    "William": {
+      "zh": "威廉",
+      "pinyin": "Wēi lián"
+    },
+    "Richard": {
+      "zh": "理查德",
+      "pinyin": "Lǐ chá dé"
+    },
+    "Joseph": {
+      "zh": "约瑟夫",
+      "pinyin": "Yuē sè fū"
+    },
+    "Thomas": {
+      "zh": "托马斯",
+      "pinyin": "Tuō mǎ sī"
+    },
+    "Charles": {
+      "zh": "查尔斯",
+      "pinyin": "Chá ěr sī"
+    },
+    "Christopher": {
+      "zh": "克里斯托弗",
+      "pinyin": "Kè lǐ sī tuō fú"
+    },
+    "Daniel": {
+      "zh": "丹尼尔",
+      "pinyin": "Dān ní ěr"
+    },
+    "Matthew": {
+      "zh": "马修",
+      "pinyin": "Mǎ xiū"
+    },
+    "Anthony": {
+      "zh": "安东尼",
+      "pinyin": "Ān dōng ní"
+    },
+    "Mark": {
+      "zh": "马克",
+      "pinyin": "Mǎ kè"
+    },
+    "Donald": {
+      "zh": "唐纳德",
+      "pinyin": "Táng nà dé"
+    },
+    "Steven": {
+      "zh": "史蒂文",
+      "pinyin": "Shǐ dì wén"
+    },
+    "Paul": {
+      "zh": "保罗",
+      "pinyin": "Bǎo luó"
+    },
+    "Andrew": {
+      "zh": "安德鲁",
+      "pinyin": "Ān dé lǔ"
+    },
+    "Joshua": {
+      "zh": "乔舒亚",
+      "pinyin": "Qiáo shū yà"
+    },
+    "Kenneth": {
+      "zh": "肯尼思",
+      "pinyin": "Kěn ní sī"
+    },
+    "Kevin": {
+      "zh": "凯文",
+      "pinyin": "Kǎi wén"
+    },
+    "Brian": {
+      "zh": "布赖恩",
+      "pinyin": "Bù lài ēn"
+    },
+    "George": {
+      "zh": "乔治",
+      "pinyin": "Qiáo zhì"
+    },
+    "Edward": {
+      "zh": "爱德华",
+      "pinyin": "Ài dé huá"
+    },
+    "Ronald": {
+      "zh": "罗纳德",
+      "pinyin": "Luó nà dé"
+    },
+    "Timothy": {
+      "zh": "蒂莫西",
+      "pinyin": "Dì mò xī"
+    },
+    "Jason": {
+      "zh": "杰森",
+      "pinyin": "Jié sēn"
+    },
+    "Jeffrey": {
+      "zh": "杰弗里",
+      "pinyin": "Jié fú lǐ"
+    },
+    "Ryan": {
+      "zh": "瑞安",
+      "pinyin": "Ruì ān"
+    },
+    "Jacob": {
+      "zh": "雅各布",
+      "pinyin": "Yǎ gè bù"
+    },
+    "Gary": {
+      "zh": "加里",
+      "pinyin": "Jiā lǐ"
+    },
+    "Nicholas": {
+      "zh": "尼古拉斯",
+      "pinyin": "Ní gǔ lā sī"
+    },
+    "Eric": {
+      "zh": "埃里克",
+      "pinyin": "Āi lǐ kè"
+    },
+    "Jonathan": {
+      "zh": "乔纳森",
+      "pinyin": "Qiáo nà sēn"
+    },
+    "Stephen": {
+      "zh": "斯蒂芬",
+      "pinyin": "Sī dì fēn"
+    },
+    "Larry": {
+      "zh": "拉里",
+      "pinyin": "Lā lǐ"
+    },
+    "Justin": {
+      "zh": "贾斯廷",
+      "pinyin": "Jiǎ sī tíng"
+    },
+    "Scott": {
+      "zh": "斯科特",
+      "pinyin": "Sī kē tè"
+    },
+    "Brandon": {
+      "zh": "布兰登",
+      "pinyin": "Bù lán dēng"
+    },
+    "Benjamin": {
+      "zh": "本杰明",
+      "pinyin": "Běn jié míng"
+    },
+    "Samuel": {
+      "zh": "塞缪尔",
+      "pinyin": "Sāi miù ěr"
+    },
+    "Gregory": {
+      "zh": "格雷戈里",
+      "pinyin": "Gé léi gē lǐ"
+    },
+    "Alexander": {
+      "zh": "亚历山大",
+      "pinyin": "Yà lì shān dà"
+    },
+    "Patrick": {
+      "zh": "帕特里克",
+      "pinyin": "Pà tè lǐ kè"
+    },
+    "Frank": {
+      "zh": "弗兰克",
+      "pinyin": "Fú lán kè"
+    },
+    "Raymond": {
+      "zh": "雷蒙德",
+      "pinyin": "Léi méng dé"
+    },
+    "Jack": {
+      "zh": "杰克",
+      "pinyin": "Jié kè"
+    },
+    "Dennis": {
+      "zh": "丹尼斯",
+      "pinyin": "Dān ní sī"
+    },
+    "Jerry": {
+      "zh": "杰里",
+      "pinyin": "Jié lǐ"
+    },
+    "Tyler": {
+      "zh": "泰勒",
+      "pinyin": "Tài lè"
+    },
+    "Aaron": {
+      "zh": "亚伦",
+      "pinyin": "Yà lún"
+    },
+    "Henry": {
+      "zh": "亨利",
+      "pinyin": "Hēng lì"
+    },
+    "Peter": {
+      "zh": "彼得",
+      "pinyin": "Bǐ dé"
+    },
+    "Adam": {
+      "zh": "亚当",
+      "pinyin": "Yà dāng"
+    },
+    "Zachary": {
+      "zh": "扎卡里",
+      "pinyin": "Zhā kǎ lǐ"
+    },
+    "Nathan": {
+      "zh": "内森",
+      "pinyin": "Nèi sēn"
+    },
+    "Walter": {
+      "zh": "沃尔特",
+      "pinyin": "Wò ěr tè"
+    },
+    "Kyle": {
+      "zh": "凯尔",
+      "pinyin": "Kǎi ěr"
+    },
+    "Harold": {
+      "zh": "哈罗德",
+      "pinyin": "Hā luó dé"
+    },
+    "Carl": {
+      "zh": "卡尔",
+      "pinyin": "Kǎ ěr"
+    },
+    "Jeremy": {
+      "zh": "杰里米",
+      "pinyin": "Jié lǐ mǐ"
+    },
+    "Gerald": {
+      "zh": "杰拉尔德",
+      "pinyin": "Jié lā ěr dé"
+    },
+    "Keith": {
+      "zh": "基思",
+      "pinyin": "Jī sī"
+    },
+    "Roger": {
+      "zh": "罗杰",
+      "pinyin": "Luó jié"
+    },
+    "Arthur": {
+      "zh": "阿瑟",
+      "pinyin": "Ā sè"
+    },
+    "Terry": {
+      "zh": "特里",
+      "pinyin": "Tè lǐ"
+    },
+    "Lawrence": {
+      "zh": "劳伦斯",
+      "pinyin": "Láo lún sī"
+    },
+    "Sean": {
+      "zh": "肖恩",
+      "pinyin": "Xiào ēn"
+    },
+    "Christian": {
+      "zh": "克里斯蒂安",
+      "pinyin": "Kè lǐ sī dì ān"
+    },
+    "Albert": {
+      "zh": "阿尔伯特",
+      "pinyin": "Ā ěr bó tè"
+    },
+    "Ethan": {
+      "zh": "伊桑",
+      "pinyin": "Yī sāng"
+    },
+    "Austin": {
+      "zh": "奥斯汀",
+      "pinyin": "Ào sī tīng"
+    },
+    "Jesse": {
+      "zh": "杰西",
+      "pinyin": "Jié xī"
+    },
+    "Bruce": {
+      "zh": "布鲁斯",
+      "pinyin": "Bù lǔ sī"
+    },
+    "Jordan": {
+      "zh": "乔丹",
+      "pinyin": "Qiáo dān"
+    },
+    "Ralph": {
+      "zh": "拉尔夫",
+      "pinyin": "Lā ěr fū"
+    },
+    "Roy": {
+      "zh": "罗伊",
+      "pinyin": "Luó yī"
+    },
+    "Noah": {
+      "zh": "诺亚",
+      "pinyin": "Nuò yà"
+    },
+    "Eugene": {
+      "zh": "尤金",
+      "pinyin": "Yóu jīn"
+    },
+    "Wayne": {
+      "zh": "韦恩",
+      "pinyin": "Wéi ēn"
+    },
+    "Louis": {
+      "zh": "路易斯",
+      "pinyin": "Lù yì sī"
+    },
+    "Philip": {
+      "zh": "菲利普",
+      "pinyin": "Fēi lì pǔ"
+    },
+    "Bradley": {
+      "zh": "布拉德利",
+      "pinyin": "Bù lā dé lì"
+    },
+    "Oliver": {
+      "zh": "奥利弗",
+      "pinyin": "Ào lì fú"
+    },
+    "Liam": {
+      "zh": "利亚姆",
+      "pinyin": "Lì yà mǔ"
+    },
+    "Lucas": {
+      "zh": "卢卡斯",
+      "pinyin": "Lú kǎ sī"
+    },
+    "Mason": {
+      "zh": "梅森",
+      "pinyin": "Méi sēn"
+    },
+    "Logan": {
+      "zh": "洛根",
+      "pinyin": "Luò gēn"
+    },
+    "Elijah": {
+      "zh": "以利亚",
+      "pinyin": "Yǐ lì yà"
+    },
+    "Aiden": {
+      "zh": "艾登",
+      "pinyin": "Ài dēng"
+    },
+    "Carter": {
+      "zh": "卡特",
+      "pinyin": "Kǎ tè"
+    },
+    "Owen": {
+      "zh": "欧文",
+      "pinyin": "Ōu wén"
+    },
+    "Caleb": {
+      "zh": "凯莱布",
+      "pinyin": "Kǎi lái bù"
+    },
+    "Julian": {
+      "zh": "朱利安",
+      "pinyin": "Zhū lì ān"
+    },
+    "Levi": {
+      "zh": "利瓦伊",
+      "pinyin": "Lì wǎ yī"
+    },
+    "Isaac": {
+      "zh": "艾萨克",
+      "pinyin": "Ài sà kè"
+    },
+    "Lincoln": {
+      "zh": "林肯",
+      "pinyin": "Lín kěn"
+    },
+    "Connor": {
+      "zh": "康纳",
+      "pinyin": "Kāng nà"
+    },
+    "Hunter": {
+      "zh": "亨特",
+      "pinyin": "Hēng tè"
+    },
+    "Miles": {
+      "zh": "迈尔斯",
+      "pinyin": "Mài ěr sī"
+    },
+    "Ian": {
+      "zh": "伊恩",
+      "pinyin": "Yī ēn"
+    },
+    "Cole": {
+      "zh": "科尔",
+      "pinyin": "Kē ěr"
+    },
+    "Dominic": {
+      "zh": "多米尼克",
+      "pinyin": "Duō mǐ ní kè"
+    },
+    "Diego": {
+      "zh": "迭戈",
+      "pinyin": "Dié gē"
+    },
+    "Carlos": {
+      "zh": "卡洛斯",
+      "pinyin": "Kǎ luò sī"
+    },
+    "Marco": {
+      "zh": "马尔科",
+      "pinyin": "Mǎ ěr kē"
+    },
+    "Antonio": {
+      "zh": "安东尼奥",
+      "pinyin": "Ān dōng ní ào"
+    },
+    "Rafael": {
+      "zh": "拉斐尔",
+      "pinyin": "Lā fěi ěr"
+    },
+    "Mohamed": {
+      "zh": "穆罕默德",
+      "pinyin": "Mù hǎn mò dé"
+    },
+    "Omar": {
+      "zh": "奥马尔",
+      "pinyin": "Ào mǎ ěr"
+    },
+    "Victor": {
+      "zh": "维克托",
+      "pinyin": "Wéi kè tuō"
+    },
+    "Vincent": {
+      "zh": "文森特",
+      "pinyin": "Wén sēn tè"
+    },
+    "Alan": {
+      "zh": "艾伦",
+      "pinyin": "Ài lún"
+    },
+    "Shawn": {
+      "zh": "肖恩",
+      "pinyin": "Xiào ēn"
+    },
+    "Derek": {
+      "zh": "德里克",
+      "pinyin": "Dé lǐ kè"
+    },
+    "Shane": {
+      "zh": "谢恩",
+      "pinyin": "Xiè ēn"
+    },
+    "Cody": {
+      "zh": "科迪",
+      "pinyin": "Kē dí"
+    },
+    "Blake": {
+      "zh": "布莱克",
+      "pinyin": "Bù lái kè"
+    },
+    "Colin": {
+      "zh": "科林",
+      "pinyin": "Kē lín"
+    },
+    "Marcus": {
+      "zh": "马库斯",
+      "pinyin": "Mǎ kù sī"
+    },
+    "Trevor": {
+      "zh": "特雷弗",
+      "pinyin": "Tè léi fú"
+    },
+    "Seth": {
+      "zh": "塞思",
+      "pinyin": "Sāi sī"
+    },
+    "Dean": {
+      "zh": "迪恩",
+      "pinyin": "Dí ēn"
+    },
+    "Grant": {
+      "zh": "格兰特",
+      "pinyin": "Gé lán tè"
+    },
+    "Cameron": {
+      "zh": "卡梅伦",
+      "pinyin": "Kǎ méi lún"
+    },
+    "Tristan": {
+      "zh": "特里斯坦",
+      "pinyin": "Tè lǐ sī tǎn"
+    },
+    "Xavier": {
+      "zh": "泽维尔",
+      "pinyin": "Zé wéi ěr"
+    },
+    "Felix": {
+      "zh": "费利克斯",
+      "pinyin": "Fèi lì kè sī"
+    },
+    "Hugo": {
+      "zh": "雨果",
+      "pinyin": "Yǔ guǒ"
+    },
+    "Leo": {
+      "zh": "利奥",
+      "pinyin": "Lì ào"
+    },
+    "Mary": {
+      "zh": "玛丽",
+      "pinyin": "Mǎ lì"
+    },
+    "Patricia": {
+      "zh": "帕特里夏",
+      "pinyin": "Pà tè lǐ xià"
+    },
+    "Jennifer": {
+      "zh": "珍妮弗",
+      "pinyin": "Zhēn nī fú"
+    },
+    "Linda": {
+      "zh": "琳达",
+      "pinyin": "Lín dá"
+    },
+    "Elizabeth": {
+      "zh": "伊丽莎白",
+      "pinyin": "Yī lì shā bái"
+    },
+    "Barbara": {
+      "zh": "芭芭拉",
+      "pinyin": "Bā bā lā"
+    },
+    "Susan": {
+      "zh": "苏珊",
+      "pinyin": "Sū shān"
+    },
+    "Jessica": {
+      "zh": "杰西卡",
+      "pinyin": "Jié xī kǎ"
+    },
+    "Sarah": {
+      "zh": "萨拉",
+      "pinyin": "Sà lā"
+    },
+    "Karen": {
+      "zh": "卡伦",
+      "pinyin": "Kǎ lún"
+    },
+    "Nancy": {
+      "zh": "南希",
+      "pinyin": "Nán xī"
+    },
+    "Lisa": {
+      "zh": "莉萨",
+      "pinyin": "Lì sà"
+    },
+    "Margaret": {
+      "zh": "玛格丽特",
+      "pinyin": "Mǎ gé lì tè"
+    },
+    "Sandra": {
+      "zh": "桑德拉",
+      "pinyin": "Sāng dé lā"
+    },
+    "Ashley": {
+      "zh": "阿什利",
+      "pinyin": "Ā shén lì"
+    },
+    "Dorothy": {
+      "zh": "多萝西",
+      "pinyin": "Duō luó xī"
+    },
+    "Kimberly": {
+      "zh": "金伯利",
+      "pinyin": "Jīn bó lì"
+    },
+    "Emily": {
+      "zh": "埃米莉",
+      "pinyin": "Āi mǐ lì"
+    },
+    "Donna": {
+      "zh": "唐娜",
+      "pinyin": "Táng nà"
+    },
+    "Michelle": {
+      "zh": "米歇尔",
+      "pinyin": "Mǐ xiē ěr"
+    },
+    "Carol": {
+      "zh": "卡罗尔",
+      "pinyin": "Kǎ luó ěr"
+    },
+    "Amanda": {
+      "zh": "阿曼达",
+      "pinyin": "Ā màn dá"
+    },
+    "Melissa": {
+      "zh": "梅利莎",
+      "pinyin": "Méi lì shā"
+    },
+    "Deborah": {
+      "zh": "德博拉",
+      "pinyin": "Dé bó lā"
+    },
+    "Stephanie": {
+      "zh": "斯蒂芬妮",
+      "pinyin": "Sī dì fēn nī"
+    },
+    "Rebecca": {
+      "zh": "丽贝卡",
+      "pinyin": "Lì bèi kǎ"
+    },
+    "Laura": {
+      "zh": "劳拉",
+      "pinyin": "Láo lā"
+    },
+    "Sharon": {
+      "zh": "莎伦",
+      "pinyin": "Shā lún"
+    },
+    "Cynthia": {
+      "zh": "辛西娅",
+      "pinyin": "Xīn xī yà"
+    },
+    "Kathleen": {
+      "zh": "凯瑟琳",
+      "pinyin": "Kǎi sè lín"
+    },
+    "Amy": {
+      "zh": "埃米",
+      "pinyin": "Āi mǐ"
+    },
+    "Shirley": {
+      "zh": "雪莉",
+      "pinyin": "Xuě lì"
+    },
+    "Angela": {
+      "zh": "安杰拉",
+      "pinyin": "Ān jié lā"
+    },
+    "Helen": {
+      "zh": "海伦",
+      "pinyin": "Hǎi lún"
+    },
+    "Anna": {
+      "zh": "安娜",
+      "pinyin": "Ān nà"
+    },
+    "Brenda": {
+      "zh": "布伦达",
+      "pinyin": "Bù lún dá"
+    },
+    "Pamela": {
+      "zh": "帕梅拉",
+      "pinyin": "Pà méi lā"
+    },
+    "Nicole": {
+      "zh": "妮科尔",
+      "pinyin": "Nī kē ěr"
+    },
+    "Samantha": {
+      "zh": "萨曼莎",
+      "pinyin": "Sà màn shā"
+    },
+    "Katherine": {
+      "zh": "凯瑟琳",
+      "pinyin": "Kǎi sè lín"
+    },
+    "Christine": {
+      "zh": "克里斯蒂娜",
+      "pinyin": "Kè lǐ sī dì nà"
+    },
+    "Emma": {
+      "zh": "艾玛",
+      "pinyin": "Ài mǎ"
+    },
+    "Debra": {
+      "zh": "黛布拉",
+      "pinyin": "Dài bù lā"
+    },
+    "Rachel": {
+      "zh": "蕾切尔",
+      "pinyin": "Lěi qiè ěr"
+    },
+    "Carolyn": {
+      "zh": "卡罗琳",
+      "pinyin": "Kǎ luó lín"
+    },
+    "Janet": {
+      "zh": "珍妮特",
+      "pinyin": "Zhēn nī tè"
+    },
+    "Virginia": {
+      "zh": "弗吉尼亚",
+      "pinyin": "Fú jí ní yà"
+    },
+    "Maria": {
+      "zh": "玛丽亚",
+      "pinyin": "Mǎ lì yà"
+    },
+    "Heather": {
+      "zh": "希瑟",
+      "pinyin": "Xī sè"
+    },
+    "Diane": {
+      "zh": "黛安",
+      "pinyin": "Dài ān"
+    },
+    "Julie": {
+      "zh": "朱莉",
+      "pinyin": "Zhū lì"
+    },
+    "Joyce": {
+      "zh": "乔伊斯",
+      "pinyin": "Qiáo yī sī"
+    },
+    "Victoria": {
+      "zh": "维多利亚",
+      "pinyin": "Wéi duō lì yà"
+    },
+    "Ruth": {
+      "zh": "露丝",
+      "pinyin": "Lù sī"
+    },
+    "Olivia": {
+      "zh": "奥利维亚",
+      "pinyin": "Ào lì wéi yà"
+    },
+    "Kelly": {
+      "zh": "凯莉",
+      "pinyin": "Kǎi lì"
+    },
+    "Christina": {
+      "zh": "克里斯蒂娜",
+      "pinyin": "Kè lǐ sī dì nà"
+    },
+    "Lauren": {
+      "zh": "劳伦",
+      "pinyin": "Láo lún"
+    },
+    "Joan": {
+      "zh": "琼",
+      "pinyin": "Qióng"
+    },
+    "Evelyn": {
+      "zh": "伊芙琳",
+      "pinyin": "Yī fú lín"
+    },
+    "Judith": {
+      "zh": "朱迪思",
+      "pinyin": "Zhū dí sī"
+    },
+    "Megan": {
+      "zh": "梅甘",
+      "pinyin": "Méi gān"
+    },
+    "Andrea": {
+      "zh": "安德烈娅",
+      "pinyin": "Ān dé liè yà"
+    },
+    "Cheryl": {
+      "zh": "谢丽尔",
+      "pinyin": "Xiè lì ěr"
+    },
+    "Hannah": {
+      "zh": "汉娜",
+      "pinyin": "Hàn nà"
+    },
+    "Jacqueline": {
+      "zh": "杰奎琳",
+      "pinyin": "Jié kuí lín"
+    },
+    "Martha": {
+      "zh": "玛莎",
+      "pinyin": "Mǎ shā"
+    },
+    "Gloria": {
+      "zh": "格洛丽亚",
+      "pinyin": "Gé luò lì yà"
+    },
+    "Teresa": {
+      "zh": "特蕾莎",
+      "pinyin": "Tè lěi shā"
+    },
+    "Madison": {
+      "zh": "麦迪逊",
+      "pinyin": "Mài dí xùn"
+    },
+    "Frances": {
+      "zh": "弗朗西丝",
+      "pinyin": "Fú lǎng xī sī"
+    },
+    "Janice": {
+      "zh": "贾尼丝",
+      "pinyin": "Jiǎ ní sī"
+    },
+    "Abigail": {
+      "zh": "阿比盖尔",
+      "pinyin": "Ā bǐ gài ěr"
+    },
+    "Alice": {
+      "zh": "艾丽斯",
+      "pinyin": "Ài lì sī"
+    },
+    "Judy": {
+      "zh": "朱迪",
+      "pinyin": "Zhū dí"
+    },
+    "Sophia": {
+      "zh": "索菲娅",
+      "pinyin": "Suǒ fēi yà"
+    },
+    "Grace": {
+      "zh": "格蕾丝",
+      "pinyin": "Gé lěi sī"
+    },
+    "Lily": {
+      "zh": "莉莉",
+      "pinyin": "Lì lì"
+    },
+    "Chloe": {
+      "zh": "克洛艾",
+      "pinyin": "Kè luò ài"
+    },
+    "Zoe": {
+      "zh": "佐伊",
+      "pinyin": "Zuǒ yī"
+    },
+    "Nora": {
+      "zh": "诺拉",
+      "pinyin": "Nuò lā"
+    },
+    "Hazel": {
+      "zh": "黑兹尔",
+      "pinyin": "Hēi zī ěr"
+    },
+    "Aurora": {
+      "zh": "奥罗拉",
+      "pinyin": "Ào luó lā"
+    },
+    "Penelope": {
+      "zh": "佩内洛普",
+      "pinyin": "Pèi nèi luò pǔ"
+    },
+    "Layla": {
+      "zh": "蕾拉",
+      "pinyin": "Lěi lā"
+    },
+    "Riley": {
+      "zh": "赖利",
+      "pinyin": "Lài lì"
+    },
+    "Scarlett": {
+      "zh": "斯卡利特",
+      "pinyin": "Sī kǎ lì tè"
+    },
+    "Aria": {
+      "zh": "阿丽亚",
+      "pinyin": "Ā lì yà"
+    },
+    "Mia": {
+      "zh": "米娅",
+      "pinyin": "Mǐ yà"
+    },
+    "Ella": {
+      "zh": "埃拉",
+      "pinyin": "Āi lā"
+    },
+    "Avery": {
+      "zh": "艾弗里",
+      "pinyin": "Ài fú lǐ"
+    },
+    "Harper": {
+      "zh": "哈珀",
+      "pinyin": "Hā pò"
+    },
+    "Camila": {
+      "zh": "卡米拉",
+      "pinyin": "Kǎ mǐ lā"
+    },
+    "Sofia": {
+      "zh": "索菲娅",
+      "pinyin": "Suǒ fēi yà"
+    },
+    "Amelia": {
+      "zh": "阿梅莉亚",
+      "pinyin": "Ā méi lì yà"
+    },
+    "Isabella": {
+      "zh": "伊莎贝拉",
+      "pinyin": "Yī shā bèi lā"
+    },
+    "Natalie": {
+      "zh": "娜塔莉",
+      "pinyin": "Nà tǎ lì"
+    },
+    "Violet": {
+      "zh": "维奥莱特",
+      "pinyin": "Wéi ào lái tè"
+    },
+    "Willow": {
+      "zh": "薇洛",
+      "pinyin": "Wēi luò"
+    },
+    "Ivy": {
+      "zh": "艾薇",
+      "pinyin": "Ài wēi"
+    },
+    "Ruby": {
+      "zh": "鲁比",
+      "pinyin": "Lǔ bǐ"
+    },
+    "Stella": {
+      "zh": "斯特拉",
+      "pinyin": "Sī tè lā"
+    },
+    "Claire": {
+      "zh": "克莱尔",
+      "pinyin": "Kè lái ěr"
+    },
+    "Audrey": {
+      "zh": "奥德丽",
+      "pinyin": "Ào dé lì"
+    },
+    "Bella": {
+      "zh": "贝拉",
+      "pinyin": "Bèi lā"
+    },
+    "Daisy": {
+      "zh": "黛西",
+      "pinyin": "Dài xī"
+    },
+    "Rose": {
+      "zh": "罗斯",
+      "pinyin": "Luó sī"
+    },
+    "Iris": {
+      "zh": "艾里斯",
+      "pinyin": "Ài lǐ sī"
+    },
+    "Jade": {
+      "zh": "杰德",
+      "pinyin": "Jié dé"
+    },
+    "Summer": {
+      "zh": "萨默",
+      "pinyin": "Sà mò"
+    }
+  }
+}

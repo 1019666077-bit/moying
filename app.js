@@ -19,6 +19,12 @@
     kuang: "fonts/zhimangxing-latin.ttf",
     seal: "fonts/seal.ttf",
   };
+  // Chinese characters for the name combos. Kept out of FONTS so it never
+  // becomes a brush-style key (?style=).
+  const HANZI_FONT = "fonts/mashanzheng-hanzi.ttf";
+  const NAMES_URL = "data/names-zh.json";
+  // Landing pages for these words are not names; skip the "no Chinese name" note.
+  const WORD_PAGES = new Set(["love", "peace", "hope", "dream"]);
 
   const fontPromises = {};
   const fontReady = {};
@@ -33,6 +39,7 @@
     count: document.getElementById("charCount"),
     charHint: document.getElementById("charHint"),
     limitHint: document.getElementById("limitHint"),
+    nameHint: document.getElementById("nameHint"),
     btnExport: document.getElementById("btnExport"),
     btnPay: document.getElementById("btnPay"),
     payNote: document.getElementById("payNote"),
@@ -60,6 +67,8 @@
   let pollTimer = 0;
   let pollAttempts = 0;
   let memoryToken = "";
+  let namesMap = null; // lowercased English name -> Chinese transliteration
+  let priceLabel = "$1.99"; // matches functions/lib/pricing.js; refreshed from /api/config
   const UNLOCK_KEY = "moying-unlock";
 
   document.querySelectorAll(".seg").forEach((seg) => {
@@ -111,21 +120,10 @@
     };
   }
 
-  function designsMatch(paid, current) {
-    if (!paid || !current) return false;
-    return paid.text === current.text
-      && paid.style === current.style
-      && paid.dir === current.dir
-      && paid.paper === current.paper
-      && paid.ink === current.ink
-      && Number(paid.size) === Number(current.size)
-      && Number(paid.track) === Number(current.track)
-      && Number(paid.dry) === Number(current.dry)
-      && !!paid.seal === !!current.seal;
-  }
-
+  // A purchase unlocks the word itself, so every brush style, paper, ink, size
+  // and layout is clean once the same word is drawn. Changing the word locks again.
   function cleanNow(snap) {
-    return designsMatch(paidDesign, designPayload(snap));
+    return !!paidDesign && paidDesign.word === snap.text;
   }
 
   function isToken(value) {
@@ -161,17 +159,17 @@
       ui.btnPay.disabled = true;
       ui.btnPay.classList.add("paid");
       ui.btnRestore.hidden = true;
-      setPayNote("Watermark removed for this design. Export is a clean 1800×2400 file.");
+      setPayNote("Watermark removed for this word. Every brush style and setting exports clean at 1800×2400.");
       ui.exportHint.textContent = "Clean download: 1800×2400, no watermark";
       return;
     }
     ui.btnPay.classList.remove("paid");
     ui.btnPay.disabled = payBusy;
-    ui.btnPay.textContent = payBusy ? "Starting checkout…" : "Remove watermark · $1.99";
+    ui.btnPay.textContent = payBusy ? "Starting checkout…" : `Remove watermark · ${priceLabel}`;
     ui.exportHint.textContent = "Free downloads: 900×1200 watermarked preview";
     if (paidDesign) {
       ui.btnRestore.hidden = false;
-      setPayNote(`A clean download is saved for “${paidDesign.text}”.`);
+      setPayNote(`A clean download is saved for “${paidDesign.text}”. Switch style or paper freely — the word stays unlocked.`);
       return;
     }
     ui.btnRestore.hidden = true;
@@ -237,7 +235,7 @@
     }
     if (data.status === "paid" && data.design) {
       const firstConfirm = !paidDesign;
-      paidDesign = data.design;
+      paidDesign = { ...data.design, word: data.word || data.design.text };
       waitingForPayment = false;
       payError = "";
       if (expectReturn && firstConfirm) track("purchase-confirmed");
@@ -335,10 +333,66 @@
     }
   }
 
+  // The price shown in the button comes from the server config when it is
+  // reachable, and from the static HTML fallback otherwise. Both match
+  // functions/lib/pricing.js, which tests enforce.
+  async function loadPrice() {
+    try {
+      const res = await fetch("/api/config", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data && typeof data.priceLabel === "string" && data.priceLabel) {
+        priceLabel = data.priceLabel;
+        updatePayUi();
+      }
+    } catch (_) { /* keep the fallback price */ }
+  }
+
+  async function loadNames() {
+    try {
+      const res = await fetch(NAMES_URL, { cache: "force-cache" });
+      if (!res.ok) return null;
+      const data = await res.json();
+      // The table nests records under "names" as { zh, pinyin }; a flat
+      // "Name": "汉字" map is still accepted so an older cached file keeps working.
+      const table = data && typeof data.names === "object" && data.names ? data.names : data;
+      const map = new Map();
+      for (const [key, value] of Object.entries(table)) {
+        if (key.startsWith("_")) continue;
+        const zh = value && typeof value === "object" ? value.zh : value;
+        if (typeof zh !== "string" || !zh) continue;
+        map.set(key.toLowerCase(), zh);
+      }
+      return map.size ? map : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // Only a single Latin word that is in the fixed table gets a combo. Words and
+  // phrases outside it stay English-only.
+  function comboFor(text) {
+    if (!namesMap || !text) return "";
+    if (!/^[A-Za-z][A-Za-z'’-]*$/.test(text)) return "";
+    return namesMap.get(text.toLowerCase()) || "";
+  }
+
+  function updateComboHint(text) {
+    if (!ui.nameHint) return;
+    const lower = String(text || "").toLowerCase();
+    const missing = !!namesMap && /^[A-Za-z][A-Za-z'’-]*$/.test(text)
+      && !WORD_PAGES.has(lower) && !namesMap.has(lower);
+    ui.nameHint.hidden = !missing;
+    ui.nameHint.textContent = missing
+      ? `We don't have a Chinese name for ${text} yet.`
+      : "";
+  }
+
   function loadFont(key) {
     if (!fontPromises[key]) {
       fontPromises[key] = (async () => {
-        const res = await fetch(FONTS[key]);
+        // `key` is a FONTS style name or a direct font path (the hanzi subset).
+        const res = await fetch(FONTS[key] || key);
         if (!res.ok) throw new Error("font " + res.status);
         const font = opentype.parse(await res.arrayBuffer());
         fontReady[key] = font;
@@ -853,6 +907,37 @@
     return fitted;
   }
 
+  function paintHanzi(ctx, font, chars, size, centerX, centerY, ink) {
+    const glyphs = [...chars].map((ch) => {
+      const bb = font.getPath(ch, 0, 0, size).getBoundingBox();
+      return { ch, bb, gw: Math.max(size * 0.72, bb.x2 - bb.x1) };
+    });
+    const gap = size * 0.1;
+    const total = glyphs.reduce((sum, g) => sum + g.gw, 0) + gap * Math.max(0, glyphs.length - 1);
+    let x = centerX - total / 2;
+    ctx.save();
+    ctx.globalAlpha = 0.94;
+    glyphs.forEach((g) => {
+      const path = font.getPath(g.ch, x - g.bb.x1, centerY - (g.bb.y1 + g.bb.y2) / 2, size);
+      path.fill = `rgb(${ink.r},${ink.g},${ink.b})`;
+      path.draw(ctx);
+      x += g.gw + gap;
+    });
+    ctx.restore();
+  }
+
+  // English brush letters above, the conventional Chinese characters below.
+  function paintCombo(ctx, font, hanziFont, snap, ink, rng) {
+    const englishSnap = { ...snap, size: snap.size * 0.74 };
+    ctx.save();
+    ctx.translate(0, -BASE_H * 0.11);
+    const fitted = paintWords(ctx, font, englishSnap, ink, rng);
+    ctx.restore();
+    const size = Math.min(150, (BASE_W * 0.62) / Math.max(1, [...snap.combo].length));
+    paintHanzi(ctx, hanziFont, snap.combo, size, BASE_W * 0.5, BASE_H * 0.7, ink);
+    return fitted;
+  }
+
   function withLogical(ctx, target, fn) {
     const scale = target.width / BASE_W;
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
@@ -892,8 +977,11 @@
     const inkRng = mulberry32(hashString(seedKey(snap) + "|ink"));
     const lctx = layer.getContext("2d");
     let fitted = baseSize(snap);
+    const hanziFont = opts && opts.hanziFont;
     withLogical(lctx, layer, () => {
-      fitted = paintWords(lctx, font, snap, inkColor(snap), inkRng);
+      fitted = (snap.combo && hanziFont)
+        ? paintCombo(lctx, font, hanziFont, snap, inkColor(snap), inkRng)
+        : paintWords(lctx, font, snap, inkColor(snap), inkRng);
     });
     if (watermark) cutInkWatermark(layer, target, transparent);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -936,6 +1024,7 @@
     updatePayUi();
     preparePreview();
     if (!snap.text) {
+      updateComboHint("");
       paintScene(canvas, snap, null, null, { watermark: !cleanNow(snap) });
       if (ui.loading && gen === previewGen && exportCount === 0) ui.loading.classList.add("hide");
       return;
@@ -950,8 +1039,24 @@
       if (gen !== previewGen) return;
       const filtered = filterGlyphs(font, snap.text);
       syncControls({ unsupported: snap.unsupported || filtered.dropped, changed: snap.changed }, filtered.text);
-      const scene = { ...snap, text: filtered.text, unsupported: snap.unsupported || filtered.dropped };
-      paintScene(canvas, scene, font, sealFont, { watermark: !cleanNow(snap) });
+      updateComboHint(filtered.text);
+      const combo = comboFor(filtered.text);
+      let hanziFont = null;
+      if (combo) {
+        hanziFont = await loadFont(HANZI_FONT).catch(() => null);
+        if (gen !== previewGen) return;
+        if (hanziFont && ![...combo].every((ch) => {
+          const glyph = hanziFont.charToGlyph(ch);
+          return glyph && glyph.name !== ".notdef";
+        })) hanziFont = null;
+      }
+      const scene = {
+        ...snap,
+        text: filtered.text,
+        unsupported: snap.unsupported || filtered.dropped,
+        combo: hanziFont ? combo : "",
+      };
+      paintScene(canvas, scene, font, sealFont, { watermark: !cleanNow(snap), hanziFont });
     } catch (err) {
       if (gen !== previewGen) return;
       console.error(err);
@@ -1002,12 +1107,22 @@
     const [font, sealFont] = await Promise.all([loadFont(snap.style), loadFont("seal").catch(() => null)]);
     const filtered = filterGlyphs(font, snap.text);
     if (!filtered.text) return null;
+    const combo = comboFor(filtered.text);
+    let hanziFont = null;
+    if (combo) {
+      hanziFont = await loadFont(HANZI_FONT).catch(() => null);
+      if (hanziFont && ![...combo].every((ch) => {
+        const glyph = hanziFont.charToGlyph(ch);
+        return glyph && glyph.name !== ".notdef";
+      })) hanziFont = null;
+    }
     const out = document.createElement("canvas");
     out.width = clean ? CLEAN_HD_W : FREE_W;
     out.height = clean ? CLEAN_HD_H : FREE_H;
-    paintScene(out, { ...snap, text: filtered.text }, font, sealFont, {
+    paintScene(out, { ...snap, text: filtered.text, combo: hanziFont ? combo : "" }, font, sealFont, {
       transparent: !!transparent,
       watermark: !clean,
+      hanziFont,
     });
     return { canvas: out, text: filtered.text };
   }
@@ -1168,6 +1283,12 @@
     if (!b.hasAttribute("aria-pressed")) b.setAttribute("aria-pressed", b.classList.contains("on") ? "true" : "false");
   });
   preparePreview();
-  drawPreview();
-  if (isToken(currentToken())) refreshUnlock(expectReturn ? 90 : 15);
+  // Draw once the name table is known so a matching name paints its combo on
+  // the first pass instead of flashing the English-only version.
+  loadNames().then((map) => {
+    namesMap = map;
+    drawPreview();
+    if (isToken(currentToken())) refreshUnlock(expectReturn ? 90 : 15);
+  });
+  loadPrice();
 })();

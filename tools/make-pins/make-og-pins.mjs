@@ -20,6 +20,7 @@ import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer-core";
+import { pinFile } from "./pin-file.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
@@ -350,7 +351,7 @@ async function contactSheet(page, rows, port) {
 }
 
 async function main() {
-  const rows = PINS.map((pin) => ({ ...pin, file: `${pin.slug}.jpg` }));
+  const rows = PINS.map((pin) => ({ ...pin, file: pinFile(pin.slug) }));
   const outDir = path.join(ROOT, "pins");
   fs.mkdirSync(outDir, { recursive: true });
 

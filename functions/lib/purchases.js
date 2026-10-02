@@ -1,5 +1,8 @@
-// $1.99 in cents. Tax may make the charged amount higher. A lower charge does not unlock.
-export const MIN_USD_CENTS = 199;
+import { PRICE_USD_CENTS } from "./pricing.js";
+
+// The configured price in cents. Tax may make the charged amount higher.
+// A lower charge does not unlock.
+export const MIN_USD_CENTS = PRICE_USD_CENTS;
 
 const TOKEN_RE = /^[a-f0-9]{64}$/;
 
@@ -49,6 +52,22 @@ export function tokenFromEvent(data) {
   const meta = data.orderMetadata;
   if (meta && typeof meta === "object" && isToken(meta.unlock)) return meta.unlock;
   return "";
+}
+
+// A purchase unlocks the paid word in every brush style, paper, ink and size,
+// so the record stores the word separately from the design snapshot that was
+// used at checkout. Older records only have the design; fall back to its text.
+export function unlockWord(record) {
+  if (!record) return "";
+  if (typeof record.word === "string" && record.word) return record.word;
+  const design = record.design;
+  if (design && typeof design === "object" && typeof design.text === "string") return design.text;
+  return "";
+}
+
+export function unlocksText(record, text) {
+  const word = unlockWord(record);
+  return !!word && word === text;
 }
 
 export function usdCents(value) {

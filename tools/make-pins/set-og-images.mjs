@@ -1,33 +1,43 @@
 #!/usr/bin/env node
 /**
- * Point each SEO landing page's og:image / twitter:image at its own pin.
+ * Point each SEO landing page's og:image / twitter:image at its own pin, and
+ * give every one of them a descriptive alt.
  *
- * Every landing page used to share https://mymoying.com/og.png, so all 16 pins
- * on Pinterest looked identical. Each page now points at the 1000x1500 pin that
- * make-og-pins.mjs renders for it, with matching width/height.
+ * The pins are JPEG, named after the page slug and what the image shows
+ * (pins/emma-chinese-calligraphy-name.jpg), so the file name alone describes
+ * the picture. The alt carries the same idea for screen readers and for the
+ * social cards: "Emma written in Chinese brush calligraphy style with Chinese
+ * name 艾玛".
  *
- * The pins are JPEG (a PNG sheet of rice paper was ~1.1MB each), so this also
- * rewrites the earlier /pins/<slug>.png references to /pins/<slug>.jpg. Both the
- * original og.png form and the png-pin form are accepted, so the script is safe
- * to re-run on any checkout.
- *
- * index.html keeps og.png, and terms/privacy/404 are untouched.
+ * The script rewrites the whole og:image / twitter:image run on each page, so
+ * it is safe to re-run and works whether the page currently points at the old
+ * slug-only pin, an earlier png pin, or the shared og.png.
  *
  *   node tools/make-pins/set-og-images.mjs [--check]
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { pinFile } from "./pin-file.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
 const SITE = "https://mymoying.com";
 const PIN_W = 1000;
 const PIN_H = 1500;
-const PIN_EXT = "jpg";
 
-// Landing page slug -> pin file. The page name and the pin name are the same
-// slug, which is what makes the mappingauditable by eye.
+// Landing page slug -> the word its pin draws, for guide/word pages.
+const DRAWN = {
+  love: "Love",
+  peace: "Peace",
+  hope: "Hope",
+  dream: "Dream",
+  "name-in-chinese-calligraphy": "Emma",
+  "chinese-calligraphy-tattoo-ideas": "Strength",
+  "meaning-of-chinese-characters": "Love",
+  "custom-chinese-name-gift": "Family",
+};
+
 const PAGES = [
   "emma",
   "michael",
@@ -47,70 +57,83 @@ const PAGES = [
   "custom-chinese-name-gift",
 ];
 
+function nameTable() {
+  const table = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "names-zh.json"), "utf8"));
+  const records = table.names || table;
+  const bySlug = new Map();
+  for (const [name, value] of Object.entries(records)) {
+    if (name.startsWith("_")) continue;
+    const zh = value && typeof value === "object" ? value.zh : value;
+    bySlug.set(name.toLowerCase(), { name, zh });
+  }
+  return bySlug;
+}
+
+function altFor(slug, names) {
+  const named = names.get(slug);
+  if (named) return `${named.name} written in Chinese brush calligraphy style with Chinese name ${named.zh}`;
+  const word = DRAWN[slug] || slug;
+  return `${word} written in Chinese brush calligraphy style`;
+}
+
 const check = process.argv.includes("--check");
+const names = nameTable();
 let changed = 0;
 
 for (const slug of PAGES) {
   const file = path.join(ROOT, `${slug}.html`);
   const original = fs.readFileSync(file, "utf8");
-  if (!fs.existsSync(path.join(ROOT, "pins", `${slug}.${PIN_EXT}`))) {
-    throw new Error(`pins/${slug}.${PIN_EXT} is missing - run make-og-pins.mjs first`);
+  const pin = pinFile(slug);
+  if (!fs.existsSync(path.join(ROOT, "pins", pin))) {
+    throw new Error(`pins/${pin} is missing - run make-og-pins.mjs first`);
   }
+  const pinUrl = `${SITE}/pins/${pin}`;
+  const alt = altFor(slug, names);
+  const eol = original.includes("\r\n") ? "\r\n" : "\n";
+  const lines = original.split(/\r?\n/);
 
-  // The pages are checked in with CRLF; keep whatever the file already uses so a
-  // two-line edit stays a two-line diff.
-  const nl = original.includes("\r\n") ? "\r\n" : "\n";
-
-  const pinUrl = `${SITE}/pins/${slug}.${PIN_EXT}`;
-  const ogBlock =
-    `  <meta property="og:image" content="${pinUrl}" />${nl}` +
-    `  <meta property="og:image:width" content="${PIN_W}" />${nl}` +
-    `  <meta property="og:image:height" content="${PIN_H}" />`;
-  const twitterTag = `  <meta name="twitter:image" content="${pinUrl}" />`;
-
-  // Two starting shapes are accepted, so this runs on a fresh checkout or on the
-  // png-pin state: the original shared og.png at 1200x630, and the png pin.
-  const ogForms = [
-    `  <meta property="og:image" content="${SITE}/og.png" />${nl}` +
-    `  <meta property="og:image:width" content="1200" />${nl}` +
-    `  <meta property="og:image:height" content="630" />`,
-    `  <meta property="og:image" content="${SITE}/pins/${slug}.png" />${nl}` +
-    `  <meta property="og:image:width" content="${PIN_W}" />${nl}` +
+  const isOg = (line) => /^\s*<meta property="og:image(:[a-z]+)?"/.test(line);
+  const isTwitter = (line) => /^\s*<meta name="twitter:image(:[a-z]+)?"/.test(line);
+  const ogBlock = [
+    `  <meta property="og:image" content="${pinUrl}" />`,
+    `  <meta property="og:image:width" content="${PIN_W}" />`,
     `  <meta property="og:image:height" content="${PIN_H}" />`,
+    `  <meta property="og:image:alt" content="${alt}" />`,
   ];
-  const twitterForms = [
-    `  <meta name="twitter:image" content="${SITE}/og.png" />`,
-    `  <meta name="twitter:image" content="${SITE}/pins/${slug}.png" />`,
+  const twitterBlock = [
+    `  <meta name="twitter:image" content="${pinUrl}" />`,
+    `  <meta name="twitter:image:alt" content="${alt}" />`,
   ];
 
-  const rewrite = (text, forms, to, label) => {
-    for (const from of forms) {
-      const count = text.split(from).length - 1;
-      if (count === 0) continue;
-      if (count !== 1) {
-        throw new Error(`${slug}.html: expected 1 match for [${from.split(/\r?\n/)[0]}], found ${count}`);
-      }
-      return text.replace(from, to);
+  let foundOg = false;
+  let foundTwitter = false;
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (isOg(lines[i])) {
+      foundOg = true;
+      out.push(...ogBlock);
+      while (i + 1 < lines.length && isOg(lines[i + 1])) i++;
+      continue;
     }
-    throw new Error(`${slug}.html: no ${label} tag matched - has the page been hand-edited?`);
-  };
+    if (isTwitter(lines[i])) {
+      foundTwitter = true;
+      out.push(...twitterBlock);
+      while (i + 1 < lines.length && isTwitter(lines[i + 1])) i++;
+      continue;
+    }
+    out.push(lines[i]);
+  }
+  if (!foundOg) throw new Error(`${slug}.html has no og:image tag`);
+  if (!foundTwitter) throw new Error(`${slug}.html has no twitter:image tag`);
 
-  let next = original;
-  if (!next.includes(ogBlock)) next = rewrite(next, ogForms, ogBlock, "og:image");
-  if (!next.includes(twitterTag)) next = rewrite(next, twitterForms, twitterTag, "twitter:image");
-
-  const left = next.split("/og.png").length - 1;
-  if (left !== 0) throw new Error(`${slug}.html still references og.png ${left} time(s)`);
-  const stale = next.split(`/pins/${slug}.png`).length - 1;
-  if (stale !== 0) throw new Error(`${slug}.html still references pins/${slug}.png ${stale} time(s)`);
-
+  const next = out.join(eol);
   if (next !== original) {
     changed += 1;
     if (check) {
       console.log(`WOULD CHANGE ${slug}.html`);
     } else {
       fs.writeFileSync(file, next);
-      console.log(`updated ${slug}.html -> ${pinUrl}`);
+      console.log(`updated ${slug}.html -> ${pin}`);
     }
   } else {
     console.log(`already correct ${slug}.html`);

@@ -1,5 +1,5 @@
 import { json } from "../lib/http.js";
-import { isToken, readPurchase, revokedKey } from "../lib/purchases.js";
+import { isToken, readPurchase, revokedKey, unlockWord } from "../lib/purchases.js";
 
 export async function onRequestGet({ request, env }) {
   if (!env || !env.PURCHASES) return json({ error: "payments_unavailable" }, 503);
@@ -14,5 +14,5 @@ export async function onRequestGet({ request, env }) {
     return json({ status: "unknown" });
   }
   if (record.status === "refunded") return json({ status: "refunded" });
-  return json({ status: record.status, design: record.design });
+  return json({ status: record.status, design: record.design, word: unlockWord(record) });
 }

@@ -6,6 +6,8 @@
   --muted: #5c4e3a;
 }
 * { box-sizing: border-box; }
+/* [hidden] must win over component display rules (e.g. .hint-btn's display:block). */
+[hidden] { display: none !important; }
 html, body {
   margin: 0;
   min-height: 100%;
@@ -61,6 +63,8 @@ html, body {
   aspect-ratio: 3 / 4;
   box-shadow: 0 10px 28px rgba(40, 24, 8, 0.18);
 }
+/* Static sample images (name pages) sit in the same paper frame as the canvas. */
+.stage-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 959px) {
   .studio .workspace { display: flex; flex-direction: column; }
   .studio .panel { display: contents; }
@@ -155,6 +159,50 @@ html, body {
 .pay:disabled.paid { opacity: 1; cursor: default; background: #2c241c; }
 .hint.price { line-height: 1.35; }
 .pay-note:empty { display: none; }
+.sample {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  align-items: flex-start;
+}
+.sample img {
+  width: 96px;
+  height: 128px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  flex: 0 0 auto;
+  background: #d9cbb0;
+}
+.sample figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.sample figcaption strong { font-size: 13px; color: var(--ink); }
+.sample-badge {
+  align-self: flex-start;
+  background: #2c241c;
+  color: #f3ead6;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.trust {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+}
+.trust p { margin: 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.trust a { color: #7a3b2a; }
+.trust code { font-size: 11px; }
 .hint-btn {
   display: block;
   border: 0;

@@ -28,4 +28,27 @@ subset fonts/full/LongCang-Regular.ttf "U+0020-007E" fonts/longcang-latin.ttf
 subset fonts/full/LiuJianMaoCao-Regular.ttf "U+0020-007E" fonts/liujianmaocao-latin.ttf
 subset fonts/full/ZhiMangXing-Regular.ttf "U+0020-007E" fonts/zhimangxing-latin.ttf
 subset fonts/full/ZCOOLXiaoWei-Regular.ttf "U+58A8,U+82F1" fonts/seal.ttf
+
+# Hanzi for the English -> Chinese transliteration combos. The character list
+# is derived from data/names-zh.json, so the font only ships glyphs the table
+# can actually draw.
+node -e '
+const fs = require("fs");
+const table = JSON.parse(fs.readFileSync("data/names-zh.json", "utf8"));
+const chars = new Set();
+for (const [key, value] of Object.entries(table)) {
+  if (key === "_note") continue;
+  for (const ch of value) chars.add(ch);
+}
+fs.mkdirSync("fonts/full", { recursive: true });
+fs.writeFileSync("fonts/full/hanzi.txt", [...chars].sort().join(""));
+'
+pyftsubset fonts/full/MaShanZheng-Regular.ttf \
+  --text-file=fonts/full/hanzi.txt \
+  --glyph-names \
+  --notdef-glyph \
+  --notdef-outline \
+  --recommended-glyphs \
+  --name-IDs='*' \
+  --output-file=fonts/mashanzheng-hanzi.ttf
 echo "font subsets ready"
