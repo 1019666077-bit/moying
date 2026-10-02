@@ -1,5 +1,5 @@
 import { createSign, generateKeyPairSync } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import assert from "node:assert/strict";
 import { onRequestPost as checkout } from "../functions/api/checkout.js";
 import { onRequestGet as status } from "../functions/api/status.js";
@@ -543,7 +543,19 @@ const tests = [
       assert.equal(response.status, 404, `${path} is still served`);
       assert.match(response.headers.get("x-robots-tag") || "", /noindex/);
     }
-    for (const path of ["/", "/index.html", "/emma", "/robots.txt", "/sitemap.xml", "/pins/emma.jpg", "/api/webhook", "/404.html"]) {
+    for (const path of [
+      "/",
+      "/index.html",
+      "/emma",
+      "/names",
+      "/name/michael",
+      "/name/img/michael-chinese-calligraphy-name.jpg",
+      "/robots.txt",
+      "/sitemap.xml",
+      "/pins/emma-chinese-calligraphy-name.jpg",
+      "/api/webhook",
+      "/404.html",
+    ]) {
       assert.equal((await onRequest(context(path))).status, 200, `${path} was blocked`);
     }
     const root = new URL("../", import.meta.url);
@@ -634,18 +646,155 @@ const tests = [
     const table = JSON.parse(readFileSync(new URL("../data/names-zh.json", import.meta.url), "utf8"));
     assert.equal(typeof table._note, "string");
     assert.ok(table._note.length > 20, "the _note is too short");
-    const entries = Object.entries(table).filter(([key]) => key !== "_note");
+    assert.equal(typeof table._pinyinNote, "string");
+    assert.match(table._pinyinNote, /review/i, "the pinyin note must ask for a human review");
+    assert.equal(typeof table.names, "object");
+    const entries = Object.entries(table.names).filter(([key]) => !key.startsWith("_"));
     assert.ok(entries.length >= 100, `only ${entries.length} names`);
+    const tone = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
     for (const [key, value] of entries) {
       assert.match(key, /^[A-Za-z][A-Za-z'’-]*$/, `${key} is not a Latin name`);
-      assert.equal(typeof value, "string");
-      assert.match(value, /^[一-鿿]+$/, `${key} is not all Chinese characters`);
+      assert.equal(typeof value, "object", `${key} is not a record`);
+      assert.match(value.zh, /^[一-鿿]+$/, `${key} is not all Chinese characters`);
+      assert.equal(typeof value.pinyin, "string");
+      assert.ok(value.pinyin.length > 0, `${key} has no pinyin`);
+      assert.match(value.pinyin, /^[A-Za-zÀ-ɏ' -]+$/, `${key} pinyin has odd characters`);
+      assert.match(value.pinyin, tone, `${key} pinyin has no tone mark`);
     }
-    assert.equal(table.Emma, "艾玛");
-    assert.equal(table.Michael, "迈克尔");
+    assert.equal(table.names.Emma.zh, "艾玛");
+    assert.equal(table.names.Michael.zh, "迈克尔");
+    assert.equal(table.names.Michael.pinyin, "Mài kè ěr");
     const font = readFileSync(new URL("../fonts/mashanzheng-hanzi.ttf", import.meta.url));
     assert.ok(font.length > 1000, "the hanzi subset font is missing");
     assert.equal(font.subarray(0, 4).toString("latin1"), "\u0000\u0001\u0000\u0000", "the hanzi font is not a TTF");
+  }),
+
+  check("every name in the table has one page with a unique title, H1 and canonical", () => {
+    const root = new URL("../", import.meta.url);
+    const table = JSON.parse(readFileSync(new URL("../data/names-zh.json", import.meta.url), "utf8"));
+    const names = Object.keys(table.names).filter((key) => !key.startsWith("_"));
+    const slugFor = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "");
+    const dir = new URL("../name/", import.meta.url);
+    const files = readdirSync(dir).filter((name) => name.endsWith(".html"));
+    assert.equal(files.length, names.length, `expected ${names.length} name pages, found ${files.length}`);
+    const titles = new Set();
+    const h1s = new Set();
+    for (const name of names) {
+      const slug = slugFor(name);
+      const html = readFileSync(new URL(`${slug}.html`, dir), "utf8");
+      const title = html.match(/<title>([^<]+)<\/title>/);
+      assert.ok(title, `${slug}.html has no title`);
+      assert.equal(titles.has(title[1]), false, `${slug}.html repeats the title ${title[1]}`);
+      titles.add(title[1]);
+      const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/g) || [];
+      assert.equal(h1.length, 1, `${slug}.html has ${h1.length} H1 elements`);
+      const h1Text = h1[0].replace(/<[^>]+>/g, "").trim();
+      assert.ok(h1Text.includes(name), `${slug}.html H1 does not name ${name}`);
+      assert.equal(h1s.has(h1Text), false, `${slug}.html repeats the H1 ${h1Text}`);
+      h1s.add(h1Text);
+      assert.ok(
+        html.includes(`<link rel="canonical" href="https://mymoying.com/name/${slug}" />`),
+        `${slug}.html canonical is wrong`,
+      );
+      assert.ok(html.includes(`/?text=${name}`), `${slug}.html does not link to the generator`);
+      assert.ok(html.includes("$4.99"), `${slug}.html does not show the price`);
+    }
+    const index = readFileSync(new URL("names.html", root), "utf8");
+    for (const name of names) {
+      assert.ok(index.includes(`href="/name/${slugFor(name)}"`), `names.html does not link ${name}`);
+    }
+  }),
+
+  check("the sitemap lists every name page and the names index", () => {
+    const table = JSON.parse(readFileSync(new URL("../data/names-zh.json", import.meta.url), "utf8"));
+    const sitemap = readFileSync(new URL("../sitemap.xml", import.meta.url), "utf8");
+    const locs = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
+    assert.ok(locs.has("https://mymoying.com/names"), "sitemap is missing /names");
+    let count = 0;
+    for (const name of Object.keys(table.names)) {
+      if (name.startsWith("_")) continue;
+      const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "");
+      assert.ok(locs.has(`https://mymoying.com/name/${slug}`), `sitemap is missing /name/${slug}`);
+      count += 1;
+    }
+    assert.ok(count >= 100, `only ${count} name pages in the sitemap`);
+    const nameLocs = [...locs].filter((loc) => loc.startsWith("https://mymoying.com/name/"));
+    assert.equal(nameLocs.length, count, "sitemap has a name page that is not in the table");
+  }),
+
+  check("every html image has alt text and every local image file exists", () => {
+    const root = new URL("../", import.meta.url);
+    const pages = [];
+    const walk = (dir) => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        if (entry.name === "node_modules" || entry.name === ".git") continue;
+        const child = new URL(`${entry.name}${entry.isDirectory() ? "/" : ""}`, dir);
+        if (entry.isDirectory()) walk(child);
+        else if (entry.name.endsWith(".html")) pages.push(child);
+      }
+    };
+    walk(root);
+    assert.ok(pages.length > 200, `only ${pages.length} html pages found`);
+
+    const jpegSize = (buf) => {
+      if (buf[0] !== 0xff || buf[1] !== 0xd8) throw new Error("not a jpeg");
+      let i = 2;
+      while (i + 9 < buf.length) {
+        if (buf[i] !== 0xff) break;
+        const marker = buf[i + 1];
+        if (marker === 0xd8 || marker === 0xd9) { i += 2; continue; }
+        const len = buf.readUInt16BE(i + 2);
+        if (marker === 0xc0 || marker === 0xc1 || marker === 0xc2) {
+          return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+        }
+        i += 2 + len;
+      }
+      throw new Error("jpeg size missing");
+    };
+    const localPath = (page, url) => {
+      if (url.startsWith("https://mymoying.com/")) return new URL(url.slice("https://mymoying.com/".length), root);
+      if (/^https?:/.test(url)) return null;
+      return new URL(url, page);
+    };
+
+    let images = 0;
+    for (const page of pages) {
+      const html = readFileSync(page, "utf8");
+      for (const tag of html.match(/<img\b[^>]*>/g) || []) {
+        const src = tag.match(/\bsrc="([^"]+)"/);
+        assert.ok(src, `an img in ${page.pathname} has no src`);
+        const alt = tag.match(/\balt="([^"]*)"/);
+        assert.ok(alt && alt[1].trim(), `an img in ${page.pathname} has no alt text`);
+        const file = localPath(page, src[1]);
+        if (file) {
+          assert.ok(existsSync(file), `${page.pathname} points at a missing image ${src[1]}`);
+          images += 1;
+        }
+      }
+      for (const meta of html.match(/<meta\s+(?:property|name)="(?:og:image|twitter:image)"\s+content="([^"]+)"/g) || []) {
+        const url = meta.match(/content="([^"]+)"/)[1];
+        const file = localPath(page, url);
+        assert.ok(file, `${page.pathname} has an absolute social image ${url}`);
+        assert.ok(existsSync(file), `${page.pathname} points at a missing social image ${url}`);
+        if (page.pathname.includes("/name/") && file.pathname.includes("/name/img/")) {
+          const dims = jpegSize(readFileSync(file));
+          const html2 = html;
+          const w = html2.match(/<meta property="og:image:width" content="(\d+)"/);
+          const h = html2.match(/<meta property="og:image:height" content="(\d+)"/);
+          assert.ok(w && h, `${page.pathname} has no og:image dimensions`);
+          assert.equal(Number(w[1]), dims.width, `${page.pathname} og:image:width is wrong`);
+          assert.equal(Number(h[1]), dims.height, `${page.pathname} og:image:height is wrong`);
+        }
+      }
+    }
+    assert.ok(images >= 200, `only ${images} local images checked`);
+
+    // Every pin the pages reference, and every pin on disk, is present.
+    for (const file of readdirSync(new URL("../pins/", import.meta.url))) {
+      if (file.endsWith(".jpg")) {
+        assert.match(file, /-chinese-calligraphy-(name|word|guide)\.jpg$/, `pins/${file} is not descriptively named`);
+      }
+    }
   }),
 ];
 

@@ -353,10 +353,15 @@
       const res = await fetch(NAMES_URL, { cache: "force-cache" });
       if (!res.ok) return null;
       const data = await res.json();
+      // The table nests records under "names" as { zh, pinyin }; a flat
+      // "Name": "汉字" map is still accepted so an older cached file keeps working.
+      const table = data && typeof data.names === "object" && data.names ? data.names : data;
       const map = new Map();
-      for (const [key, value] of Object.entries(data)) {
-        if (key === "_note" || typeof value !== "string" || !value) continue;
-        map.set(key.toLowerCase(), value);
+      for (const [key, value] of Object.entries(table)) {
+        if (key.startsWith("_")) continue;
+        const zh = value && typeof value === "object" ? value.zh : value;
+        if (typeof zh !== "string" || !zh) continue;
+        map.set(key.toLowerCase(), zh);
       }
       return map.size ? map : null;
     } catch (_) {

@@ -63,6 +63,8 @@ html, body {
   aspect-ratio: 3 / 4;
   box-shadow: 0 10px 28px rgba(40, 24, 8, 0.18);
 }
+/* Static sample images (name pages) sit in the same paper frame as the canvas. */
+.stage-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 959px) {
   .studio .workspace { display: flex; flex-direction: column; }
   .studio .panel { display: contents; }
