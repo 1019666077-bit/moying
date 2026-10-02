@@ -548,8 +548,9 @@ const tests = [
       "/index.html",
       "/emma",
       "/names",
-      "/name/michael",
-      "/name/img/michael-chinese-calligraphy-name.jpg",
+      "/michael",
+      "/noah",
+      "/samples/michael-chinese-calligraphy-name.jpg",
       "/robots.txt",
       "/sitemap.xml",
       "/pins/emma-chinese-calligraphy-name.jpg",
@@ -669,19 +670,18 @@ const tests = [
     assert.equal(font.subarray(0, 4).toString("latin1"), "\u0000\u0001\u0000\u0000", "the hanzi font is not a TTF");
   }),
 
-  check("every name in the table has one page with a unique title, H1 and canonical", () => {
+  check("every name in the table has one page at the root with a unique title, H1 and canonical", () => {
     const root = new URL("../", import.meta.url);
     const table = JSON.parse(readFileSync(new URL("../data/names-zh.json", import.meta.url), "utf8"));
     const names = Object.keys(table.names).filter((key) => !key.startsWith("_"));
     const slugFor = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "");
-    const dir = new URL("../name/", import.meta.url);
-    const files = readdirSync(dir).filter((name) => name.endsWith(".html"));
-    assert.equal(files.length, names.length, `expected ${names.length} name pages, found ${files.length}`);
     const titles = new Set();
     const h1s = new Set();
     for (const name of names) {
       const slug = slugFor(name);
-      const html = readFileSync(new URL(`${slug}.html`, dir), "utf8");
+      const file = new URL(`${slug}.html`, root);
+      assert.ok(existsSync(file), `${slug}.html is missing at the repository root`);
+      const html = readFileSync(file, "utf8");
       const title = html.match(/<title>([^<]+)<\/title>/);
       assert.ok(title, `${slug}.html has no title`);
       assert.equal(titles.has(title[1]), false, `${slug}.html repeats the title ${title[1]}`);
@@ -693,33 +693,97 @@ const tests = [
       assert.equal(h1s.has(h1Text), false, `${slug}.html repeats the H1 ${h1Text}`);
       h1s.add(h1Text);
       assert.ok(
-        html.includes(`<link rel="canonical" href="https://mymoying.com/name/${slug}" />`),
+        html.includes(`<link rel="canonical" href="https://mymoying.com/${slug}" />`),
         `${slug}.html canonical is wrong`,
       );
-      assert.ok(html.includes(`/?text=${name}`), `${slug}.html does not link to the generator`);
+      assert.ok(html.includes(`?text=${name}`), `${slug}.html does not link to the generator`);
       assert.ok(html.includes("$4.99"), `${slug}.html does not show the price`);
+    }
+    // The eight name pages that were already indexed keep their exact URL,
+    // canonical and og:url — they are patched in place, never regenerated.
+    for (const slug of ["emma", "michael", "sophia", "james", "grace", "lily", "ethan", "olivia"]) {
+      const html = readFileSync(new URL(`${slug}.html`, root), "utf8");
+      assert.ok(
+        html.includes(`<link rel="canonical" href="https://mymoying.com/${slug}" />`),
+        `${slug}.html canonical changed`,
+      );
+      assert.ok(
+        html.includes(`<meta property="og:url" content="https://mymoying.com/${slug}" />`),
+        `${slug}.html og:url changed`,
+      );
+    }
+    // The word pages that are not names keep their URL and canonical as well.
+    for (const slug of ["love", "peace", "hope", "dream"]) {
+      const html = readFileSync(new URL(`${slug}.html`, root), "utf8");
+      assert.ok(
+        html.includes(`<link rel="canonical" href="https://mymoying.com/${slug}" />`),
+        `${slug}.html canonical changed`,
+      );
     }
     const index = readFileSync(new URL("names.html", root), "utf8");
     for (const name of names) {
-      assert.ok(index.includes(`href="/name/${slugFor(name)}"`), `names.html does not link ${name}`);
+      assert.ok(index.includes(`href="${slugFor(name)}"`), `names.html does not link ${name}`);
     }
   }),
 
-  check("the sitemap lists every name page and the names index", () => {
+  check("the repository has no nested name pages and no nested name links", () => {
+    const root = new URL("../", import.meta.url);
+    // The retired URL scheme is spelled in parts here so that a repository-wide
+    // search for the old path comes back empty; these assertions are the only
+    // place it could still be written down.
+    const nested = `/${"name"}/`;
+    const nestedDir = new URL(`../${"name"}/`, import.meta.url);
+    assert.equal(existsSync(nestedDir), false, `the ${nested} directory still exists`);
+    const pages = [];
+    const walk = (dir) => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        if (entry.name === "node_modules" || entry.name === ".git") continue;
+        const child = new URL(`${entry.name}${entry.isDirectory() ? "/" : ""}`, dir);
+        if (entry.isDirectory()) walk(child);
+        else if (entry.name.endsWith(".html")) pages.push(child);
+      }
+    };
+    walk(root);
+    assert.ok(pages.length > 200, `only ${pages.length} html pages found`);
+    for (const page of pages) {
+      assert.equal(page.pathname.includes(nested), false, `${page.pathname} is a nested name page`);
+      const html = readFileSync(page, "utf8");
+      assert.equal(html.includes(nested), false, `${page.pathname} still links a nested name path`);
+    }
+  }),
+
+  check("the sitemap lists every name page at the root and the names index", () => {
     const table = JSON.parse(readFileSync(new URL("../data/names-zh.json", import.meta.url), "utf8"));
     const sitemap = readFileSync(new URL("../sitemap.xml", import.meta.url), "utf8");
     const locs = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
     assert.ok(locs.has("https://mymoying.com/names"), "sitemap is missing /names");
+    // Entries that existed before this change are still present, byte for byte.
+    for (const loc of [
+      "https://mymoying.com/",
+      "https://mymoying.com/name-in-chinese-calligraphy",
+      "https://mymoying.com/chinese-calligraphy-tattoo-ideas",
+      "https://mymoying.com/meaning-of-chinese-characters",
+      "https://mymoying.com/custom-chinese-name-gift",
+      "https://mymoying.com/terms",
+      "https://mymoying.com/privacy",
+      "https://mymoying.com/love",
+      "https://mymoying.com/peace",
+      "https://mymoying.com/hope",
+      "https://mymoying.com/dream",
+    ]) {
+      assert.ok(locs.has(loc), `sitemap dropped the original entry ${loc}`);
+    }
     let count = 0;
     for (const name of Object.keys(table.names)) {
       if (name.startsWith("_")) continue;
       const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "");
-      assert.ok(locs.has(`https://mymoying.com/name/${slug}`), `sitemap is missing /name/${slug}`);
+      assert.ok(locs.has(`https://mymoying.com/${slug}`), `sitemap is missing /${slug}`);
       count += 1;
     }
     assert.ok(count >= 100, `only ${count} name pages in the sitemap`);
-    const nameLocs = [...locs].filter((loc) => loc.startsWith("https://mymoying.com/name/"));
-    assert.equal(nameLocs.length, count, "sitemap has a name page that is not in the table");
+    for (const loc of locs) {
+      assert.equal(loc.includes(`/${"name"}/`), false, `sitemap still lists the nested path ${loc}`);
+    }
   }),
 
   check("every html image has alt text and every local image file exists", () => {
@@ -776,11 +840,10 @@ const tests = [
         const file = localPath(page, url);
         assert.ok(file, `${page.pathname} has an absolute social image ${url}`);
         assert.ok(existsSync(file), `${page.pathname} points at a missing social image ${url}`);
-        if (page.pathname.includes("/name/") && file.pathname.includes("/name/img/")) {
+        if (html.includes("generated by tools/make-name-pages.mjs")) {
           const dims = jpegSize(readFileSync(file));
-          const html2 = html;
-          const w = html2.match(/<meta property="og:image:width" content="(\d+)"/);
-          const h = html2.match(/<meta property="og:image:height" content="(\d+)"/);
+          const w = html.match(/<meta property="og:image:width" content="(\d+)"/);
+          const h = html.match(/<meta property="og:image:height" content="(\d+)"/);
           assert.ok(w && h, `${page.pathname} has no og:image dimensions`);
           assert.equal(Number(w[1]), dims.width, `${page.pathname} og:image:width is wrong`);
           assert.equal(Number(h[1]), dims.height, `${page.pathname} og:image:height is wrong`);

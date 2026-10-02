@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * Render the small sample image used by every /name/<slug> page.
+ * Render the small sample image used by every name page.
  *
  *   cd tools/make-pins && npm install
  *   node tools/make-name-images.mjs
  *
- * One 480x640 JPEG per name lands in name/img/. The image is the site's own
+ * One 480x640 JPEG per name lands in samples/. The image is the site's own
  * brush renderer (app.js) drawing the English letters plus the Chinese name
  * below them, at the free-preview quality: the same "mymoying.com preview"
  * mark the unpaid generator shows, so a page can never leak the clean
@@ -216,7 +216,7 @@ async function main() {
   const names = loadNames().filter((entry) => !only || entry.slug === only);
   if (!names.length) throw new Error(`No names matched --only ${only}`);
 
-  const outDir = path.join(ROOT, "name", "img");
+  const outDir = path.join(ROOT, "samples");
   fs.mkdirSync(outDir, { recursive: true });
   const { server, port } = await startServer(buildRuntime());
   const browser = await puppeteer.launch({
