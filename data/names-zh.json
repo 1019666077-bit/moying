@@ -1,970 +1,2696 @@
 {
   "_note": "Transliterations are the conventional written forms (通行音译) commonly used for these names in mainland China. They are chosen by sound, not by meaning, and are given for reference only. Have a person review them before any permanent use such as a tattoo. This table is fixed data; no AI generation happens at request time.",
   "_pinyinNote": "The pinyin field is derived from the Chinese characters with tone marks and is given for reference only. A person must review it before any permanent use such as a tattoo, because some characters have more than one reading.",
+  "_charMeanings": {
+    "东": "east",
+    "丝": "silk, thread",
+    "丹": "cinnabar, red",
+    "丽": "beautiful",
+    "乔": "tall, lofty",
+    "亚": "Asia, second",
+    "亨": "prosperous, smooth",
+    "什": "miscellaneous",
+    "以": "by means of, with",
+    "伊": "he, she (classical)",
+    "伦": "human relations, ethics",
+    "伯": "uncle, earl",
+    "佐": "assist",
+    "佩": "wear, admire",
+    "保": "protect",
+    "修": "cultivate, repair",
+    "克": "overcome, gram",
+    "兰": "orchid",
+    "兹": "this, now",
+    "内": "inside",
+    "凯": "triumphant, victorious",
+    "切": "cut, close",
+    "利": "sharp, benefit",
+    "加": "add",
+    "劳": "labor, toil",
+    "勒": "rein in, engrave",
+    "华": "splendid, China",
+    "南": "south",
+    "博": "broad, learned",
+    "卡": "card, checkpoint",
+    "卢": "hut (a surname)",
+    "历": "experience, calendar",
+    "古": "ancient",
+    "史": "history",
+    "各": "each",
+    "吉": "lucky",
+    "哈": "ha (a laugh)",
+    "唐": "the Tang dynasty",
+    "坦": "flat, open",
+    "埃": "dust",
+    "基": "base, foundation",
+    "塔": "tower, pagoda",
+    "塞": "block, fort",
+    "夏": "summer",
+    "多": "many",
+    "大": "big",
+    "夫": "man, husband",
+    "奎": "a constellation, stride",
+    "奥": "profound, Austria",
+    "妮": "girl, maid",
+    "姆": "nursemaid, mother",
+    "威": "power, might",
+    "娅": "aunt by marriage (in names)",
+    "娜": "elegant (in names)",
+    "安": "peace, safe",
+    "尔": "you, thus",
+    "尤": "especially",
+    "尼": "nun (transliteration)",
+    "山": "mountain",
+    "布": "cloth, spread",
+    "希": "hope, rare",
+    "帕": "handkerchief",
+    "库": "warehouse",
+    "康": "health, peace",
+    "廉": "honest, incorruptible",
+    "廷": "court",
+    "弗": "not",
+    "当": "ought, match",
+    "彼": "that, other",
+    "得": "obtain",
+    "德": "virtue, morality",
+    "思": "think, thought",
+    "恩": "grace, favor",
+    "戈": "spear, weapon",
+    "戴": "wear, respect",
+    "扎": "bind, prick",
+    "托": "support, entrust",
+    "拉": "pull",
+    "文": "writing, culture",
+    "斐": "rich in literary grace",
+    "斯": "this (transliteration)",
+    "明": "bright",
+    "易": "easy, change",
+    "普": "general, universal",
+    "曼": "graceful, long",
+    "朗": "clear, bright",
+    "本": "root, origin",
+    "朱": "vermilion",
+    "杰": "outstanding",
+    "林": "forest",
+    "果": "fruit, result",
+    "查": "inspect",
+    "根": "root",
+    "格": "pattern, standard",
+    "桑": "mulberry",
+    "梅": "plum",
+    "森": "forest",
+    "欧": "Europe (a surname)",
+    "歇": "rest",
+    "比": "compare",
+    "汀": "shore, sandbar",
+    "汉": "Han, Chinese, man",
+    "沃": "fertile, irrigate",
+    "治": "govern, cure",
+    "泰": "peaceful, grand",
+    "泽": "marsh, grace",
+    "洛": "the Luo river",
+    "海": "sea",
+    "烈": "fierce, intense",
+    "爱": "love",
+    "特": "special",
+    "玛": "agate",
+    "珀": "amber",
+    "珊": "coral",
+    "珍": "treasure, precious",
+    "理": "reason, texture",
+    "琳": "beautiful jade",
+    "琼": "fine jade",
+    "瑞": "auspicious, lucky",
+    "瑟": "a zither (transliteration)",
+    "瓦": "tile",
+    "甘": "sweet",
+    "登": "ascend",
+    "白": "white",
+    "盖": "lid, cover",
+    "科": "science, subject",
+    "穆": "solemn, respectful",
+    "米": "rice",
+    "索": "rope, search",
+    "约": "pact, about",
+    "纳": "receive, accept",
+    "维": "maintain, dimension",
+    "缪": "entwine (transliteration)",
+    "罕": "rare",
+    "罗": "net, collect",
+    "翰": "writing brush (a surname)",
+    "肖": "resemble",
+    "肯": "willing",
+    "舒": "stretch, comfortable",
+    "艾": "mugwort, artemisia",
+    "芙": "lotus",
+    "芬": "fragrance",
+    "芭": "a plant (transliteration)",
+    "苏": "revive (a surname)",
+    "莉": "jasmine",
+    "莎": "sedge, a plant",
+    "莫": "no, none",
+    "莱": "a herb (transliteration)",
+    "菲": "fragrant (a plant)",
+    "萝": "radish, trailing plant",
+    "萨": "bodhisattva (transliteration)",
+    "蒂": "stem (of fruit)",
+    "蒙": "cover, deceive",
+    "蕾": "bud",
+    "薇": "a fern, rose (in names)",
+    "西": "west",
+    "詹": "verbose (a surname)",
+    "诺": "promise",
+    "谢": "thank",
+    "贝": "shell, cowrie",
+    "费": "fee, cost",
+    "贾": "merchant (a surname)",
+    "赖": "rely",
+    "路": "road",
+    "辛": "bitter, laborious",
+    "达": "reach",
+    "迈": "stride",
+    "迪": "enlighten, guide",
+    "迭": "alternate",
+    "逊": "humble, yielding",
+    "里": "inside, a mile",
+    "金": "gold, metal",
+    "阿": "a prefix, hill",
+    "雅": "elegant, refined",
+    "雨": "rain",
+    "雪": "snow",
+    "雷": "thunder",
+    "露": "dew, reveal",
+    "韦": "leather (a surname)",
+    "马": "horse",
+    "鲁": "blunt, the state of Lu",
+    "麦": "wheat",
+    "黑": "black",
+    "默": "silent",
+    "黛": "dark blue (eyebrow pigment)",
+    "怀": "bosom, cherish",
+    "赛": "contest, match",
+    "裘": "fur coat (a surname)",
+    "舍": "house, give up",
+    "莲": "lotus",
+    "娃": "baby, doll",
+    "典": "canon, classic",
+    "因": "cause, because",
+    "凡": "ordinary, every",
+    "生": "birth, life, student",
+    "蔡": "a herb (a surname)",
+    "万": "ten thousand",
+    "拿": "take, hold",
+    "耶": "a final particle (transliteration)",
+    "巴": "to long for, a place name"
+  },
   "names": {
-    "Michael": {
-      "zh": "迈克尔",
-      "pinyin": "Mài kè ěr"
-    },
-    "James": {
-      "zh": "詹姆斯",
-      "pinyin": "Zhān mǔ sī"
-    },
-    "John": {
-      "zh": "约翰",
-      "pinyin": "Yuē hàn"
-    },
-    "Robert": {
-      "zh": "罗伯特",
-      "pinyin": "Luó bó tè"
-    },
-    "David": {
-      "zh": "戴维",
-      "pinyin": "Dài wéi"
-    },
-    "William": {
-      "zh": "威廉",
-      "pinyin": "Wēi lián"
-    },
-    "Richard": {
-      "zh": "理查德",
-      "pinyin": "Lǐ chá dé"
-    },
-    "Joseph": {
-      "zh": "约瑟夫",
-      "pinyin": "Yuē sè fū"
-    },
-    "Thomas": {
-      "zh": "托马斯",
-      "pinyin": "Tuō mǎ sī"
-    },
-    "Charles": {
-      "zh": "查尔斯",
-      "pinyin": "Chá ěr sī"
-    },
-    "Christopher": {
-      "zh": "克里斯托弗",
-      "pinyin": "Kè lǐ sī tuō fú"
-    },
-    "Daniel": {
-      "zh": "丹尼尔",
-      "pinyin": "Dān ní ěr"
-    },
-    "Matthew": {
-      "zh": "马修",
-      "pinyin": "Mǎ xiū"
-    },
-    "Anthony": {
-      "zh": "安东尼",
-      "pinyin": "Ān dōng ní"
-    },
-    "Mark": {
-      "zh": "马克",
-      "pinyin": "Mǎ kè"
-    },
-    "Donald": {
-      "zh": "唐纳德",
-      "pinyin": "Táng nà dé"
-    },
-    "Steven": {
-      "zh": "史蒂文",
-      "pinyin": "Shǐ dì wén"
-    },
-    "Paul": {
-      "zh": "保罗",
-      "pinyin": "Bǎo luó"
-    },
-    "Andrew": {
-      "zh": "安德鲁",
-      "pinyin": "Ān dé lǔ"
-    },
-    "Joshua": {
-      "zh": "乔舒亚",
-      "pinyin": "Qiáo shū yà"
-    },
-    "Kenneth": {
-      "zh": "肯尼思",
-      "pinyin": "Kěn ní sī"
-    },
-    "Kevin": {
-      "zh": "凯文",
-      "pinyin": "Kǎi wén"
-    },
-    "Brian": {
-      "zh": "布赖恩",
-      "pinyin": "Bù lài ēn"
-    },
-    "George": {
-      "zh": "乔治",
-      "pinyin": "Qiáo zhì"
-    },
-    "Edward": {
-      "zh": "爱德华",
-      "pinyin": "Ài dé huá"
-    },
-    "Ronald": {
-      "zh": "罗纳德",
-      "pinyin": "Luó nà dé"
-    },
-    "Timothy": {
-      "zh": "蒂莫西",
-      "pinyin": "Dì mò xī"
-    },
-    "Jason": {
-      "zh": "杰森",
-      "pinyin": "Jié sēn"
-    },
-    "Jeffrey": {
-      "zh": "杰弗里",
-      "pinyin": "Jié fú lǐ"
-    },
-    "Ryan": {
-      "zh": "瑞安",
-      "pinyin": "Ruì ān"
-    },
-    "Jacob": {
-      "zh": "雅各布",
-      "pinyin": "Yǎ gè bù"
-    },
-    "Gary": {
-      "zh": "加里",
-      "pinyin": "Jiā lǐ"
-    },
-    "Nicholas": {
-      "zh": "尼古拉斯",
-      "pinyin": "Ní gǔ lā sī"
-    },
-    "Eric": {
-      "zh": "埃里克",
-      "pinyin": "Āi lǐ kè"
-    },
-    "Jonathan": {
-      "zh": "乔纳森",
-      "pinyin": "Qiáo nà sēn"
-    },
-    "Stephen": {
-      "zh": "斯蒂芬",
-      "pinyin": "Sī dì fēn"
-    },
-    "Larry": {
-      "zh": "拉里",
-      "pinyin": "Lā lǐ"
-    },
-    "Justin": {
-      "zh": "贾斯廷",
-      "pinyin": "Jiǎ sī tíng"
-    },
-    "Scott": {
-      "zh": "斯科特",
-      "pinyin": "Sī kē tè"
-    },
-    "Brandon": {
-      "zh": "布兰登",
-      "pinyin": "Bù lán dēng"
-    },
-    "Benjamin": {
-      "zh": "本杰明",
-      "pinyin": "Běn jié míng"
-    },
-    "Samuel": {
-      "zh": "塞缪尔",
-      "pinyin": "Sāi miù ěr"
-    },
-    "Gregory": {
-      "zh": "格雷戈里",
-      "pinyin": "Gé léi gē lǐ"
-    },
-    "Alexander": {
-      "zh": "亚历山大",
-      "pinyin": "Yà lì shān dà"
-    },
-    "Patrick": {
-      "zh": "帕特里克",
-      "pinyin": "Pà tè lǐ kè"
-    },
-    "Frank": {
-      "zh": "弗兰克",
-      "pinyin": "Fú lán kè"
-    },
-    "Raymond": {
-      "zh": "雷蒙德",
-      "pinyin": "Léi méng dé"
-    },
-    "Jack": {
-      "zh": "杰克",
-      "pinyin": "Jié kè"
-    },
-    "Dennis": {
-      "zh": "丹尼斯",
-      "pinyin": "Dān ní sī"
-    },
-    "Jerry": {
-      "zh": "杰里",
-      "pinyin": "Jié lǐ"
-    },
-    "Tyler": {
-      "zh": "泰勒",
-      "pinyin": "Tài lè"
-    },
     "Aaron": {
       "zh": "亚伦",
-      "pinyin": "Yà lún"
-    },
-    "Henry": {
-      "zh": "亨利",
-      "pinyin": "Hēng lì"
-    },
-    "Peter": {
-      "zh": "彼得",
-      "pinyin": "Bǐ dé"
-    },
-    "Adam": {
-      "zh": "亚当",
-      "pinyin": "Yà dāng"
-    },
-    "Zachary": {
-      "zh": "扎卡里",
-      "pinyin": "Zhā kǎ lǐ"
-    },
-    "Nathan": {
-      "zh": "内森",
-      "pinyin": "Nèi sēn"
-    },
-    "Walter": {
-      "zh": "沃尔特",
-      "pinyin": "Wò ěr tè"
-    },
-    "Kyle": {
-      "zh": "凯尔",
-      "pinyin": "Kǎi ěr"
-    },
-    "Harold": {
-      "zh": "哈罗德",
-      "pinyin": "Hā luó dé"
-    },
-    "Carl": {
-      "zh": "卡尔",
-      "pinyin": "Kǎ ěr"
-    },
-    "Jeremy": {
-      "zh": "杰里米",
-      "pinyin": "Jié lǐ mǐ"
-    },
-    "Gerald": {
-      "zh": "杰拉尔德",
-      "pinyin": "Jié lā ěr dé"
-    },
-    "Keith": {
-      "zh": "基思",
-      "pinyin": "Jī sī"
-    },
-    "Roger": {
-      "zh": "罗杰",
-      "pinyin": "Luó jié"
-    },
-    "Arthur": {
-      "zh": "阿瑟",
-      "pinyin": "Ā sè"
-    },
-    "Terry": {
-      "zh": "特里",
-      "pinyin": "Tè lǐ"
-    },
-    "Lawrence": {
-      "zh": "劳伦斯",
-      "pinyin": "Láo lún sī"
-    },
-    "Sean": {
-      "zh": "肖恩",
-      "pinyin": "Xiào ēn"
-    },
-    "Christian": {
-      "zh": "克里斯蒂安",
-      "pinyin": "Kè lǐ sī dì ān"
-    },
-    "Albert": {
-      "zh": "阿尔伯特",
-      "pinyin": "Ā ěr bó tè"
-    },
-    "Ethan": {
-      "zh": "伊桑",
-      "pinyin": "Yī sāng"
-    },
-    "Austin": {
-      "zh": "奥斯汀",
-      "pinyin": "Ào sī tīng"
-    },
-    "Jesse": {
-      "zh": "杰西",
-      "pinyin": "Jié xī"
-    },
-    "Bruce": {
-      "zh": "布鲁斯",
-      "pinyin": "Bù lǔ sī"
-    },
-    "Jordan": {
-      "zh": "乔丹",
-      "pinyin": "Qiáo dān"
-    },
-    "Ralph": {
-      "zh": "拉尔夫",
-      "pinyin": "Lā ěr fū"
-    },
-    "Roy": {
-      "zh": "罗伊",
-      "pinyin": "Luó yī"
-    },
-    "Noah": {
-      "zh": "诺亚",
-      "pinyin": "Nuò yà"
-    },
-    "Eugene": {
-      "zh": "尤金",
-      "pinyin": "Yóu jīn"
-    },
-    "Wayne": {
-      "zh": "韦恩",
-      "pinyin": "Wéi ēn"
-    },
-    "Louis": {
-      "zh": "路易斯",
-      "pinyin": "Lù yì sī"
-    },
-    "Philip": {
-      "zh": "菲利普",
-      "pinyin": "Fēi lì pǔ"
-    },
-    "Bradley": {
-      "zh": "布拉德利",
-      "pinyin": "Bù lā dé lì"
-    },
-    "Oliver": {
-      "zh": "奥利弗",
-      "pinyin": "Ào lì fú"
-    },
-    "Liam": {
-      "zh": "利亚姆",
-      "pinyin": "Lì yà mǔ"
-    },
-    "Lucas": {
-      "zh": "卢卡斯",
-      "pinyin": "Lú kǎ sī"
-    },
-    "Mason": {
-      "zh": "梅森",
-      "pinyin": "Méi sēn"
-    },
-    "Logan": {
-      "zh": "洛根",
-      "pinyin": "Luò gēn"
-    },
-    "Elijah": {
-      "zh": "以利亚",
-      "pinyin": "Yǐ lì yà"
-    },
-    "Aiden": {
-      "zh": "艾登",
-      "pinyin": "Ài dēng"
-    },
-    "Carter": {
-      "zh": "卡特",
-      "pinyin": "Kǎ tè"
-    },
-    "Owen": {
-      "zh": "欧文",
-      "pinyin": "Ōu wén"
-    },
-    "Caleb": {
-      "zh": "凯莱布",
-      "pinyin": "Kǎi lái bù"
-    },
-    "Julian": {
-      "zh": "朱利安",
-      "pinyin": "Zhū lì ān"
-    },
-    "Levi": {
-      "zh": "利瓦伊",
-      "pinyin": "Lì wǎ yī"
-    },
-    "Isaac": {
-      "zh": "艾萨克",
-      "pinyin": "Ài sà kè"
-    },
-    "Lincoln": {
-      "zh": "林肯",
-      "pinyin": "Lín kěn"
-    },
-    "Connor": {
-      "zh": "康纳",
-      "pinyin": "Kāng nà"
-    },
-    "Hunter": {
-      "zh": "亨特",
-      "pinyin": "Hēng tè"
-    },
-    "Miles": {
-      "zh": "迈尔斯",
-      "pinyin": "Mài ěr sī"
-    },
-    "Ian": {
-      "zh": "伊恩",
-      "pinyin": "Yī ēn"
-    },
-    "Cole": {
-      "zh": "科尔",
-      "pinyin": "Kē ěr"
-    },
-    "Dominic": {
-      "zh": "多米尼克",
-      "pinyin": "Duō mǐ ní kè"
-    },
-    "Diego": {
-      "zh": "迭戈",
-      "pinyin": "Dié gē"
-    },
-    "Carlos": {
-      "zh": "卡洛斯",
-      "pinyin": "Kǎ luò sī"
-    },
-    "Marco": {
-      "zh": "马尔科",
-      "pinyin": "Mǎ ěr kē"
-    },
-    "Antonio": {
-      "zh": "安东尼奥",
-      "pinyin": "Ān dōng ní ào"
-    },
-    "Rafael": {
-      "zh": "拉斐尔",
-      "pinyin": "Lā fěi ěr"
-    },
-    "Mohamed": {
-      "zh": "穆罕默德",
-      "pinyin": "Mù hǎn mò dé"
-    },
-    "Omar": {
-      "zh": "奥马尔",
-      "pinyin": "Ào mǎ ěr"
-    },
-    "Victor": {
-      "zh": "维克托",
-      "pinyin": "Wéi kè tuō"
-    },
-    "Vincent": {
-      "zh": "文森特",
-      "pinyin": "Wén sēn tè"
-    },
-    "Alan": {
-      "zh": "艾伦",
-      "pinyin": "Ài lún"
-    },
-    "Shawn": {
-      "zh": "肖恩",
-      "pinyin": "Xiào ēn"
-    },
-    "Derek": {
-      "zh": "德里克",
-      "pinyin": "Dé lǐ kè"
-    },
-    "Shane": {
-      "zh": "谢恩",
-      "pinyin": "Xiè ēn"
-    },
-    "Cody": {
-      "zh": "科迪",
-      "pinyin": "Kē dí"
-    },
-    "Blake": {
-      "zh": "布莱克",
-      "pinyin": "Bù lái kè"
-    },
-    "Colin": {
-      "zh": "科林",
-      "pinyin": "Kē lín"
-    },
-    "Marcus": {
-      "zh": "马库斯",
-      "pinyin": "Mǎ kù sī"
-    },
-    "Trevor": {
-      "zh": "特雷弗",
-      "pinyin": "Tè léi fú"
-    },
-    "Seth": {
-      "zh": "塞思",
-      "pinyin": "Sāi sī"
-    },
-    "Dean": {
-      "zh": "迪恩",
-      "pinyin": "Dí ēn"
-    },
-    "Grant": {
-      "zh": "格兰特",
-      "pinyin": "Gé lán tè"
-    },
-    "Cameron": {
-      "zh": "卡梅伦",
-      "pinyin": "Kǎ méi lún"
-    },
-    "Tristan": {
-      "zh": "特里斯坦",
-      "pinyin": "Tè lǐ sī tǎn"
-    },
-    "Xavier": {
-      "zh": "泽维尔",
-      "pinyin": "Zé wéi ěr"
-    },
-    "Felix": {
-      "zh": "费利克斯",
-      "pinyin": "Fèi lì kè sī"
-    },
-    "Hugo": {
-      "zh": "雨果",
-      "pinyin": "Yǔ guǒ"
-    },
-    "Leo": {
-      "zh": "利奥",
-      "pinyin": "Lì ào"
-    },
-    "Mary": {
-      "zh": "玛丽",
-      "pinyin": "Mǎ lì"
-    },
-    "Patricia": {
-      "zh": "帕特里夏",
-      "pinyin": "Pà tè lǐ xià"
-    },
-    "Jennifer": {
-      "zh": "珍妮弗",
-      "pinyin": "Zhēn nī fú"
-    },
-    "Linda": {
-      "zh": "琳达",
-      "pinyin": "Lín dá"
-    },
-    "Elizabeth": {
-      "zh": "伊丽莎白",
-      "pinyin": "Yī lì shā bái"
-    },
-    "Barbara": {
-      "zh": "芭芭拉",
-      "pinyin": "Bā bā lā"
-    },
-    "Susan": {
-      "zh": "苏珊",
-      "pinyin": "Sū shān"
-    },
-    "Jessica": {
-      "zh": "杰西卡",
-      "pinyin": "Jié xī kǎ"
-    },
-    "Sarah": {
-      "zh": "萨拉",
-      "pinyin": "Sà lā"
-    },
-    "Karen": {
-      "zh": "卡伦",
-      "pinyin": "Kǎ lún"
-    },
-    "Nancy": {
-      "zh": "南希",
-      "pinyin": "Nán xī"
-    },
-    "Lisa": {
-      "zh": "莉萨",
-      "pinyin": "Lì sà"
-    },
-    "Margaret": {
-      "zh": "玛格丽特",
-      "pinyin": "Mǎ gé lì tè"
-    },
-    "Sandra": {
-      "zh": "桑德拉",
-      "pinyin": "Sāng dé lā"
-    },
-    "Ashley": {
-      "zh": "阿什利",
-      "pinyin": "Ā shén lì"
-    },
-    "Dorothy": {
-      "zh": "多萝西",
-      "pinyin": "Duō luó xī"
-    },
-    "Kimberly": {
-      "zh": "金伯利",
-      "pinyin": "Jīn bó lì"
-    },
-    "Emily": {
-      "zh": "埃米莉",
-      "pinyin": "Āi mǐ lì"
-    },
-    "Donna": {
-      "zh": "唐娜",
-      "pinyin": "Táng nà"
-    },
-    "Michelle": {
-      "zh": "米歇尔",
-      "pinyin": "Mǐ xiē ěr"
-    },
-    "Carol": {
-      "zh": "卡罗尔",
-      "pinyin": "Kǎ luó ěr"
-    },
-    "Amanda": {
-      "zh": "阿曼达",
-      "pinyin": "Ā màn dá"
-    },
-    "Melissa": {
-      "zh": "梅利莎",
-      "pinyin": "Méi lì shā"
-    },
-    "Deborah": {
-      "zh": "德博拉",
-      "pinyin": "Dé bó lā"
-    },
-    "Stephanie": {
-      "zh": "斯蒂芬妮",
-      "pinyin": "Sī dì fēn nī"
-    },
-    "Rebecca": {
-      "zh": "丽贝卡",
-      "pinyin": "Lì bèi kǎ"
-    },
-    "Laura": {
-      "zh": "劳拉",
-      "pinyin": "Láo lā"
-    },
-    "Sharon": {
-      "zh": "莎伦",
-      "pinyin": "Shā lún"
-    },
-    "Cynthia": {
-      "zh": "辛西娅",
-      "pinyin": "Xīn xī yà"
-    },
-    "Kathleen": {
-      "zh": "凯瑟琳",
-      "pinyin": "Kǎi sè lín"
-    },
-    "Amy": {
-      "zh": "埃米",
-      "pinyin": "Āi mǐ"
-    },
-    "Shirley": {
-      "zh": "雪莉",
-      "pinyin": "Xuě lì"
-    },
-    "Angela": {
-      "zh": "安杰拉",
-      "pinyin": "Ān jié lā"
-    },
-    "Helen": {
-      "zh": "海伦",
-      "pinyin": "Hǎi lún"
-    },
-    "Anna": {
-      "zh": "安娜",
-      "pinyin": "Ān nà"
-    },
-    "Brenda": {
-      "zh": "布伦达",
-      "pinyin": "Bù lún dá"
-    },
-    "Pamela": {
-      "zh": "帕梅拉",
-      "pinyin": "Pà méi lā"
-    },
-    "Nicole": {
-      "zh": "妮科尔",
-      "pinyin": "Nī kē ěr"
-    },
-    "Samantha": {
-      "zh": "萨曼莎",
-      "pinyin": "Sà màn shā"
-    },
-    "Katherine": {
-      "zh": "凯瑟琳",
-      "pinyin": "Kǎi sè lín"
-    },
-    "Christine": {
-      "zh": "克里斯蒂娜",
-      "pinyin": "Kè lǐ sī dì nà"
-    },
-    "Emma": {
-      "zh": "艾玛",
-      "pinyin": "Ài mǎ"
-    },
-    "Debra": {
-      "zh": "黛布拉",
-      "pinyin": "Dài bù lā"
-    },
-    "Rachel": {
-      "zh": "蕾切尔",
-      "pinyin": "Lěi qiè ěr"
-    },
-    "Carolyn": {
-      "zh": "卡罗琳",
-      "pinyin": "Kǎ luó lín"
-    },
-    "Janet": {
-      "zh": "珍妮特",
-      "pinyin": "Zhēn nī tè"
-    },
-    "Virginia": {
-      "zh": "弗吉尼亚",
-      "pinyin": "Fú jí ní yà"
-    },
-    "Maria": {
-      "zh": "玛丽亚",
-      "pinyin": "Mǎ lì yà"
-    },
-    "Heather": {
-      "zh": "希瑟",
-      "pinyin": "Xī sè"
-    },
-    "Diane": {
-      "zh": "黛安",
-      "pinyin": "Dài ān"
-    },
-    "Julie": {
-      "zh": "朱莉",
-      "pinyin": "Zhū lì"
-    },
-    "Joyce": {
-      "zh": "乔伊斯",
-      "pinyin": "Qiáo yī sī"
-    },
-    "Victoria": {
-      "zh": "维多利亚",
-      "pinyin": "Wéi duō lì yà"
-    },
-    "Ruth": {
-      "zh": "露丝",
-      "pinyin": "Lù sī"
-    },
-    "Olivia": {
-      "zh": "奥利维亚",
-      "pinyin": "Ào lì wéi yà"
-    },
-    "Kelly": {
-      "zh": "凯莉",
-      "pinyin": "Kǎi lì"
-    },
-    "Christina": {
-      "zh": "克里斯蒂娜",
-      "pinyin": "Kè lǐ sī dì nà"
-    },
-    "Lauren": {
-      "zh": "劳伦",
-      "pinyin": "Láo lún"
-    },
-    "Joan": {
-      "zh": "琼",
-      "pinyin": "Qióng"
-    },
-    "Evelyn": {
-      "zh": "伊芙琳",
-      "pinyin": "Yī fú lín"
-    },
-    "Judith": {
-      "zh": "朱迪思",
-      "pinyin": "Zhū dí sī"
-    },
-    "Megan": {
-      "zh": "梅甘",
-      "pinyin": "Méi gān"
-    },
-    "Andrea": {
-      "zh": "安德烈娅",
-      "pinyin": "Ān dé liè yà"
-    },
-    "Cheryl": {
-      "zh": "谢丽尔",
-      "pinyin": "Xiè lì ěr"
-    },
-    "Hannah": {
-      "zh": "汉娜",
-      "pinyin": "Hàn nà"
-    },
-    "Jacqueline": {
-      "zh": "杰奎琳",
-      "pinyin": "Jié kuí lín"
-    },
-    "Martha": {
-      "zh": "玛莎",
-      "pinyin": "Mǎ shā"
-    },
-    "Gloria": {
-      "zh": "格洛丽亚",
-      "pinyin": "Gé luò lì yà"
-    },
-    "Teresa": {
-      "zh": "特蕾莎",
-      "pinyin": "Tè lěi shā"
-    },
-    "Madison": {
-      "zh": "麦迪逊",
-      "pinyin": "Mài dí xùn"
-    },
-    "Frances": {
-      "zh": "弗朗西丝",
-      "pinyin": "Fú lǎng xī sī"
-    },
-    "Janice": {
-      "zh": "贾尼丝",
-      "pinyin": "Jiǎ ní sī"
+      "pinyin": "Yà lún",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "exalted, high mountain",
+      "note": "In the Bible, Aaron was the brother of Moses and the first high priest of Israel."
     },
     "Abigail": {
       "zh": "阿比盖尔",
-      "pinyin": "Ā bǐ gài ěr"
+      "pinyin": "Ā bǐ gài ěr",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "my father's joy",
+      "note": "In the Bible, Abigail was a wise and beautiful wife of King David."
+    },
+    "Adam": {
+      "zh": "亚当",
+      "pinyin": "Yà dāng",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "man, earth",
+      "note": "In the Bible, Adam is the first man in the Book of Genesis."
+    },
+    "Addison": {
+      "zh": "艾迪生",
+      "pinyin": "Ài dí shēng",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "son of Adam",
+      "note": "A surname meaning 'son of Adam' that became a top girls' pick in the 2000s."
+    },
+    "Adeline": {
+      "zh": "阿德琳",
+      "pinyin": "Ā dé lín",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "noble",
+      "note": "A French name meaning 'noble' that has been revived in the 21st century."
+    },
+    "Adrian": {
+      "zh": "阿德里安",
+      "pinyin": "Ā dé lǐ ān",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "from Hadria (a town in northern Italy)",
+      "note": "The name of a Roman emperor and of several early popes."
+    },
+    "Aiden": {
+      "zh": "艾登",
+      "pinyin": "Ài dēng",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "little fire",
+      "note": "A modern favourite with Irish roots, often chosen for its bright, energetic sound."
+    },
+    "Alan": {
+      "zh": "艾伦",
+      "pinyin": "Ài lún",
+      "gender": "m",
+      "origin": "Celtic",
+      "meaning": "handsome, cheerful (of uncertain origin)",
+      "note": "A classic Gaelic name that has stayed common across the English-speaking world for generations."
+    },
+    "Albert": {
+      "zh": "阿尔伯特",
+      "pinyin": "Ā ěr bó tè",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "noble and bright",
+      "note": "Albert Einstein, the physicist who developed the theory of relativity, carried this name."
+    },
+    "Alexander": {
+      "zh": "亚历山大",
+      "pinyin": "Yà lì shān dà",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "defender of the people",
+      "note": "Alexander the Great, the ancient Macedonian king, is the name's most famous bearer."
+    },
+    "Alexandra": {
+      "zh": "亚历山德拉",
+      "pinyin": "Yà lì shān dé lā",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "defender of the people",
+      "note": "The feminine of Alexander, carried by the last tsarina of Russia."
     },
     "Alice": {
       "zh": "艾丽斯",
-      "pinyin": "Ài lì sī"
+      "pinyin": "Ài lì sī",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "noble",
+      "note": "Lewis Carroll's Alice's Adventures in Wonderland made the name a literary icon."
     },
-    "Judy": {
-      "zh": "朱迪",
-      "pinyin": "Zhū dí"
-    },
-    "Sophia": {
-      "zh": "索菲娅",
-      "pinyin": "Suǒ fēi yà"
-    },
-    "Grace": {
-      "zh": "格蕾丝",
-      "pinyin": "Gé lěi sī"
-    },
-    "Lily": {
-      "zh": "莉莉",
-      "pinyin": "Lì lì"
-    },
-    "Chloe": {
-      "zh": "克洛艾",
-      "pinyin": "Kè luò ài"
-    },
-    "Zoe": {
-      "zh": "佐伊",
-      "pinyin": "Zuǒ yī"
-    },
-    "Nora": {
-      "zh": "诺拉",
-      "pinyin": "Nuò lā"
-    },
-    "Hazel": {
-      "zh": "黑兹尔",
-      "pinyin": "Hēi zī ěr"
-    },
-    "Aurora": {
-      "zh": "奥罗拉",
-      "pinyin": "Ào luó lā"
-    },
-    "Penelope": {
-      "zh": "佩内洛普",
-      "pinyin": "Pèi nèi luò pǔ"
-    },
-    "Layla": {
-      "zh": "蕾拉",
-      "pinyin": "Lěi lā"
-    },
-    "Riley": {
-      "zh": "赖利",
-      "pinyin": "Lài lì"
-    },
-    "Scarlett": {
-      "zh": "斯卡利特",
-      "pinyin": "Sī kǎ lì tè"
-    },
-    "Aria": {
-      "zh": "阿丽亚",
-      "pinyin": "Ā lì yà"
-    },
-    "Mia": {
-      "zh": "米娅",
-      "pinyin": "Mǐ yà"
-    },
-    "Ella": {
-      "zh": "埃拉",
-      "pinyin": "Āi lā"
-    },
-    "Avery": {
-      "zh": "艾弗里",
-      "pinyin": "Ài fú lǐ"
-    },
-    "Harper": {
-      "zh": "哈珀",
-      "pinyin": "Hā pò"
-    },
-    "Camila": {
-      "zh": "卡米拉",
-      "pinyin": "Kǎ mǐ lā"
-    },
-    "Sofia": {
-      "zh": "索菲娅",
-      "pinyin": "Suǒ fēi yà"
+    "Amanda": {
+      "zh": "阿曼达",
+      "pinyin": "Ā màn dá",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "worthy of love",
+      "note": "A Latin name meaning 'worthy of love' that peaked in the 1980s."
     },
     "Amelia": {
       "zh": "阿梅莉亚",
-      "pinyin": "Ā méi lì yà"
+      "pinyin": "Ā méi lì yà",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "industrious, striving",
+      "note": "A name with aviation history through the pilot Amelia Earhart."
     },
-    "Isabella": {
-      "zh": "伊莎贝拉",
-      "pinyin": "Yī shā bèi lā"
+    "Amy": {
+      "zh": "埃米",
+      "pinyin": "Āi mǐ",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "beloved",
+      "note": "A friendly French name meaning 'beloved', a favourite of the 1970s."
     },
-    "Natalie": {
-      "zh": "娜塔莉",
-      "pinyin": "Nà tǎ lì"
+    "Andrea": {
+      "zh": "安德烈娅",
+      "pinyin": "Ān dé liè yà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "strong, brave (feminine of Andrew)",
+      "note": "The feminine of Andrew, common across many European languages."
     },
-    "Violet": {
-      "zh": "维奥莱特",
-      "pinyin": "Wéi ào lái tè"
+    "Andrew": {
+      "zh": "安德鲁",
+      "pinyin": "Ān dé lǔ",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "manly, brave",
+      "note": "Saint Andrew is the patron saint of Scotland and one of the twelve apostles."
     },
-    "Willow": {
-      "zh": "薇洛",
-      "pinyin": "Wēi luò"
+    "Angela": {
+      "zh": "安杰拉",
+      "pinyin": "Ān jié lā",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "messenger, angel",
+      "note": "From the Greek for 'messenger', and the name of the civil-rights activist Angela Davis."
     },
-    "Ivy": {
-      "zh": "艾薇",
-      "pinyin": "Ài wēi"
+    "Anna": {
+      "zh": "安娜",
+      "pinyin": "Ān nà",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "grace",
+      "note": "A timeless name carried by heroines of literature and by many saints."
     },
-    "Ruby": {
-      "zh": "鲁比",
-      "pinyin": "Lǔ bǐ"
+    "Anthony": {
+      "zh": "安东尼",
+      "pinyin": "Ān dōng ní",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "priceless one (from the Roman name Antonius)",
+      "note": "Saint Anthony of Padua made the name beloved in the Christian world."
     },
-    "Stella": {
-      "zh": "斯特拉",
-      "pinyin": "Sī tè lā"
+    "Antonio": {
+      "zh": "安东尼奥",
+      "pinyin": "Ān dōng ní ào",
+      "gender": "m",
+      "origin": "Spanish",
+      "meaning": "priceless one (form of Anthony)",
+      "note": "A Spanish and Italian form of Anthony, common across southern Europe and Latin America."
     },
-    "Claire": {
-      "zh": "克莱尔",
-      "pinyin": "Kè lái ěr"
+    "Aria": {
+      "zh": "阿丽亚",
+      "pinyin": "Ā lì yà",
+      "gender": "f",
+      "origin": "Italian",
+      "meaning": "air, a solo song",
+      "note": "A musical term for a solo song, now a top US girls' name."
+    },
+    "Ariana": {
+      "zh": "阿里安娜",
+      "pinyin": "Ā lǐ ān nà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "most holy (from Ariadne)",
+      "note": "From the Greek Ariadne, and the name of the singer Ariana Grande."
+    },
+    "Arthur": {
+      "zh": "阿瑟",
+      "pinyin": "Ā sè",
+      "gender": "m",
+      "origin": "Celtic",
+      "meaning": "bear (of uncertain origin)",
+      "note": "King Arthur, the legendary British ruler of the Round Table, gave the name its heroic tone."
+    },
+    "Asher": {
+      "zh": "阿舍",
+      "pinyin": "Ā shě",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "happy, blessed",
+      "note": "In the Bible, Asher was one of Jacob's twelve sons."
+    },
+    "Ashley": {
+      "zh": "阿什利",
+      "pinyin": "Ā shén lì",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "ash tree meadow",
+      "note": "An English surname that swept to the top of US charts in the 1980s and 1990s."
+    },
+    "Athena": {
+      "zh": "雅典娜",
+      "pinyin": "Yǎ diǎn nà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "goddess of wisdom and war",
+      "note": "Athena was the Greek goddess of wisdom, war and crafts."
     },
     "Audrey": {
       "zh": "奥德丽",
-      "pinyin": "Ào dé lì"
+      "pinyin": "Ào dé lì",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "noble strength",
+      "note": "The actress Audrey Hepburn gave the name its elegant charm."
+    },
+    "Aurora": {
+      "zh": "奥罗拉",
+      "pinyin": "Ào luó lā",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "dawn",
+      "note": "The Roman goddess of dawn, and the sleeping princess in the fairy tale."
+    },
+    "Austin": {
+      "zh": "奥斯汀",
+      "pinyin": "Ào sī tīng",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "great, magnificent (from Augustine)",
+      "note": "A sleek place-and-surname name that rose sharply in the late 20th century."
+    },
+    "Autumn": {
+      "zh": "奥特姆",
+      "pinyin": "Ào tè mǔ",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "the fall season",
+      "note": "A season name for the fall, popular since the 1970s."
+    },
+    "Ava": {
+      "zh": "艾娃",
+      "pinyin": "Ài wá",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "bird, life (of uncertain origin)",
+      "note": "The actress Ava Gardner gave the name its mid-century glamour."
+    },
+    "Avery": {
+      "zh": "艾弗里",
+      "pinyin": "Ài fú lǐ",
+      "gender": "u",
+      "origin": "English",
+      "meaning": "elf ruler",
+      "note": "A surname name that now sits high on the charts for any gender."
+    },
+    "Barbara": {
+      "zh": "芭芭拉",
+      "pinyin": "Bā bā lā",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "foreign, stranger",
+      "note": "Saint Barbara is the patron saint of miners and architects."
     },
     "Bella": {
       "zh": "贝拉",
-      "pinyin": "Bèi lā"
+      "pinyin": "Bèi lā",
+      "gender": "f",
+      "origin": "Italian",
+      "meaning": "beautiful",
+      "note": "An Italian word for 'beautiful', popularised by the Twilight heroine."
+    },
+    "Benjamin": {
+      "zh": "本杰明",
+      "pinyin": "Běn jié míng",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "son of the right hand",
+      "note": "In the Bible, Benjamin was the youngest son of Jacob and Rachel."
+    },
+    "Blake": {
+      "zh": "布莱克",
+      "pinyin": "Bù lái kè",
+      "gender": "u",
+      "origin": "English",
+      "meaning": "dark-haired or pale (of uncertain origin)",
+      "note": "A crisp surname name that works for any gender and evokes the poet William Blake."
+    },
+    "Bradley": {
+      "zh": "布拉德利",
+      "pinyin": "Bù lā dé lì",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "broad meadow",
+      "note": "A gentle English surname name meaning 'broad meadow'."
+    },
+    "Brandon": {
+      "zh": "布兰登",
+      "pinyin": "Bù lán dēng",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "broom hill, or prince (from Brandon)",
+      "note": "A surname-turned-first-name that was a top pick in the 1980s and 1990s."
+    },
+    "Brenda": {
+      "zh": "布伦达",
+      "pinyin": "Bù lún dá",
+      "gender": "f",
+      "origin": "Norse",
+      "meaning": "sword (of uncertain origin)",
+      "note": "A Norse-rooted name that was a mid-century favourite."
+    },
+    "Brian": {
+      "zh": "布赖恩",
+      "pinyin": "Bù lài ēn",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "high, noble",
+      "note": "Brian Boru was a celebrated High King of Ireland in the early 11th century."
+    },
+    "Brooklyn": {
+      "zh": "布鲁克林",
+      "pinyin": "Bù lǔ kè lín",
+      "gender": "f",
+      "origin": "Dutch",
+      "meaning": "broken land (a New York borough)",
+      "note": "A place name from the New York borough, popular since the 1990s."
+    },
+    "Bruce": {
+      "zh": "布鲁斯",
+      "pinyin": "Bù lǔ sī",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "from the brushwood",
+      "note": "The name of the Scottish hero Robert the Bruce, and later of the musician Bruce Springsteen."
+    },
+    "Caleb": {
+      "zh": "凯莱布",
+      "pinyin": "Kǎi lái bù",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "whole-hearted, faithful",
+      "note": "In the Bible, Caleb was one of the two spies who trusted God to give Israel the land."
+    },
+    "Cameron": {
+      "zh": "卡梅伦",
+      "pinyin": "Kǎ méi lún",
+      "gender": "u",
+      "origin": "Scottish",
+      "meaning": "crooked nose",
+      "note": "A Scottish clan surname that became a popular first name for any gender."
+    },
+    "Camila": {
+      "zh": "卡米拉",
+      "pinyin": "Kǎ mǐ lā",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "young ceremonial attendant",
+      "note": "A Spanish and Italian name that has surged in popularity in recent years."
+    },
+    "Carl": {
+      "zh": "卡尔",
+      "pinyin": "Kǎ ěr",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "free man (form of Charles)",
+      "note": "A solid Germanic name shared by the astronomer Carl Sagan."
+    },
+    "Carlos": {
+      "zh": "卡洛斯",
+      "pinyin": "Kǎ luò sī",
+      "gender": "m",
+      "origin": "Spanish",
+      "meaning": "free man (form of Charles)",
+      "note": "The Spanish and Portuguese form of Charles, common throughout the Spanish-speaking world."
+    },
+    "Carol": {
+      "zh": "卡罗尔",
+      "pinyin": "Kǎ luó ěr",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "free man (feminine of Charles)",
+      "note": "A feminine of Charles, and the name of many beloved Christmas songs."
+    },
+    "Caroline": {
+      "zh": "卡罗琳",
+      "pinyin": "Kǎ luó lín",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "free man (feminine of Charles)",
+      "note": "A French feminine of Charles, and the title of a Neil Diamond song."
+    },
+    "Carolyn": {
+      "zh": "卡罗琳",
+      "pinyin": "Kǎ luó lín",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "free man (feminine of Charles)",
+      "note": "A classic feminine of Charles that peaked in the mid-20th century."
+    },
+    "Carter": {
+      "zh": "卡特",
+      "pinyin": "Kǎ tè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "cart driver",
+      "note": "An English occupational surname that entered the top ranks in the early 2000s."
+    },
+    "Charles": {
+      "zh": "查尔斯",
+      "pinyin": "Chá ěr sī",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "free man",
+      "note": "Carried by King Charles I, Charles Darwin and Charles Dickens."
+    },
+    "Charlotte": {
+      "zh": "夏洛特",
+      "pinyin": "Xià luò tè",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "free man (feminine of Charles)",
+      "note": "The name of Queen Charlotte of England and of the writer Charlotte Brontë."
+    },
+    "Chase": {
+      "zh": "蔡斯",
+      "pinyin": "Cài sī",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "hunter",
+      "note": "An English word-name for a hunter, now a modern favourite."
+    },
+    "Cheryl": {
+      "zh": "谢丽尔",
+      "pinyin": "Xiè lì ěr",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "dear one (from chérie)",
+      "note": "A French-rooted name meaning 'dear', a big favourite of the 1950s."
+    },
+    "Chloe": {
+      "zh": "克洛艾",
+      "pinyin": "Kè luò ài",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "young green shoot, blooming",
+      "note": "A Greek name tied to the goddess of agriculture, from the word for 'green shoot'."
+    },
+    "Christian": {
+      "zh": "克里斯蒂安",
+      "pinyin": "Kè lǐ sī dì ān",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "follower of Christ",
+      "note": "A name that literally means a follower of Christ, popular across many languages."
+    },
+    "Christina": {
+      "zh": "克里斯蒂娜",
+      "pinyin": "Kè lǐ sī dì nà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "follower of Christ",
+      "note": "A form of Christine, tied to the word 'Christ'."
+    },
+    "Christine": {
+      "zh": "克里斯蒂娜",
+      "pinyin": "Kè lǐ sī dì nà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "follower of Christ",
+      "note": "A French form of Christina, common across the Christian world."
+    },
+    "Christopher": {
+      "zh": "克里斯托弗",
+      "pinyin": "Kè lǐ sī tuō fú",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "bearer of Christ",
+      "note": "Saint Christopher is the legendary patron of travellers."
+    },
+    "Claire": {
+      "zh": "克莱尔",
+      "pinyin": "Kè lái ěr",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "clear, bright",
+      "note": "A bright French name meaning 'clear', shared by the actress Claire Danes."
+    },
+    "Clara": {
+      "zh": "克拉拉",
+      "pinyin": "Kè lā lā",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "clear, bright",
+      "note": "The name of Clara Barton, founder of the American Red Cross."
+    },
+    "Cody": {
+      "zh": "科迪",
+      "pinyin": "Kē dí",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "helpful (from a surname)",
+      "note": "An Irish surname made famous by the showman Buffalo Bill Cody."
+    },
+    "Cole": {
+      "zh": "科尔",
+      "pinyin": "Kē ěr",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "coal-black, swarthy",
+      "note": "A short, modern surname name with an old English meaning of 'coal-black'."
+    },
+    "Colin": {
+      "zh": "科林",
+      "pinyin": "Kē lín",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "young creature, or people's victory",
+      "note": "A Scottish-Irish classic shared by the actor Colin Firth."
+    },
+    "Connor": {
+      "zh": "康纳",
+      "pinyin": "Kāng nà",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "lover of hounds",
+      "note": "An Irish name meaning 'lover of hounds', carried by many a king of Connacht."
+    },
+    "Cooper": {
+      "zh": "库珀",
+      "pinyin": "Kù pò",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "barrel maker",
+      "note": "An English surname for a barrel maker that became a popular first name."
+    },
+    "Cynthia": {
+      "zh": "辛西娅",
+      "pinyin": "Xīn xī yà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "from Mount Cynthus (an epithet of Artemis)",
+      "note": "An epithet of Artemis, the Greek moon goddess of Mount Cynthus."
     },
     "Daisy": {
       "zh": "黛西",
-      "pinyin": "Dài xī"
+      "pinyin": "Dài xī",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "day's eye (a flower)",
+      "note": "A flower name from 'day's eye', and the heroine of The Great Gatsby."
     },
-    "Rose": {
-      "zh": "罗斯",
-      "pinyin": "Luó sī"
+    "Daniel": {
+      "zh": "丹尼尔",
+      "pinyin": "Dān ní ěr",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God is my judge",
+      "note": "In the Bible, Daniel survived the lions' den and interpreted dreams."
+    },
+    "David": {
+      "zh": "戴维",
+      "pinyin": "Dài wéi",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "beloved",
+      "note": "King David, the shepherd who defeated Goliath, is the name's most famous bearer."
+    },
+    "Dean": {
+      "zh": "迪恩",
+      "pinyin": "Dí ēn",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "valley, or church official",
+      "note": "A cool one-syllable choice popularised by the actor James Dean."
+    },
+    "Deborah": {
+      "zh": "德博拉",
+      "pinyin": "Dé bó lā",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "bee",
+      "note": "In the Bible, Deborah was a prophetess and judge of Israel."
+    },
+    "Debra": {
+      "zh": "黛布拉",
+      "pinyin": "Dài bù lā",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "bee (variant of Deborah)",
+      "note": "A spelling variant of Deborah that was hugely popular in the 1950s."
+    },
+    "Declan": {
+      "zh": "德克兰",
+      "pinyin": "Dé kè lán",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "man of prayer, full of goodness",
+      "note": "Saint Declan was a fifth-century Irish missionary."
+    },
+    "Delilah": {
+      "zh": "黛利拉",
+      "pinyin": "Dài lì lā",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "delicate",
+      "note": "In the Bible, Delilah was the woman who betrayed Samson."
+    },
+    "Dennis": {
+      "zh": "丹尼斯",
+      "pinyin": "Dān ní sī",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "follower of Dionysus",
+      "note": "From the Greek god Dionysus; a steady classic of the mid-20th century."
+    },
+    "Derek": {
+      "zh": "德里克",
+      "pinyin": "Dé lǐ kè",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "ruler of the people",
+      "note": "A Germanic name meaning 'ruler of the people', shortened from Theodoric."
+    },
+    "Diane": {
+      "zh": "黛安",
+      "pinyin": "Dài ān",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "divine (form of Diana)",
+      "note": "A French form of Diana, the Roman goddess of the hunt."
+    },
+    "Diego": {
+      "zh": "迭戈",
+      "pinyin": "Dié gē",
+      "gender": "m",
+      "origin": "Spanish",
+      "meaning": "supplanter (form of James)",
+      "note": "The Spanish form of James, made famous by the artist Diego Velázquez."
+    },
+    "Dominic": {
+      "zh": "多米尼克",
+      "pinyin": "Duō mǐ ní kè",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "of the Lord",
+      "note": "Saint Dominic founded the Dominican order in the 13th century."
+    },
+    "Donald": {
+      "zh": "唐纳德",
+      "pinyin": "Táng nà dé",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "world ruler",
+      "note": "A Gaelic name meaning 'world ruler', long associated with Scottish clans."
+    },
+    "Donna": {
+      "zh": "唐娜",
+      "pinyin": "Táng nà",
+      "gender": "f",
+      "origin": "Italian",
+      "meaning": "lady",
+      "note": "An Italian word for 'lady', a top pick of the 1960s."
+    },
+    "Dorothy": {
+      "zh": "多萝西",
+      "pinyin": "Duō luó xī",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "gift of God",
+      "note": "The heroine of The Wizard of Oz, who travelled down the yellow brick road."
+    },
+    "Dylan": {
+      "zh": "迪伦",
+      "pinyin": "Dí lún",
+      "gender": "m",
+      "origin": "Welsh",
+      "meaning": "son of the sea",
+      "note": "The Welsh poet Dylan Thomas, and the singer Bob Dylan, carried the name."
+    },
+    "Edward": {
+      "zh": "爱德华",
+      "pinyin": "Ài dé huá",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "wealthy guard",
+      "note": "Carried by eight English kings, including Edward the Confessor."
+    },
+    "Eleanor": {
+      "zh": "埃莉诺",
+      "pinyin": "Āi lì nuò",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "bright, shining one",
+      "note": "Eleanor Roosevelt, the influential US first lady and diplomat, bore this name."
+    },
+    "Elena": {
+      "zh": "埃琳娜",
+      "pinyin": "Āi lín nà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "bright, shining light (form of Helen)",
+      "note": "A southern-European form of Helen, meaning 'bright, shining light'."
+    },
+    "Eli": {
+      "zh": "伊莱",
+      "pinyin": "Yī lái",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "ascended, uplifted",
+      "note": "In the Bible, Eli was the high priest who raised the prophet Samuel."
+    },
+    "Elias": {
+      "zh": "埃利亚斯",
+      "pinyin": "Āi lì yà sī",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "my God is Yahweh (form of Elijah)",
+      "note": "The Greek form of Elijah, carried by several early saints."
+    },
+    "Elijah": {
+      "zh": "以利亚",
+      "pinyin": "Yǐ lì yà",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "my God is Yahweh",
+      "note": "The biblical prophet Elijah called down fire from heaven on Mount Carmel."
+    },
+    "Elizabeth": {
+      "zh": "伊丽莎白",
+      "pinyin": "Yī lì shā bái",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "pledged to God",
+      "note": "The name of two English queens, including the long-reigning Elizabeth II."
+    },
+    "Ella": {
+      "zh": "埃拉",
+      "pinyin": "Āi lā",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "all, completely",
+      "note": "A graceful short name shared by the jazz singer Ella Fitzgerald."
+    },
+    "Elliot": {
+      "zh": "埃利奥特",
+      "pinyin": "Āi lì ào tè",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "the Lord is my God",
+      "note": "A surname-turned-first-name shared by the poet T. S. Eliot."
+    },
+    "Emily": {
+      "zh": "埃米莉",
+      "pinyin": "Āi mǐ lì",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "rival, eager",
+      "note": "A Latin-rooted classic shared by the poet Emily Dickinson."
+    },
+    "Emma": {
+      "zh": "艾玛",
+      "pinyin": "Ài mǎ",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "whole, universal",
+      "note": "Jane Austen's novel Emma (1815) made the name a literary favourite."
+    },
+    "Emmett": {
+      "zh": "埃米特",
+      "pinyin": "Āi mǐ tè",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "whole, universal",
+      "note": "A Germanic name meaning 'universal', now a top US pick."
+    },
+    "Eric": {
+      "zh": "埃里克",
+      "pinyin": "Āi lǐ kè",
+      "gender": "m",
+      "origin": "Norse",
+      "meaning": "eternal ruler",
+      "note": "A Norse name meaning 'eternal ruler', common across Scandinavia."
+    },
+    "Ethan": {
+      "zh": "伊桑",
+      "pinyin": "Yī sāng",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "firm, enduring",
+      "note": "A solid Hebrew name that topped the US charts for most of the 2010s."
+    },
+    "Eugene": {
+      "zh": "尤金",
+      "pinyin": "Yóu jīn",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "well-born, noble",
+      "note": "A Greek name meaning 'well-born', shared by the playwright Eugene O'Neill."
+    },
+    "Evelyn": {
+      "zh": "伊芙琳",
+      "pinyin": "Yī fú lín",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "wished-for child (of uncertain origin)",
+      "note": "A surname-turned-first-name that has returned to the top of the charts."
+    },
+    "Everett": {
+      "zh": "埃弗里特",
+      "pinyin": "Āi fú lǐ tè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "brave as a boar",
+      "note": "An English surname name that has risen steadily since the 2000s."
+    },
+    "Everly": {
+      "zh": "埃弗利",
+      "pinyin": "Āi fú lì",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "boar meadow",
+      "note": "A modern English surname name, made famous by the Everly Brothers."
+    },
+    "Ezra": {
+      "zh": "埃兹拉",
+      "pinyin": "Āi zī lā",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "help",
+      "note": "In the Bible, Ezra the scribe led the Jews back from exile."
+    },
+    "Felix": {
+      "zh": "费利克斯",
+      "pinyin": "Fèi lì kè sī",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "happy, fortunate",
+      "note": "A cheerful Latin name meaning 'happy', and a favourite in ancient Rome."
+    },
+    "Frances": {
+      "zh": "弗朗西丝",
+      "pinyin": "Fú lǎng xī sī",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "from France, free one",
+      "note": "A feminine of Francis, and the name of the writer Frances Hodgson Burnett."
+    },
+    "Frank": {
+      "zh": "弗兰克",
+      "pinyin": "Fú lán kè",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "free man (short form of Francis)",
+      "note": "A friendly short form of Francis, and the name of the singer Frank Sinatra."
+    },
+    "Freya": {
+      "zh": "弗雷娅",
+      "pinyin": "Fú léi yà",
+      "gender": "f",
+      "origin": "Norse",
+      "meaning": "lady, goddess of love",
+      "note": "Freya was the Norse goddess of love, beauty and war."
+    },
+    "Gabriel": {
+      "zh": "加布里埃尔",
+      "pinyin": "Jiā bù lǐ āi ěr",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God is my strength",
+      "note": "The archangel Gabriel announced the births of John the Baptist and Jesus."
+    },
+    "Gabriella": {
+      "zh": "加布里埃拉",
+      "pinyin": "Jiā bù lǐ āi lā",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "God is my strength (feminine of Gabriel)",
+      "note": "The feminine of Gabriel, popular across Italy and Latin America."
+    },
+    "Gary": {
+      "zh": "加里",
+      "pinyin": "Jiā lǐ",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "spear (from a surname)",
+      "note": "A mid-century classic made famous by the actor Gary Cooper."
+    },
+    "Gavin": {
+      "zh": "加文",
+      "pinyin": "Jiā wén",
+      "gender": "m",
+      "origin": "Welsh",
+      "meaning": "white hawk",
+      "note": "A Welsh name meaning 'white hawk', common in Scotland and Wales."
+    },
+    "Genevieve": {
+      "zh": "吉纳维芙",
+      "pinyin": "Jí nà wéi fú",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "woman of the family",
+      "note": "Saint Genevieve is the patron saint of Paris."
+    },
+    "George": {
+      "zh": "乔治",
+      "pinyin": "Qiáo zhì",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "farmer, earth-worker",
+      "note": "The name of six British kings and of George Washington, the first US president."
+    },
+    "Gerald": {
+      "zh": "杰拉尔德",
+      "pinyin": "Jié lā ěr dé",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "rule of the spear",
+      "note": "A Germanic name meaning 'rule of the spear', and the given name of President Gerald Ford."
+    },
+    "Gloria": {
+      "zh": "格洛丽亚",
+      "pinyin": "Gé luò lì yà",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "glory",
+      "note": "A Latin word for 'glory', and the name of the singer Gloria Estefan."
+    },
+    "Grace": {
+      "zh": "格蕾丝",
+      "pinyin": "Gé lěi sī",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "grace, favour",
+      "note": "A virtue name, and the actress Grace Kelly, later Princess of Monaco."
+    },
+    "Grant": {
+      "zh": "格兰特",
+      "pinyin": "Gé lán tè",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "great, tall",
+      "note": "A Scottish surname name, and the surname of the US president Ulysses S. Grant."
+    },
+    "Grayson": {
+      "zh": "格雷森",
+      "pinyin": "Gé léi sēn",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "son of the steward",
+      "note": "A surname meaning 'son of the steward' that has become a top US pick."
+    },
+    "Gregory": {
+      "zh": "格雷戈里",
+      "pinyin": "Gé léi gē lǐ",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "watchful, alert",
+      "note": "The name of several popes, including Pope Gregory the Great."
+    },
+    "Hannah": {
+      "zh": "汉娜",
+      "pinyin": "Hàn nà",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "grace",
+      "note": "In the Bible, Hannah was the mother of the prophet Samuel."
+    },
+    "Harold": {
+      "zh": "哈罗德",
+      "pinyin": "Hā luó dé",
+      "gender": "m",
+      "origin": "Norse",
+      "meaning": "army ruler",
+      "note": "The last Anglo-Saxon king of England before the Norman conquest was Harold II."
+    },
+    "Harper": {
+      "zh": "哈珀",
+      "pinyin": "Hā pò",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "harp player",
+      "note": "A musical surname made famous by the author Harper Lee."
+    },
+    "Hazel": {
+      "zh": "黑兹尔",
+      "pinyin": "Hēi zī ěr",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "the hazel tree",
+      "note": "A nature name from the hazel tree that has returned to fashion."
+    },
+    "Heather": {
+      "zh": "希瑟",
+      "pinyin": "Xī sè",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "the heather plant",
+      "note": "A nature name from the flowering heather plant, big in the 1970s."
+    },
+    "Helen": {
+      "zh": "海伦",
+      "pinyin": "Hǎi lún",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "bright, shining light",
+      "note": "Helen of Troy, the most beautiful woman in Greek myth, bore this name."
+    },
+    "Henry": {
+      "zh": "亨利",
+      "pinyin": "Hēng lì",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "home ruler",
+      "note": "The name of eight English kings and of the industrialist Henry Ford."
+    },
+    "Hudson": {
+      "zh": "哈德森",
+      "pinyin": "Hā dé sēn",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "son of Hugh",
+      "note": "A surname of the explorer Henry Hudson, who charted the river and bay."
+    },
+    "Hugo": {
+      "zh": "雨果",
+      "pinyin": "Yǔ guǒ",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "mind, spirit",
+      "note": "A Latin-rooted favourite, shared by the writer Victor Hugo."
+    },
+    "Hunter": {
+      "zh": "亨特",
+      "pinyin": "Hēng tè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "one who hunts",
+      "note": "An English occupational name that surged in the 1990s and 2000s."
+    },
+    "Ian": {
+      "zh": "伊恩",
+      "pinyin": "Yī ēn",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "God is gracious (form of John)",
+      "note": "The Scottish form of John, carried by the author Ian Fleming."
     },
     "Iris": {
       "zh": "艾里斯",
-      "pinyin": "Ài lǐ sī"
+      "pinyin": "Ài lǐ sī",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "rainbow",
+      "note": "The Greek goddess of the rainbow and a messenger of the gods."
+    },
+    "Isaac": {
+      "zh": "艾萨克",
+      "pinyin": "Ài sà kè",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "he will laugh",
+      "note": "In the Bible, Isaac was the long-awaited son of Abraham and Sarah."
+    },
+    "Isabella": {
+      "zh": "伊莎贝拉",
+      "pinyin": "Yī shā bèi lā",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "pledged to God (form of Elizabeth)",
+      "note": "A Spanish and Italian form of Elizabeth, carried by queens of Castile."
+    },
+    "Isaiah": {
+      "zh": "艾赛亚",
+      "pinyin": "Ài sài yà",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "salvation of the Lord",
+      "note": "The prophet Isaiah is a major figure of the Hebrew Bible."
+    },
+    "Isla": {
+      "zh": "艾拉",
+      "pinyin": "Ài lā",
+      "gender": "f",
+      "origin": "Scottish",
+      "meaning": "island (from the isle of Islay)",
+      "note": "A Scottish name from the island of Islay, now a top UK pick."
+    },
+    "Ivan": {
+      "zh": "伊万",
+      "pinyin": "Yī wàn",
+      "gender": "m",
+      "origin": "Slavic",
+      "meaning": "God is gracious (form of John)",
+      "note": "The Slavic form of John, and the name of several Russian tsars."
+    },
+    "Ivy": {
+      "zh": "艾薇",
+      "pinyin": "Ài wēi",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "the ivy plant",
+      "note": "A nature name from the climbing ivy plant, now a top US pick."
+    },
+    "Jack": {
+      "zh": "杰克",
+      "pinyin": "Jié kè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "God is gracious (diminutive of John)",
+      "note": "A sturdy English classic and the name of the author Jack London."
+    },
+    "Jackson": {
+      "zh": "杰克逊",
+      "pinyin": "Jié kè xùn",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "son of Jack",
+      "note": "A surname of Andrew Jackson, the seventh US president."
+    },
+    "Jacob": {
+      "zh": "雅各布",
+      "pinyin": "Yǎ gè bù",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "supplanter",
+      "note": "In the Bible, Jacob was the patriarch whose twelve sons founded the tribes of Israel."
+    },
+    "Jacqueline": {
+      "zh": "杰奎琳",
+      "pinyin": "Jié kuí lín",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "supplanter (feminine of Jacques)",
+      "note": "The name of Jacqueline Kennedy Onassis, the elegant US first lady."
     },
     "Jade": {
       "zh": "杰德",
-      "pinyin": "Jié dé"
+      "pinyin": "Jié dé",
+      "gender": "f",
+      "origin": "Spanish",
+      "meaning": "the jade stone",
+      "note": "A gemstone name, from the green stone prized in Chinese culture."
+    },
+    "James": {
+      "zh": "詹姆斯",
+      "pinyin": "Zhān mǔ sī",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "supplanter (form of Jacob)",
+      "note": "Carried by King James I of England, who commissioned the King James Bible."
+    },
+    "Janet": {
+      "zh": "珍妮特",
+      "pinyin": "Zhēn nī tè",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "God is gracious (diminutive of Jane)",
+      "note": "A diminutive of Jane, common in the mid-20th century."
+    },
+    "Janice": {
+      "zh": "贾尼丝",
+      "pinyin": "Jiǎ ní sī",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "God is gracious (form of Jane)",
+      "note": "A form of Jane that was a favourite of the 1940s and 1950s."
+    },
+    "Jason": {
+      "zh": "杰森",
+      "pinyin": "Jié sēn",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "healer",
+      "note": "In Greek myth, Jason led the Argonauts on the quest for the Golden Fleece."
+    },
+    "Jayden": {
+      "zh": "杰登",
+      "pinyin": "Jié dēng",
+      "gender": "m",
+      "origin": "American",
+      "meaning": "thankful (a modern coinage)",
+      "note": "A modern American coinage that shot to the top of the charts in the 2000s."
+    },
+    "Jeffrey": {
+      "zh": "杰弗里",
+      "pinyin": "Jié fú lǐ",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "peace (form of Geoffrey)",
+      "note": "A friendly Germanic name that peaked in the mid-20th century."
+    },
+    "Jennifer": {
+      "zh": "珍妮弗",
+      "pinyin": "Zhēn nī fú",
+      "gender": "f",
+      "origin": "Welsh",
+      "meaning": "white wave (from Guinevere)",
+      "note": "From the Cornish form of Guinevere, the top US girls' name for years."
+    },
+    "Jeremiah": {
+      "zh": "杰里迈亚",
+      "pinyin": "Jié lǐ mài yà",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "appointed by God",
+      "note": "The prophet Jeremiah wrote of Jerusalem's fall and of a new covenant."
+    },
+    "Jeremy": {
+      "zh": "杰里米",
+      "pinyin": "Jié lǐ mǐ",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God will uplift (form of Jeremiah)",
+      "note": "A form of Jeremiah, popularised in Britain by the actor Jeremy Irons."
+    },
+    "Jerry": {
+      "zh": "杰里",
+      "pinyin": "Jié lǐ",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "rule of the spear (short form)",
+      "note": "A friendly short form of Gerald or Jeremy, long common in the US."
+    },
+    "Jesse": {
+      "zh": "杰西",
+      "pinyin": "Jié xī",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "gift",
+      "note": "In the Bible, Jesse was the father of King David."
+    },
+    "Jessica": {
+      "zh": "杰西卡",
+      "pinyin": "Jié xī kǎ",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "to behold (from Shakespeare)",
+      "note": "Invented by Shakespeare for a character in The Merchant of Venice."
+    },
+    "Joan": {
+      "zh": "琼",
+      "pinyin": "Qióng",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "God is gracious (feminine of John)",
+      "note": "Joan of Arc, the French heroine and saint, bore this name."
+    },
+    "Joel": {
+      "zh": "乔尔",
+      "pinyin": "Qiáo ěr",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "Yahweh is God",
+      "note": "In the Bible, Joel was a minor prophet who foresaw the day of the Lord."
+    },
+    "John": {
+      "zh": "约翰",
+      "pinyin": "Yuē hàn",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God is gracious",
+      "note": "One of the most enduring names in English, carried by kings, popes and apostles."
+    },
+    "Jonah": {
+      "zh": "约拿",
+      "pinyin": "Yuē ná",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "dove",
+      "note": "In the Bible, Jonah was swallowed by a great fish."
+    },
+    "Jonathan": {
+      "zh": "乔纳森",
+      "pinyin": "Qiáo nà sēn",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "gift of God",
+      "note": "In the Bible, Jonathan was King Saul's son and David's loyal friend."
+    },
+    "Jordan": {
+      "zh": "乔丹",
+      "pinyin": "Qiáo dān",
+      "gender": "u",
+      "origin": "Hebrew",
+      "meaning": "flowing down (the River Jordan)",
+      "note": "Named after the River Jordan, where Jesus was baptised."
+    },
+    "Joseph": {
+      "zh": "约瑟夫",
+      "pinyin": "Yuē sè fū",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God will add",
+      "note": "In the Bible, Joseph was sold into slavery by his brothers but rose to save Egypt."
+    },
+    "Josephine": {
+      "zh": "约瑟芬",
+      "pinyin": "Yuē sè fēn",
+      "gender": "f",
+      "origin": "French",
+      "meaning": "God will add (feminine of Joseph)",
+      "note": "Josephine Baker, the dancer and French Resistance agent, bore this name."
+    },
+    "Joshua": {
+      "zh": "乔舒亚",
+      "pinyin": "Qiáo shū yà",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God is salvation",
+      "note": "Joshua led the Israelites into the Promised Land after Moses."
+    },
+    "Josiah": {
+      "zh": "约西亚",
+      "pinyin": "Yuē xī yà",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God supports",
+      "note": "In the Bible, Josiah was a righteous young king of Judah."
+    },
+    "Joyce": {
+      "zh": "乔伊斯",
+      "pinyin": "Qiáo yī sī",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "lord, or joyful",
+      "note": "A name linked to 'joy', and the surname of the author James Joyce."
+    },
+    "Jude": {
+      "zh": "裘德",
+      "pinyin": "Qiú dé",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "praised",
+      "note": "The name of the Beatles song 'Hey Jude', and of Saint Jude the apostle."
+    },
+    "Judith": {
+      "zh": "朱迪思",
+      "pinyin": "Zhū dí sī",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "woman of Judea, praised",
+      "note": "In the Bible, Judith saved her people by defeating Holofernes."
+    },
+    "Judy": {
+      "zh": "朱迪",
+      "pinyin": "Zhū dí",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "praised (diminutive of Judith)",
+      "note": "A friendly short form of Judith, and the name of the actress Judy Garland."
+    },
+    "Julia": {
+      "zh": "朱莉娅",
+      "pinyin": "Zhū lì yà",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "youthful",
+      "note": "A Roman family name, and the name of the chef Julia Child."
+    },
+    "Julian": {
+      "zh": "朱利安",
+      "pinyin": "Zhū lì ān",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "youthful (from Julius)",
+      "note": "From the Roman name Julius, shared by the emperor Julian."
+    },
+    "Julie": {
+      "zh": "朱莉",
+      "pinyin": "Zhū lì",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "youthful (form of Julia)",
+      "note": "A French form of Julia that was a favourite of the 1960s."
+    },
+    "Justin": {
+      "zh": "贾斯廷",
+      "pinyin": "Jiǎ sī tíng",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "just, righteous",
+      "note": "A Roman name meaning 'just', popularised by several early saints."
+    },
+    "Kai": {
+      "zh": "凯",
+      "pinyin": "Kǎi",
+      "gender": "m",
+      "origin": "Hawaiian",
+      "meaning": "sea",
+      "note": "A short name with roots in Hawaiian ('sea') and several other cultures."
+    },
+    "Karen": {
+      "zh": "卡伦",
+      "pinyin": "Kǎ lún",
+      "gender": "f",
+      "origin": "Danish",
+      "meaning": "pure (form of Katherine)",
+      "note": "A Danish short form of Katherine that peaked in the mid-20th century."
+    },
+    "Katherine": {
+      "zh": "凯瑟琳",
+      "pinyin": "Kǎi sè lín",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "pure",
+      "note": "The name of the actress Katharine Hepburn and of Saint Catherine of Alexandria."
+    },
+    "Kathleen": {
+      "zh": "凯瑟琳",
+      "pinyin": "Kǎi sè lín",
+      "gender": "f",
+      "origin": "Irish",
+      "meaning": "pure (form of Katherine)",
+      "note": "An Irish form of Katherine, common in Ireland and the US."
+    },
+    "Keith": {
+      "zh": "基思",
+      "pinyin": "Jī sī",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "wood, forest (of uncertain origin)",
+      "note": "A Scottish surname of uncertain origin that became a big 20th-century hit."
+    },
+    "Kelly": {
+      "zh": "凯莉",
+      "pinyin": "Kǎi lì",
+      "gender": "u",
+      "origin": "Irish",
+      "meaning": "warrior, bright-headed",
+      "note": "An Irish surname meaning 'warrior', popular for any gender in the 1970s."
+    },
+    "Kenneth": {
+      "zh": "肯尼思",
+      "pinyin": "Kěn ní sī",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "born of fire, or handsome",
+      "note": "A Scottish name of kings, from the Gaelic Cináed."
+    },
+    "Kevin": {
+      "zh": "凯文",
+      "pinyin": "Kǎi wén",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "kind, gentle",
+      "note": "Saint Kevin founded the monastery of Glendalough in Ireland."
+    },
+    "Kimberly": {
+      "zh": "金伯利",
+      "pinyin": "Jīn bó lì",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "royal fortress meadow",
+      "note": "A place name from South Africa that became a top US pick in the 1960s."
+    },
+    "Kyle": {
+      "zh": "凯尔",
+      "pinyin": "Kǎi ěr",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "narrow strait (a place name)",
+      "note": "A Scottish place name from the Gaelic for 'narrow strait'."
+    },
+    "Landon": {
+      "zh": "兰登",
+      "pinyin": "Lán dēng",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "long hill",
+      "note": "An English surname name that entered the top ranks in the 2000s."
+    },
+    "Larry": {
+      "zh": "拉里",
+      "pinyin": "Lā lǐ",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "from Laurentum (short form of Lawrence)",
+      "note": "A friendly short form of Lawrence, shared by the TV host Larry King."
+    },
+    "Laura": {
+      "zh": "劳拉",
+      "pinyin": "Láo lā",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "laurel",
+      "note": "The poet Petrarch's muse, and the name of the writer Laura Ingalls Wilder."
+    },
+    "Lauren": {
+      "zh": "劳伦",
+      "pinyin": "Láo lún",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "laurel (feminine of Laurence)",
+      "note": "A feminine of Laurence that rose with the actress Lauren Bacall."
+    },
+    "Lawrence": {
+      "zh": "劳伦斯",
+      "pinyin": "Láo lún sī",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "from Laurentum, laurel",
+      "note": "Saint Lawrence was a third-century Roman deacon and martyr."
+    },
+    "Layla": {
+      "zh": "蕾拉",
+      "pinyin": "Lěi lā",
+      "gender": "f",
+      "origin": "Arabic",
+      "meaning": "night",
+      "note": "Made famous by the Derek and the Dominos song 'Layla'."
+    },
+    "Leo": {
+      "zh": "利奥",
+      "pinyin": "Lì ào",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "lion",
+      "note": "A lion-hearted Latin name carried by thirteen popes."
+    },
+    "Levi": {
+      "zh": "利瓦伊",
+      "pinyin": "Lì wǎ yī",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "joined, attached",
+      "note": "In the Bible, Levi was one of Jacob's twelve sons and ancestor of the priestly tribe."
+    },
+    "Liam": {
+      "zh": "利亚姆",
+      "pinyin": "Lì yà mǔ",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "resolute protector (short form of William)",
+      "note": "An Irish short form of William that has topped recent US charts."
+    },
+    "Lillian": {
+      "zh": "莉莲",
+      "pinyin": "Lì lián",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "lily",
+      "note": "A flower name from the Latin for 'lily', popular in the early 20th century."
+    },
+    "Lily": {
+      "zh": "莉莉",
+      "pinyin": "Lì lì",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "the lily flower",
+      "note": "A flower name symbolising purity, a top pick in recent years."
+    },
+    "Lincoln": {
+      "zh": "林肯",
+      "pinyin": "Lín kěn",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "town by the pool (a surname)",
+      "note": "The surname of Abraham Lincoln, the 16th president of the United States."
+    },
+    "Linda": {
+      "zh": "琳达",
+      "pinyin": "Lín dá",
+      "gender": "f",
+      "origin": "Germanic",
+      "meaning": "beautiful, soft",
+      "note": "A Spanish word for 'beautiful' that was the US number one in the 1940s."
+    },
+    "Lisa": {
+      "zh": "莉萨",
+      "pinyin": "Lì sà",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "pledged to God (short form of Elisabeth)",
+      "note": "A short form of Elisabeth that topped US charts in the 1960s."
+    },
+    "Logan": {
+      "zh": "洛根",
+      "pinyin": "Luò gēn",
+      "gender": "m",
+      "origin": "Scottish",
+      "meaning": "little hollow",
+      "note": "A Scottish name of a highland clan, later a comic-book hero surname."
+    },
+    "Louis": {
+      "zh": "路易斯",
+      "pinyin": "Lù yì sī",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "famous warrior",
+      "note": "The name of many French kings, including the sainted Louis IX."
+    },
+    "Lucas": {
+      "zh": "卢卡斯",
+      "pinyin": "Lú kǎ sī",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "from Lucania",
+      "note": "A Latin form of Luke that has been a top pick across Europe and the Americas."
+    },
+    "Lucy": {
+      "zh": "露西",
+      "pinyin": "Lù xī",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "light",
+      "note": "Saint Lucy is the patron saint of the blind, and a heroine of the Peanuts comic."
+    },
+    "Luke": {
+      "zh": "卢克",
+      "pinyin": "Lú kè",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "from Lucania",
+      "note": "Saint Luke was a physician and the author of the third Gospel."
+    },
+    "Luna": {
+      "zh": "卢娜",
+      "pinyin": "Lú nà",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "moon",
+      "note": "The Roman goddess of the moon, and a character in the Harry Potter books."
+    },
+    "Lydia": {
+      "zh": "莉迪娅",
+      "pinyin": "Lì dí yà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "from Lydia (a region in Asia Minor)",
+      "note": "In the New Testament, Lydia was a merchant who hosted Saint Paul."
+    },
+    "Madison": {
+      "zh": "麦迪逊",
+      "pinyin": "Mài dí xùn",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "son of Matthew (a surname)",
+      "note": "A surname of a US president that became a top girls' name after the film Splash."
+    },
+    "Marco": {
+      "zh": "马尔科",
+      "pinyin": "Mǎ ěr kē",
+      "gender": "m",
+      "origin": "Italian",
+      "meaning": "warlike (form of Mark)",
+      "note": "The Italian form of Mark, and the name of the explorer Marco Polo."
+    },
+    "Marcus": {
+      "zh": "马库斯",
+      "pinyin": "Mǎ kù sī",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "dedicated to Mars (the god of war)",
+      "note": "A Roman name tied to Mars, and the name of the emperor Marcus Aurelius."
+    },
+    "Margaret": {
+      "zh": "玛格丽特",
+      "pinyin": "Mǎ gé lì tè",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "pearl",
+      "note": "The name of Saint Margaret and of the British prime minister Margaret Thatcher."
+    },
+    "Maria": {
+      "zh": "玛丽亚",
+      "pinyin": "Mǎ lì yà",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "beloved, or bitter (form of Mary)",
+      "note": "The Latin form of Mary, and the name of the opera singer Maria Callas."
+    },
+    "Mark": {
+      "zh": "马克",
+      "pinyin": "Mǎ kè",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "warlike (from Mars)",
+      "note": "The name of the Gospel writer Saint Mark."
+    },
+    "Martha": {
+      "zh": "玛莎",
+      "pinyin": "Mǎ shā",
+      "gender": "f",
+      "origin": "Aramaic",
+      "meaning": "lady, mistress",
+      "note": "In the Bible, Martha was the sister of Lazarus and a friend of Jesus."
+    },
+    "Mary": {
+      "zh": "玛丽",
+      "pinyin": "Mǎ lì",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "beloved, or bitter (of uncertain origin)",
+      "note": "The mother of Jesus, and the most enduring girls' name in Christian history."
+    },
+    "Mason": {
+      "zh": "梅森",
+      "pinyin": "Méi sēn",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "stone worker",
+      "note": "An English occupational surname that became a top-10 first name in the 2010s."
+    },
+    "Matthew": {
+      "zh": "马修",
+      "pinyin": "Mǎ xiū",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "gift of God",
+      "note": "Saint Matthew was a tax collector who became one of the twelve apostles."
+    },
+    "Max": {
+      "zh": "马克斯",
+      "pinyin": "Mǎ kè sī",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "greatest",
+      "note": "A Latin name meaning 'greatest', short for Maximilian or Maxwell."
+    },
+    "Maya": {
+      "zh": "玛雅",
+      "pinyin": "Mǎ yǎ",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "mother, or illusion (multiple origins)",
+      "note": "The poet Maya Angelou, and the Mesoamerican civilisation, share the name."
+    },
+    "Megan": {
+      "zh": "梅甘",
+      "pinyin": "Méi gān",
+      "gender": "f",
+      "origin": "Welsh",
+      "meaning": "pearl (diminutive of Margaret)",
+      "note": "A Welsh diminutive of Margaret, popular in Britain and America."
+    },
+    "Melissa": {
+      "zh": "梅利莎",
+      "pinyin": "Méi lì shā",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "bee, honey",
+      "note": "A Greek name meaning 'bee', and a nymph who cared for the infant Zeus."
+    },
+    "Mia": {
+      "zh": "米娅",
+      "pinyin": "Mǐ yà",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "mine, or bitter (diminutive of Maria)",
+      "note": "A short, bright name that has topped charts around the world."
+    },
+    "Micah": {
+      "zh": "迈卡",
+      "pinyin": "Mài kǎ",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "who is like God?",
+      "note": "The prophet Micah predicted that the Messiah would be born in Bethlehem."
+    },
+    "Michael": {
+      "zh": "迈克尔",
+      "pinyin": "Mài kè ěr",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "who is like God?",
+      "note": "The archangel Michael, who leads heaven's armies, is the name's great bearer."
+    },
+    "Michelle": {
+      "zh": "米歇尔",
+      "pinyin": "Mǐ xiē ěr",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "who is like God? (feminine of Michael)",
+      "note": "The feminine of Michael, and the name of the US first lady Michelle Obama."
+    },
+    "Miles": {
+      "zh": "迈尔斯",
+      "pinyin": "Mài ěr sī",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "soldier (of uncertain origin)",
+      "note": "A short name shared by the jazz trumpeter Miles Davis."
+    },
+    "Mohamed": {
+      "zh": "穆罕默德",
+      "pinyin": "Mù hǎn mò dé",
+      "gender": "m",
+      "origin": "Arabic",
+      "meaning": "praised",
+      "note": "The name of the Prophet Muhammad, the founder of Islam."
+    },
+    "Nancy": {
+      "zh": "南希",
+      "pinyin": "Nán xī",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "grace (diminutive of Ann)",
+      "note": "A diminutive of Ann, and the name of the detective Nancy Drew."
+    },
+    "Naomi": {
+      "zh": "内奥米",
+      "pinyin": "Nèi ào mǐ",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "pleasantness",
+      "note": "In the Bible, Naomi was the mother-in-law of Ruth."
+    },
+    "Natalie": {
+      "zh": "娜塔莉",
+      "pinyin": "Nà tǎ lì",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "born on Christmas Day",
+      "note": "A Latin name for a Christmas-born child, carried by the actress Natalie Portman."
+    },
+    "Nathan": {
+      "zh": "内森",
+      "pinyin": "Nèi sēn",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "he gave",
+      "note": "In the Bible, Nathan was the prophet who rebuked King David."
+    },
+    "Nicholas": {
+      "zh": "尼古拉斯",
+      "pinyin": "Ní gǔ lā sī",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "victory of the people",
+      "note": "Saint Nicholas, the fourth-century bishop, is the model for Santa Claus."
+    },
+    "Nicole": {
+      "zh": "妮科尔",
+      "pinyin": "Nī kē ěr",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "victory of the people (feminine of Nicholas)",
+      "note": "The feminine of Nicholas, hugely popular in the 1970s and 1980s."
+    },
+    "Noah": {
+      "zh": "诺亚",
+      "pinyin": "Nuò yà",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "rest, comfort",
+      "note": "Noah built the ark that saved his family and the animals from the flood."
+    },
+    "Nolan": {
+      "zh": "诺兰",
+      "pinyin": "Nuò lán",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "noble, famous",
+      "note": "An Irish surname of the Nolan family, now a rising first name."
+    },
+    "Nora": {
+      "zh": "诺拉",
+      "pinyin": "Nuò lā",
+      "gender": "f",
+      "origin": "Irish",
+      "meaning": "honour, light",
+      "note": "A short form of Honora or Eleanora, and the heroine of Ibsen's A Doll's House."
+    },
+    "Oliver": {
+      "zh": "奥利弗",
+      "pinyin": "Ào lì fú",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "olive tree",
+      "note": "A literary favourite from Charles Dickens' Oliver Twist."
+    },
+    "Olivia": {
+      "zh": "奥利维亚",
+      "pinyin": "Ào lì wéi yà",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "olive tree",
+      "note": "Invented by Shakespeare for Twelfth Night, now a top name worldwide."
+    },
+    "Omar": {
+      "zh": "奥马尔",
+      "pinyin": "Ào mǎ ěr",
+      "gender": "m",
+      "origin": "Arabic",
+      "meaning": "flourishing, long-lived",
+      "note": "The second caliph of Islam, Omar ibn al-Khattab, bore this name."
+    },
+    "Owen": {
+      "zh": "欧文",
+      "pinyin": "Ōu wén",
+      "gender": "m",
+      "origin": "Welsh",
+      "meaning": "young warrior, or well-born",
+      "note": "A Welsh name meaning 'young warrior', shared by the writer Wilfred Owen."
+    },
+    "Pamela": {
+      "zh": "帕梅拉",
+      "pinyin": "Pà méi lā",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "all honey (invented by Sidney)",
+      "note": "A name invented by the poet Philip Sidney in his romance Arcadia."
+    },
+    "Parker": {
+      "zh": "帕克",
+      "pinyin": "Pà kè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "park keeper",
+      "note": "An English surname for a park keeper that works for any gender."
+    },
+    "Patricia": {
+      "zh": "帕特里夏",
+      "pinyin": "Pà tè lǐ xià",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "noblewoman",
+      "note": "The feminine of Patrick, and a top mid-century pick."
+    },
+    "Patrick": {
+      "zh": "帕特里克",
+      "pinyin": "Pà tè lǐ kè",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "nobleman",
+      "note": "Saint Patrick is the patron saint of Ireland."
+    },
+    "Paul": {
+      "zh": "保罗",
+      "pinyin": "Bǎo luó",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "small, humble",
+      "note": "Saint Paul spread early Christianity across the Roman world."
+    },
+    "Penelope": {
+      "zh": "佩内洛普",
+      "pinyin": "Pèi nèi luò pǔ",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "weaver (of uncertain origin)",
+      "note": "In Homer's Odyssey, Penelope waited faithfully for Odysseus."
+    },
+    "Peter": {
+      "zh": "彼得",
+      "pinyin": "Bǐ dé",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "rock, stone",
+      "note": "Saint Peter, a fisherman, became the first leader of the early church."
+    },
+    "Philip": {
+      "zh": "菲利普",
+      "pinyin": "Fēi lì pǔ",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "lover of horses",
+      "note": "Philip of Macedon was the father of Alexander the Great."
+    },
+    "Quinn": {
+      "zh": "奎因",
+      "pinyin": "Kuí yīn",
+      "gender": "u",
+      "origin": "Irish",
+      "meaning": "descendant of Conn",
+      "note": "An Irish surname meaning 'descendant of Conn' that suits any gender."
+    },
+    "Rachel": {
+      "zh": "蕾切尔",
+      "pinyin": "Lěi qiè ěr",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "ewe",
+      "note": "In the Bible, Rachel was the beloved wife of Jacob."
+    },
+    "Rafael": {
+      "zh": "拉斐尔",
+      "pinyin": "Lā fěi ěr",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God has healed (form of Raphael)",
+      "note": "The archangel Raphael, a healer, appears in the Book of Tobit."
+    },
+    "Ralph": {
+      "zh": "拉尔夫",
+      "pinyin": "Lā ěr fū",
+      "gender": "m",
+      "origin": "Norse",
+      "meaning": "wolf counsel",
+      "note": "The name of the writer Ralph Waldo Emerson."
+    },
+    "Raymond": {
+      "zh": "雷蒙德",
+      "pinyin": "Léi méng dé",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "wise protector",
+      "note": "A Germanic name meaning 'wise protector', common across Europe."
+    },
+    "Rebecca": {
+      "zh": "丽贝卡",
+      "pinyin": "Lì bèi kǎ",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "to bind, captivating",
+      "note": "In the Bible, Rebecca was the wife of Isaac and mother of Jacob and Esau."
+    },
+    "Richard": {
+      "zh": "理查德",
+      "pinyin": "Lǐ chá dé",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "brave ruler",
+      "note": "Richard the Lionheart, the crusader king, is the name's most famous bearer."
+    },
+    "Riley": {
+      "zh": "赖利",
+      "pinyin": "Lài lì",
+      "gender": "u",
+      "origin": "Irish",
+      "meaning": "valiant",
+      "note": "An Irish surname meaning 'valiant' that now suits any gender."
+    },
+    "Robert": {
+      "zh": "罗伯特",
+      "pinyin": "Luó bó tè",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "bright fame",
+      "note": "Robert the Bruce led Scotland to independence from England."
+    },
+    "Roger": {
+      "zh": "罗杰",
+      "pinyin": "Luó jié",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "famous spear",
+      "note": "A Germanic name that was a favourite of medieval England."
+    },
+    "Roman": {
+      "zh": "罗曼",
+      "pinyin": "Luó màn",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "citizen of Rome",
+      "note": "From the Latin for a citizen of Rome."
+    },
+    "Ronald": {
+      "zh": "罗纳德",
+      "pinyin": "Luó nà dé",
+      "gender": "m",
+      "origin": "Norse",
+      "meaning": "ruler's counsel",
+      "note": "The given name of the US president Ronald Reagan."
+    },
+    "Rose": {
+      "zh": "罗斯",
+      "pinyin": "Luó sī",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "the rose flower",
+      "note": "A classic flower name symbolising love."
+    },
+    "Roy": {
+      "zh": "罗伊",
+      "pinyin": "Luó yī",
+      "gender": "m",
+      "origin": "Gaelic",
+      "meaning": "red, or king",
+      "note": "A Gaelic name meaning 'red' or 'king', and the name of the singer Roy Orbison."
+    },
+    "Ruby": {
+      "zh": "鲁比",
+      "pinyin": "Lǔ bǐ",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "the red gemstone",
+      "note": "A gemstone name from the deep-red stone, revived in the 2000s."
+    },
+    "Ruth": {
+      "zh": "露丝",
+      "pinyin": "Lù sī",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "friend, companion",
+      "note": "In the Bible, Ruth's loyalty to her mother-in-law Naomi is celebrated."
+    },
+    "Ryan": {
+      "zh": "瑞安",
+      "pinyin": "Ruì ān",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "little king",
+      "note": "An Irish surname meaning 'little king' that became a top US pick."
+    },
+    "Sadie": {
+      "zh": "萨迪",
+      "pinyin": "Sà dí",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "princess (diminutive of Sarah)",
+      "note": "A Hebrew diminutive of Sarah that has become a favourite in its own right."
+    },
+    "Samantha": {
+      "zh": "萨曼莎",
+      "pinyin": "Sà màn shā",
+      "gender": "f",
+      "origin": "Aramaic",
+      "meaning": "listener (of uncertain origin)",
+      "note": "A name that rose to fame through the 1960s TV show Bewitched."
+    },
+    "Samuel": {
+      "zh": "塞缪尔",
+      "pinyin": "Sāi miù ěr",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "heard by God",
+      "note": "In the Bible, Samuel was the prophet who anointed the first kings of Israel."
+    },
+    "Sandra": {
+      "zh": "桑德拉",
+      "pinyin": "Sāng dé lā",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "defender of the people (short form of Alexandra)",
+      "note": "A short form of Alexandra that was a top pick in the 1940s."
+    },
+    "Sarah": {
+      "zh": "萨拉",
+      "pinyin": "Sà lā",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "princess",
+      "note": "In the Bible, Sarah was the wife of Abraham and mother of Isaac."
+    },
+    "Savannah": {
+      "zh": "萨凡纳",
+      "pinyin": "Sà fán nà",
+      "gender": "f",
+      "origin": "Spanish",
+      "meaning": "treeless plain",
+      "note": "A place name from the grassy plains, and the city of Savannah, Georgia."
+    },
+    "Sawyer": {
+      "zh": "索耶",
+      "pinyin": "Suǒ yē",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "woodcutter",
+      "note": "An English surname for a woodcutter, and the hero of Mark Twain's Tom Sawyer."
+    },
+    "Scarlett": {
+      "zh": "斯卡利特",
+      "pinyin": "Sī kǎ lì tè",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "red (a colour and surname)",
+      "note": "The heroine of Gone with the Wind, Scarlett O'Hara, gave the name its fire."
+    },
+    "Scott": {
+      "zh": "斯科特",
+      "pinyin": "Sī kē tè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "from Scotland",
+      "note": "From the surname for someone from Scotland; carried by the author F. Scott Fitzgerald."
+    },
+    "Sean": {
+      "zh": "肖恩",
+      "pinyin": "Xiào ēn",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "God is gracious (form of John)",
+      "note": "The Irish form of John, carried by the actor Sean Connery."
+    },
+    "Sebastian": {
+      "zh": "塞巴斯蒂安",
+      "pinyin": "Sài bā sī dì ān",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "venerable, revered",
+      "note": "Saint Sebastian was a Roman martyr pierced by arrows."
+    },
+    "Seth": {
+      "zh": "塞思",
+      "pinyin": "Sāi sī",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "appointed",
+      "note": "In the Bible, Seth was the third son of Adam and Eve."
+    },
+    "Shane": {
+      "zh": "谢恩",
+      "pinyin": "Xiè ēn",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "God is gracious (form of John)",
+      "note": "An anglicised Irish form of John, made famous by the western novel Shane."
+    },
+    "Sharon": {
+      "zh": "莎伦",
+      "pinyin": "Shā lún",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "the plain of Sharon",
+      "note": "A place name from the fertile plain of Sharon in Israel."
+    },
+    "Shawn": {
+      "zh": "肖恩",
+      "pinyin": "Xiào ēn",
+      "gender": "m",
+      "origin": "Irish",
+      "meaning": "God is gracious (form of John)",
+      "note": "A spelling variant of Sean, popular in North America."
+    },
+    "Shirley": {
+      "zh": "雪莉",
+      "pinyin": "Xuě lì",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "bright meadow (a place name)",
+      "note": "A surname-turned-first-name made famous by the child star Shirley Temple."
+    },
+    "Silas": {
+      "zh": "赛拉斯",
+      "pinyin": "Sài lā sī",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "of the forest",
+      "note": "In the New Testament, Silas travelled with Saint Paul."
+    },
+    "Simon": {
+      "zh": "西蒙",
+      "pinyin": "Xī méng",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "he has heard",
+      "note": "Simon Peter, renamed Peter by Jesus, was the first leader of the church."
+    },
+    "Sofia": {
+      "zh": "索菲娅",
+      "pinyin": "Suǒ fēi yà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "wisdom",
+      "note": "A Greek name meaning 'wisdom', a top pick across Europe."
+    },
+    "Sophia": {
+      "zh": "索菲娅",
+      "pinyin": "Suǒ fēi yà",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "wisdom",
+      "note": "The Greek word for 'wisdom', and the name of a famous basilica in Istanbul."
+    },
+    "Stella": {
+      "zh": "斯特拉",
+      "pinyin": "Sī tè lā",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "star",
+      "note": "A Latin name meaning 'star', revived in the 21st century."
+    },
+    "Stephanie": {
+      "zh": "斯蒂芬妮",
+      "pinyin": "Sī dì fēn nī",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "crown (feminine of Stephen)",
+      "note": "The feminine of Stephen, popular in the 1970s and 1980s."
+    },
+    "Stephen": {
+      "zh": "斯蒂芬",
+      "pinyin": "Sī dì fēn",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "crown",
+      "note": "Saint Stephen was the first Christian martyr."
+    },
+    "Steven": {
+      "zh": "史蒂文",
+      "pinyin": "Shǐ dì wén",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "crown (variant of Stephen)",
+      "note": "A variant of Stephen that became hugely popular in the mid-20th century."
     },
     "Summer": {
       "zh": "萨默",
-      "pinyin": "Sà mò"
+      "pinyin": "Sà mò",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "the summer season",
+      "note": "A cheerful season name that rose in the 1970s."
+    },
+    "Susan": {
+      "zh": "苏珊",
+      "pinyin": "Sū shān",
+      "gender": "f",
+      "origin": "Hebrew",
+      "meaning": "lily (from Susanna)",
+      "note": "A Hebrew name meaning 'lily', from the biblical Susanna."
+    },
+    "Teresa": {
+      "zh": "特蕾莎",
+      "pinyin": "Tè lěi shā",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "harvest (of uncertain origin)",
+      "note": "The name of the saint Mother Teresa, who cared for the poor of Calcutta."
+    },
+    "Terry": {
+      "zh": "特里",
+      "pinyin": "Tè lǐ",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "tender (short form of Terence)",
+      "note": "A friendly short form of Terence, common in the mid-20th century."
+    },
+    "Theodore": {
+      "zh": "西奥多",
+      "pinyin": "Xī ào duō",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "gift of God",
+      "note": "The name of the US president Theodore 'Teddy' Roosevelt."
+    },
+    "Thomas": {
+      "zh": "托马斯",
+      "pinyin": "Tuō mǎ sī",
+      "gender": "m",
+      "origin": "Aramaic",
+      "meaning": "twin",
+      "note": "Saint Thomas was the apostle who doubted until he saw Jesus."
+    },
+    "Timothy": {
+      "zh": "蒂莫西",
+      "pinyin": "Dì mò xī",
+      "gender": "m",
+      "origin": "Greek",
+      "meaning": "honouring God",
+      "note": "In the New Testament, Timothy was a young companion of Saint Paul."
+    },
+    "Trevor": {
+      "zh": "特雷弗",
+      "pinyin": "Tè léi fú",
+      "gender": "m",
+      "origin": "Welsh",
+      "meaning": "large settlement",
+      "note": "A Welsh name meaning 'large settlement', common in Britain and America."
+    },
+    "Tristan": {
+      "zh": "特里斯坦",
+      "pinyin": "Tè lǐ sī tǎn",
+      "gender": "m",
+      "origin": "Celtic",
+      "meaning": "sorrowful, or noise",
+      "note": "In the legend of Tristan and Isolde, Tristan is a Cornish knight."
+    },
+    "Tyler": {
+      "zh": "泰勒",
+      "pinyin": "Tài lè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "tile maker (a surname)",
+      "note": "An English surname for a tile maker that topped the US charts in the 1990s."
+    },
+    "Victor": {
+      "zh": "维克托",
+      "pinyin": "Wéi kè tuō",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "conqueror",
+      "note": "A Roman name meaning 'conqueror', shared by the writer Victor Hugo."
+    },
+    "Victoria": {
+      "zh": "维多利亚",
+      "pinyin": "Wéi duō lì yà",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "victory",
+      "note": "The name of Queen Victoria, who gave her name to a whole era."
+    },
+    "Vincent": {
+      "zh": "文森特",
+      "pinyin": "Wén sēn tè",
+      "gender": "m",
+      "origin": "Latin",
+      "meaning": "conquering",
+      "note": "The painter Vincent van Gogh carried this name."
+    },
+    "Violet": {
+      "zh": "维奥莱特",
+      "pinyin": "Wéi ào lái tè",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "the violet flower",
+      "note": "A flower name from the purple bloom, revived in the 2000s."
+    },
+    "Virginia": {
+      "zh": "弗吉尼亚",
+      "pinyin": "Fú jí ní yà",
+      "gender": "f",
+      "origin": "Latin",
+      "meaning": "maiden (from a Roman family name)",
+      "note": "Named for the US state, which honours Elizabeth I, the 'Virgin Queen'."
+    },
+    "Walter": {
+      "zh": "沃尔特",
+      "pinyin": "Wò ěr tè",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "army ruler",
+      "note": "The name of the writer Sir Walter Scott."
+    },
+    "Wayne": {
+      "zh": "韦恩",
+      "pinyin": "Wéi ēn",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "wagon maker (a surname)",
+      "note": "Made famous by the actor John Wayne."
+    },
+    "Wesley": {
+      "zh": "韦斯利",
+      "pinyin": "Wéi sī lì",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "west meadow",
+      "note": "The surname of John Wesley, founder of Methodism."
+    },
+    "William": {
+      "zh": "威廉",
+      "pinyin": "Wēi lián",
+      "gender": "m",
+      "origin": "Germanic",
+      "meaning": "resolute protector",
+      "note": "William Shakespeare and William the Conqueror are the name's great bearers."
+    },
+    "Willow": {
+      "zh": "薇洛",
+      "pinyin": "Wēi luò",
+      "gender": "f",
+      "origin": "English",
+      "meaning": "the willow tree",
+      "note": "A nature name from the graceful willow tree."
+    },
+    "Wyatt": {
+      "zh": "怀亚特",
+      "pinyin": "Huái yà tè",
+      "gender": "m",
+      "origin": "English",
+      "meaning": "brave in war",
+      "note": "Wyatt Earp, the lawman of the American frontier, bore this name."
+    },
+    "Xavier": {
+      "zh": "泽维尔",
+      "pinyin": "Zé wéi ěr",
+      "gender": "m",
+      "origin": "Basque",
+      "meaning": "new house, or bright",
+      "note": "Saint Francis Xavier was a pioneering Jesuit missionary."
+    },
+    "Zachary": {
+      "zh": "扎卡里",
+      "pinyin": "Zhā kǎ lǐ",
+      "gender": "m",
+      "origin": "Hebrew",
+      "meaning": "God has remembered",
+      "note": "In the Bible, Zechariah was the father of John the Baptist."
+    },
+    "Zoe": {
+      "zh": "佐伊",
+      "pinyin": "Zuǒ yī",
+      "gender": "f",
+      "origin": "Greek",
+      "meaning": "life",
+      "note": "A Greek name meaning 'life', shared by the actress Zoë Kravitz."
     }
   }
 }
