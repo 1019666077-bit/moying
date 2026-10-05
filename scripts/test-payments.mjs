@@ -538,6 +538,7 @@ const tests = [
       "/pins/batch1.csv",
       "/.dev.vars",
       "/DEPLOY.md/",
+      "/research/tattoo-check-preview/form.html",
     ]) {
       const response = await onRequest(context(path));
       assert.equal(response.status, 404, `${path} is still served`);
@@ -550,6 +551,8 @@ const tests = [
       "/names",
       "/michael",
       "/noah",
+      "/tattoo-check",
+      "/tattoo-check.html",
       "/samples/michael-chinese-calligraphy-name.jpg",
       "/robots.txt",
       "/sitemap.xml",

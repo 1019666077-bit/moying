@@ -50,3 +50,4 @@ The Pages project is connected to this repo's `main` branch, with no build step 
 - Free export: PNG, JPG, WebP, transparent PNG, SVG, PDF
 - Free files are watermarked 900×1200 previews. SVG and PDF embed that same image, so they are not a clean vector. A paid design exports a clean 1800×2400 file in the format you pick.
 - $1.99 once, through Waffo Pancake, removes the watermark for that design. The button starts a server-side checkout. Without the Functions secrets configured, it says payments are unavailable and does not break the page.
+- Optional `/tattoo-check`: $9 text-only “check before you ink” report (problems or uncertain — never OK to ink), via a separate Waffo product and DeepSeek. See [DEPLOY.md](DEPLOY.md).

@@ -2,15 +2,19 @@ import { text } from "../lib/http.js";
 import {
   MIN_USD_CENTS,
   eventKey,
+  purchaseKind,
   readPurchase,
   revokedKey,
   tokenFromEvent,
   usdCents,
   writePurchase,
 } from "../lib/purchases.js";
+import { TATTOO_KIND, TATTOO_PRICE_USD_CENTS } from "../lib/tattoo-pricing.js";
+import { ensureTattooReport } from "../lib/tattoo-report.js";
 import { verifyWebhook } from "../lib/waffo.js";
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost(context) {
+  const { request, env } = context;
   if (!env || !env.PURCHASES || !env.WAFFO_WEBHOOK_PUBLIC_KEY) return text("not configured", 500);
   if (env.WAFFO_MODE !== "test" && env.WAFFO_MODE !== "prod") return text("not configured", 500);
 
@@ -31,7 +35,7 @@ export async function onRequestPost({ request, env }) {
   if (await env.PURCHASES.get(dedupe)) return text("OK");
 
   try {
-    if (event.eventType === "order.completed") await grant(env, event);
+    if (event.eventType === "order.completed") await grant(env, event, context);
     else if (event.eventType === "refund.succeeded") await revoke(env, event);
   } catch (err) {
     console.error("webhook handler failed", event.eventType);
@@ -42,14 +46,14 @@ export async function onRequestPost({ request, env }) {
   return text("OK");
 }
 
-async function grant(env, event) {
+async function grant(env, event, context) {
   const data = event.data || {};
   if (data.currency !== "USD") return;
   const charged = data.chargedAmount != null && data.chargedAmount !== ""
     ? data.chargedAmount
     : data.amount;
   const cents = usdCents(charged);
-  if (cents == null || cents < MIN_USD_CENTS) return;
+  if (cents == null) return;
 
   const token = tokenFromEvent(data);
   if (!token) return;
@@ -57,8 +61,17 @@ async function grant(env, event) {
 
   const record = await readPurchase(env, token);
   if (!record || record.status === "refunded" || record.status === "paid") return;
-  // Records written before the per-word unlock shipped only have the design.
-  if (!record.word && record.design && typeof record.design.text === "string") record.word = record.design.text;
+
+  const kind = purchaseKind(record);
+  const minCents = kind === TATTOO_KIND ? TATTOO_PRICE_USD_CENTS : MIN_USD_CENTS;
+  if (cents < minCents) return;
+
+  if (kind === "unlock") {
+    // Records written before the per-word unlock shipped only have the design.
+    if (!record.word && record.design && typeof record.design.text === "string") {
+      record.word = record.design.text;
+    }
+  }
 
   record.status = "paid";
   record.orderId = typeof data.orderId === "string" ? data.orderId : null;
@@ -67,6 +80,23 @@ async function grant(env, event) {
     record.buyerEmail = data.buyerEmail.slice(0, 200);
   }
   await writePurchase(env, token, record);
+
+  if (kind === TATTOO_KIND) {
+    const runReport = async () => {
+      try {
+        const withReport = await ensureTattooReport(env, record);
+        await writePurchase(env, token, withReport);
+      } catch (err) {
+        console.error("tattoo report after payment failed");
+      }
+    };
+    // Prefer waitUntil so the webhook acknowledges quickly; fall back to awaiting.
+    if (context && typeof context.waitUntil === "function") {
+      context.waitUntil(runReport());
+    } else {
+      await runReport();
+    }
+  }
 }
 
 async function revoke(env, event) {

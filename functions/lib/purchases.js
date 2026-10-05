@@ -50,8 +50,18 @@ export function tokenFromEvent(data) {
   if (!data || typeof data !== "object") return "";
   if (isToken(data.orderMerchantExternalId)) return data.orderMerchantExternalId;
   const meta = data.orderMetadata;
-  if (meta && typeof meta === "object" && isToken(meta.unlock)) return meta.unlock;
+  if (meta && typeof meta === "object") {
+    if (isToken(meta.unlock)) return meta.unlock;
+    // Tattoo-check sessions also put the token under metadata.tattoo.
+    if (isToken(meta.tattoo)) return meta.tattoo;
+  }
   return "";
+}
+
+export function purchaseKind(record) {
+  if (!record || typeof record !== "object") return "unlock";
+  if (record.kind === "tattoo-check") return "tattoo-check";
+  return "unlock";
 }
 
 // A purchase unlocks the paid word in every brush style, paper, ink and size,
