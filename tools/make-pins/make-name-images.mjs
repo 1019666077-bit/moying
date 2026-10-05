@@ -213,7 +213,11 @@ async function main() {
   const args = process.argv.slice(2);
   const onlyAt = args.indexOf("--only");
   const only = onlyAt >= 0 ? args[onlyAt + 1].toLowerCase() : "";
-  const names = loadNames().filter((entry) => !only || entry.slug === only);
+  const missingOnly = args.includes("--missing");
+  let names = loadNames().filter((entry) => !only || entry.slug === only);
+  if (missingOnly) {
+    names = names.filter((entry) => !fs.existsSync(path.join(ROOT, "samples", imageFileFor(entry.slug))));
+  }
   if (!names.length) throw new Error(`No names matched --only ${only}`);
 
   const outDir = path.join(ROOT, "samples");
