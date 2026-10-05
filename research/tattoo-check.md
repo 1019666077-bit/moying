@@ -15,6 +15,8 @@
 | 3 SERP | **通过（有方法局限）** | 窄词结果里小型站 ≥3，未见 Google Translate / Reddit 垄断前排；**不是**官方 Google 后台导出 |
 | 4 一人全自动 | **失败** | 一周内可复用 Waffo 做出结账页，但「全自动 + 母语抽检 + 永久皮肤责任」不能同时成立 |
 
+**后续修订（同日）：** 若改成「AI 全自动、永不说 OK to ink、只报问题 / 不确定」，门禁 4 的工程项可翻成通过，但付费意愿与漏检声誉仍薄。见文末 [修订：仅报问题的 AI 产品](#修订仅报问题的-ai-产品)。
+
 ---
 
 ## 产品设想（研究范围）
@@ -191,6 +193,124 @@
 
 ---
 
+## 修订：仅报问题的 AI 产品
+
+修订日期：2026-10-05。改写产品形态后再评门禁 4。**以下不是律师意见**；只读公开条款与页面。
+
+### 结论（修订）
+
+**正式扩成主 SKU：仍偏 no-go。最小全自动测试：有条件 go。**
+
+改写后：**永不输出 OK to ink**；只输出 **problems found**（错字、别扭/无意义搭配、镜像、中日混用、尴尬读法）或 **uncertain, get a native speaker**，并附「仅供参考、不保证、不负责」免责。这样「一人一周全自动 + ≥$9 + 复用 Waffo」在工程上成立，争议面比「可以纹」窄。
+
+但仍不构成强 go：
+
+1. **Waffo 作 MoR 不替你扛产品内容责任**——开发者条款要你保证产品准确性，并就产品缺陷等向 Waffo 赔偿。  
+2. **$9 且永不说 OK** 与现有付费买家想买的「安心 / 确认可纹」不对齐；同形态免费层已很多。付费率 **未实测**。  
+3. **廉价 LLM** 对「粘贴明文」常见翻车词可能有用，对草图/镜像/缺笔/草书 **未实测且公开文献偏弱**；漏报一次仍可能伤墨英主品牌。
+
+| 门禁 | 原判定 | 修订后（仅报问题 / 不确定） |
+| --- | --- | --- |
+| 1 付费竞品 | 通过 | **通过**（不变） |
+| 2 Trends | 通过（部分） | **通过（部分）**（不变） |
+| 3 SERP | 通过（有方法局限） | **通过（有方法局限）**（不变） |
+| 4 一人全自动 ≥$9 + Waffo | **失败** | **通过（工程）**；法律/声誉残余风险另计，见下 |
+
+### 1）法律与声誉：免责声明够不够？非美国个体 + Waffo MoR
+
+**简答：免责有用，但不够；MoR 主要扛支付/税/拒付流程，不扛「报告写错了」的内容责任。**
+
+公开材料对得上的分工：
+
+| 来源 | 写了什么 | 对墨英的含义 |
+| --- | --- | --- |
+| [Waffo MoR 营销页](https://waffo.com/en/merchant-of-record) | Waffo 是发票上的 seller of record；税、拒付、审计相对 PSP「转到我们」；文案有 “liability for every transaction stops at us” | 指的是**交易合规与支付争议**，不是「AI 语义报告害人纹错」的产品侵权责任 |
+| [Developer Service Terms](https://www.waffo.ai/en/developer-terms)（2026-06-03） | 开发者负责产品 **legality, accuracy, safety, quality…**；**Developer Indemnity** 含 (c) Product defects… or **inaccurate Product information** | 内容错了，你仍要对 Waffo **赔偿**；个体开发者明确在适用对象内 |
+| [Buyer Terms](https://www.waffo.ai/en/buyer-terms) | 买家向 Waffo 付款，产品由 Provider 许可；**Waffo makes no warranties regarding the Product**；质量/准确性由 Provider 协议管 | 买家仍可能找「真正提供报告的人」；平台把自己摘干净 |
+| 竞品免责写法 | ChineseToolkit：**For reference only**… Always confirm with a native…（[checker](https://www.chinesetoolkit.com/tattoo-checker/)）；GoChineseName：informational；纹身前再找母语者（[disclaimer](https://www.gochinesename.com/disclaimer)）；Before You Ink：planning aid，不是 final recommendation（[tattoo-checker](https://beforeyouink.org/tattoo-checker/)） | 行业惯例是免责 + 推给母语者；**没有公开案例证明「免责 = 零责任」**（未核实判例） |
+
+**永不说 OK** 显著降低「你们批准我纹的」截图攻击面，这是声誉上的真改进。残余风险：
+
+- **漏报（false negative）：** 报告写 uncertain/没列出某尴尬读法，用户当「没大问题」去纹 → 仍可能点名墨英。  
+- **误报过多：** 用户觉得白花钱 → 拒付/差评；Waffo 处理拒付，费用与储备金规则仍可能回落到开发者（条款有 reserve/holdback，具体比例 **未逐条核算**）。  
+- **消费者强制法：** EU/UK 等对数字内容有法定权利；条款写 “not liable” **不能**保证在买家所在地全部有效——**未请律师核实**。  
+- **专业责任险：** 是否覆盖跨境 AI 咨询 **未核实**。
+
+**结论：** 免责 + 只报问题/不确定，对**非美国个体卖家**是必要减损，**不是** MoR 防火墙。把营销页 “liability stops at us” 理解成「纹身报告零风险」会误判。
+
+### 2）永不说 OK，还有人付 $9 吗？
+
+**公开证据偏弱；倾向：转化会难于「给人绿灯」或「给人可纹设计」的人工单。未做定价实验。**
+
+竞品**怎么保证 / 怎么卖：**
+
+| 卖家 | 对外承诺语气 | 买家实际夸什么（可见评语） |
+| --- | --- | --- |
+| Fiverr `kes_li` | “peace of mind before you permanently ink”；核验含义、书法、缺笔 | 摘要评语强调 **详细解释、响应快、确认准确性**——要的是「讲清楚这是什么」，不是「只列风险清单」 |
+| Fiverr `master__bo` | “Tattoo Safety”“culturally safe”；对比 AI/Google | 卖的是 **人类深度 + 可纹用**；与「永不说 OK」相反 |
+| ChineseToolkit | 免费层给含义/风险；付费 **$9.9 Safety Report** 给 PDF、替代词、给纹身师的笔记；页脚仍 **for reference only** | 付费钩子是 **可打印深度报告 + 替代方案**，不是单纯「发现问题」。站方自述用户量 **未核实** |
+| Transname | “accurate translation”、书法 stencil | 反馈夸 **翻译对了、好看、已纹上**——正向确认 + 交付物 |
+| GoChineseName | 分数/报告均为 reference；纹身仍劝独立确认 | 付费是 **起名深度 + 纹身包文件**，不是纯否定清单 |
+
+**对「只报问题 / 不确定、$9、无 OK」的含义：**
+
+- 付费买家公开夸的多是 **确认、细节、可执行设计**；「只泼冷水」更接近免费 checker / Reddit 已做的事。  
+- 若付费包仍含：**白话母语者会怎么读、问题清单、下一步去问谁、可选替代字（仍不标 OK）**，才更接近 ChineseToolkit 付费层；否则与免费层同质。  
+- **无人公开披露**「仅风险报告、无绿灯」的转化率或退款率 → 愿付 $9 与否标 **未核实**。
+
+### 3）廉价 LLM（如 DeepSeek）抓常见纹身错误：能力表
+
+**本次环境：DeepSeek MCP 不可用，无 API Key，未跑实测基准。** 下表是按错误类型做的 **能力推断**（结合公开 OCR/MLLM 局限文献与常见翻车案例），**不是准确率数字**。
+
+| 错误类型 | 例子（公开叙述中常见） | 输入若是**可复制汉字文本** | 输入若是**纹身草图/照片** | 备注 |
+| --- | --- | --- | --- | --- |
+| 英义选错字 | 要 “free spirit” 得到 **免费**（免费层也举例） | **多半能指出**字面是「免费」 | 先 OCR，再判；OCR 错则全错 | 廉价 LLM 文本语义强项 |
+| 菜单/动物翻车 | **母牛**、**鸡** 等 | **多半能指出**尴尬字面/俚语 | 同上 | 需 prompt 要求「母语者第一眼读法」 |
+| 字面堆砌口号 | Live Laugh Love 直译成清单感 | **常能标「不自然」** | 取决于是否识出字符 | 主观，边界模糊 → 宜倾 uncertain |
+| 合字变骂/贬 | 如 **二货** 类组合 | **部分能抓**；冷门组合易漏 | 更易漏 | 漏报风险高 |
+| 简繁混用 | 同句简繁夹杂 | **文本上较易规则/模型检出** | 草书写法干扰大 | 可加字典校验 |
+| 中日字形/词义差 | 日文常用汉字 vs 简体；词义漂移 | **部分能抓**；需明确「按现代汉语读」 | 更难 | 与 kanji 需求重叠 |
+| 镜像 / 旋转 | 左右翻、倒纹 | 文本输入 **看不到** | 需视觉；公开 MLLM/OCR 在镜像、模糊、手写上易幻觉（例：[arXiv 2605.16409](https://ar5iv.labs.arxiv.org/html/2605.16409)；[LLM OCR 讨论](https://www.llamaindex.ai/blog/llm-ocr)） | **弱项**；漏报或「读成通顺错字」 |
+| 缺笔 / 错笔成另一字 | 少一笔变旁字 | 若用户贴的是「正确 Unicode」则 **抓不到已纹错误**；若贴错字则可能解释错字 | 草书/艺术字 OCR **不可靠** | 人工与专业 OCR 置信度更关键 |
+| 政治/脏话暗梗 | 网民梗、谐音 | **不稳定**；过时或过检 | 更不稳定 | 应默认 uncertain |
+| 「看起来对其实半截词」 | 单字歧义（命、奇、曲 等名人案例叙述） | **能列多义**；难判用户意图 | 同左 | 产品应列多义而非假装唯一 |
+
+**产品设计含义：** 第一版应 **只收可复制文本 + 可选「意图英文」**；图片通道要么不做，要么强制 uncertain。输出偏 **uncertain**，把「没找到问题」写成「未发现明显问题 ≠ 可以纹」。DeepSeek 具体命中率：**未实测**。
+
+### 4）修订后的正反、go/no-go、最小测试
+
+**赞成（相对原三档含 OK）：**
+
+- 门禁 4 工程项满足：无母语队列，可全自动，一周内可挂 Waffo 第二商品。  
+- 去掉 OK，和竞品免责口径一致，截图「批准纹身」风险下降。  
+- 对明文经典翻车词，廉价 LLM **可能**提供即时价值（未实测）。  
+- 可挂在墨英付款成功页，边际获客成本低。
+
+**反对：**
+
+- 与免费 checker / ChatGPT / Reddit **功能重叠**；$9 理由变薄。  
+- 付费市场公开证据更支持「确认 + 设计文件 + 人类细讲」，不是「永不绿灯」。  
+- 漏报仍伤主品牌；MoR **不**转移内容赔偿义务。  
+- 图片纹身核对是刚需场景之一，恰是 AI 弱项。
+
+**最可能失败方式：** 无人付费（免费替代吃掉意图）；或偶发漏报后差评传导到 $1.99 毛笔字信任。
+
+**建议：**
+
+- **主产品扩量：no-go。**  
+- **最小测试：有条件 go**——验证的是「有没有人愿为自动化风险清单付 $9」，不是验证法律责任消失。
+
+**最小测试（修订）：**
+
+1. 一页：粘贴拟纹汉字（必填）+ 英文意图（选填）→ Waffo **$9**。  
+2. 服务端调用廉价 LLM，结构化输出：**problems found** 列表（每条：现象 + 白话「母语者可能怎么读」）或 **uncertain, get a native speaker**；**禁止** OK / safe to ink / approved。  
+3. 页顶/报告末固定免责：informational only；no guarantee；not liable for tattoo outcomes；always ask a native speaker。  
+4. **不做图片**（或图片一律 uncertain）。  
+5. 渠道：墨英相关 SEO 页 + 付款成功软链；**两周或 30 次调用上限**。  
+6. 成功线：≥5 笔无争议付费，且抽查 10 个公开翻车样例（如 免费、母牛）均能点名问题（**人工抽查，不宣称模型准确率**）。失败线：&lt;3 单，或出现「按报告去纹」投诉，或抽查漏掉明显样例。
+
+---
+
 ## 未核实清单（禁止当事实用）
 
 - ChineseTattooPro 页面正文、真实成交与评价（站点本次不可达）  
@@ -199,7 +319,11 @@
 - ChineseToolkit「12,847」、GoChineseName「2,000+ Names Reviewed」的第三方验证  
 - `chinese tattoo translation` / `kanji tattoo check` 的五年 Trends 曲线（429）  
 - 专业责任险是否覆盖此类服务  
-- 官方 Google 前十完整列表（仅有搜索代理快照）
+- 官方 Google 前十完整列表（仅有搜索代理快照）  
+- DeepSeek / 任意廉价 LLM 在纹身错误集上的实测准确率、漏报率  
+- 「仅报问题、无 OK」定价 $9 的真实付费率与退款率  
+- 免责声明在买家所在地强制法下的可执行程度（无律师意见）  
+- Waffo 拒付/reserve 对咨询类数字商品的实际费率影响  
 
 ---
 
@@ -207,10 +331,13 @@
 
 - Transname：[首页](https://transname.com/) · [appraisal](https://www.transname.com/tattoo_appraisal.html) · [feedback](https://transname.com/feedback.html)  
 - Fiverr kes_li：[gig](https://www.fiverr.com/kes_li/translate-or-verify-your-tattoo-meaning-in-tranditional-chineses-or-cantonese)  
-- GoChineseName：[pricing](https://www.gochinesename.com/pricing) · [tattoo](https://www.gochinesename.com/chinese-name-tattoo)  
+- GoChineseName：[pricing](https://www.gochinesename.com/pricing) · [tattoo](https://www.gochinesename.com/chinese-name-tattoo) · [disclaimer](https://www.gochinesename.com/disclaimer)  
 - ChineseToolkit：[tattoo-checker](https://www.chinesetoolkit.com/tattoo-checker/)  
 - Cantonese Today：[tattoo-consulting](https://www.cantonesetoday.com/tattoo-consulting/)  
+- Before You Ink：[tattoo-checker](https://beforeyouink.org/tattoo-checker/)  
+- Waffo：[MoR 说明](https://waffo.com/en/merchant-of-record) · [Developer Terms](https://www.waffo.ai/en/developer-terms) · [Buyer Terms](https://www.waffo.ai/en/buyer-terms)  
 - 免费社区：r/translator、r/AskAChinese（上文链接）  
 - 日文对照：Kanji Sensei、Yorozuya（上文链接）  
 - 墨英条款：[terms](https://mymoying.com/terms.html)  
 - Trends：本次 `pytrends`，`today 5-y`，全球，2026-10-05 拉取  
+- OCR/MLLM 局限（非纹身专用基准）：[arXiv 2605.16409](https://ar5iv.labs.arxiv.org/html/2605.16409) · [LlamaIndex LLM OCR](https://www.llamaindex.ai/blog/llm-ocr)  
