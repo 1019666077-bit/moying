@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — PhotoSweep</title>
+<meta name="description" content="Privacy policy for PhotoSweep, a Chrome extension that moves items to Trash in your own Google Photos tab. We do not collect your photos, account data, or browsing history.">
+<meta name="robots" content="index, follow">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="mark"></span>PhotoSweep</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap doc">
+
+  <h1>Privacy Policy — PhotoSweep</h1>
+  <p class="updated">Last updated: October 7, 2026</p>
+
+  <p>PhotoSweep is a Chrome extension that helps you bulk-move items to Trash in your own Google Photos tab.</p>
+
+  <p><strong>PhotoSweep is not affiliated with Google.</strong></p>
+
+  <h2>Summary</h2>
+  <div class="note">
+    <p><strong>We do not collect your photos, account data, or browsing history.</strong> Automation runs locally in your browser on <code>photos.google.com</code> using the page’s normal UI while you are signed in.</p>
+  </div>
+
+  <h2>Data the extension handles</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Where</th>
+        <th>Leaves the device?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Daily deletion counts (free tier)</td>
+        <td><code>chrome.storage.local</code> on your computer</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>License key + verification cache</td>
+        <td><code>chrome.storage.local</code> on your computer</td>
+        <td>License <strong>key only</strong> is sent when you click Activate (see below)</td>
+      </tr>
+      <tr>
+        <td>Popup settings (max delete, date filter)</td>
+        <td>In-memory / local UI only for the session</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Photo contents, filenames, faces, location</td>
+        <td>Never read for upload or analytics</td>
+        <td>No</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><strong><code>storage</code></strong> — save daily usage and license cache locally</li>
+    <li><strong><code>activeTab</code> / host permission for <code>https://photos.google.com/*</code></strong> — run the content script and talk to the active Photos tab</li>
+  </ul>
+  <p>No other sites are accessed for photo deletion. There is no analytics SDK, no ad network, and no third-party tracker in the extension.</p>
+
+  <h2>License verification (Pro)</h2>
+  <p>If you enter a license key and choose <strong>Activate</strong>, the extension sends that key to the configured license endpoint (<code>LICENSE_API</code> in the source). The response (<code>valid</code> true/false) is cached locally for offline grace (72 hours).</p>
+  <p>Until payment/licensing is fully launched, that endpoint may be a placeholder. When it goes live, only the license key (not your photos) is transmitted for verification.</p>
+  <p>The <strong>Upgrade</strong> button opens a checkout URL in a new tab; checkout is handled by the payment provider (planned: Waffo), not by uploading Photos library data.</p>
+
+  <h2>Google Photos</h2>
+  <p>PhotoSweep does not use a private Google Photos API. It clicks the same Delete / Move to trash controls you would use yourself. Your Google Account session stays between you and Google.</p>
+
+  <h2>Children</h2>
+  <p>PhotoSweep is not directed at children under 13.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, we will update this page and the “Last updated” date.</p>
+
+  <h2>Contact</h2>
+  <p>For privacy questions, email <a href="mailto:moying.studio@outlook.com">moying.studio@outlook.com</a>.</p>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-links">
+      <strong>Moying Studio</strong>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:moying.studio@outlook.com">moying.studio@outlook.com</a>
+    </div>
+    <p class="legal">PhotoSweep is not affiliated with, endorsed by, or sponsored by Google. Google Photos is a trademark of Google LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>
