@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — CullGrid</title>
+<meta name="description" content="Privacy policy for CullGrid, a Chrome extension that bulk-moves your own iCloud Photos to Recently Deleted. We do not collect your photos, Apple account data, or browsing history.">
+<meta name="robots" content="index, follow">
+<style>
+  :root { color-scheme: light dark; --fg: #1a1a1a; --muted: #555; --bg: #fff; --card: #f6f7f9; --line: #e3e5ea; --link: #0b57d0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg: #f2f2f2; --muted: #b0b0b0; --bg: #121212; --card: #1e1e1e; --line: #333; --link: #8ab4f8; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 20px 48px; }
+  header { border-bottom: 1px solid var(--line); margin-bottom: 28px; padding-bottom: 16px; }
+  .brand { font-weight: 700; text-decoration: none; color: var(--fg); }
+  h1 { font-size: 1.75rem; margin: 0 0 8px; }
+  h2 { font-size: 1.15rem; margin: 28px 0 10px; }
+  p, li { color: var(--fg); }
+  .updated, .muted { color: var(--muted); font-size: 0.92rem; }
+  .note { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; margin: 12px 0; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+  a { color: var(--link); }
+  ul { padding-left: 1.2rem; }
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <a class="brand" href="https://mymoying.com/">Moying Studio</a>
+    <p class="muted" style="margin:6px 0 0;">CullGrid · Chrome / Edge extension</p>
+  </header>
+
+  <h1>Privacy Policy — CullGrid</h1>
+  <p class="updated">Last updated: October 9, 2026</p>
+
+  <p>CullGrid is a browser extension that helps you bulk-move items to <strong>Recently Deleted</strong> in your own iCloud Photos web tab (<code>icloud.com</code> / <code>icloud.com.cn</code>).</p>
+  <p><strong>CullGrid is not affiliated with Apple Inc.</strong> iCloud and Apple are trademarks of Apple Inc.</p>
+
+  <h2>Operator</h2>
+  <p>CullGrid is operated by <strong>东莞市常平创客汇网络技术工作室</strong> (Dongguan Changping Chuangkehui Network Technology Studio), also doing business as <strong>Moying Studio</strong>.</p>
+  <p>Privacy / support contact: <a href="mailto:moying.studio@outlook.com">moying.studio@outlook.com</a></p>
+
+  <h2>Summary</h2>
+  <div class="note">
+    <p style="margin:0;"><strong>We do not collect your photos, filenames, faces, location, Apple account credentials, or browsing history.</strong> Automation runs locally in your browser on the iCloud Photos page you already signed in to. The extension does not upload photo bytes to CullGrid servers.</p>
+  </div>
+
+  <h2>Data the extension handles</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Where it lives</th>
+        <th>Leaves your device?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lifetime free-tier confirm count (up to 50 successful moves to Recently Deleted)</td>
+        <td><code>chrome.storage.local</code> on this browser</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Consent / safety notice flags, last-run summary, popup settings</td>
+        <td><code>chrome.storage.local</code> (or session UI only)</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Activation (license) token after you paste a code</td>
+        <td><code>chrome.storage.local</code>; verified with local WebCrypto (Ed25519)</td>
+        <td>No — verification does not call a CullGrid license API</td>
+      </tr>
+      <tr>
+        <td>Photo contents, filenames, faces, EXIF, Apple account data</td>
+        <td>Never read for upload, analytics, or sale</td>
+        <td>No</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Browsing, filtering, and preview do not spend free-tier confirms. Only a successful confirmed move into Recently Deleted counts.</p>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><strong><code>storage</code></strong> — store the free-tier count, consent flags, and activation token locally.</li>
+    <li><strong>Host access for iCloud Photos</strong> (<code>https://www.icloud.com/photos/*</code>, <code>…/applications/photos3/*</code>, and the matching <code>icloud.com.cn</code> hosts) — run a content script on the Photos UI you opened so CullGrid can use the page’s own selection and Delete controls.</li>
+  </ul>
+  <p>There is no analytics SDK, no advertising network, no third-party tracker, and no remote code execution inside the extension.</p>
+
+  <h2>Checkout (optional Pro unlock)</h2>
+  <p>If you choose <strong>Upgrade</strong>, CullGrid opens a <strong>Waffo</strong> checkout URL in a <strong>new browser tab</strong>. Payment card and billing details are entered on Waffo’s page, not inside the extension. CullGrid does not receive or store your card number.</p>
+  <p>After payment, you receive an activation code (MVP: issued manually by support after the order). You paste that code in the CullGrid popup. The code is checked <strong>locally</strong> with a public key; no photo data is involved.</p>
+  <p>Order email and payment records held by Waffo are governed by Waffo’s own privacy policy. We may use your order email and order id only to deliver the activation code and handle support or refunds.</p>
+
+  <h2>How CullGrid talks to iCloud</h2>
+  <p>CullGrid does not call a private Apple write API and does not export your cookies off-device. It drives the same Delete / confirm UI you would click yourself in the signed-in Photos tab. Your Apple Account session stays between you and Apple.</p>
+  <p>Items move to <strong>Recently Deleted</strong> (typically restorable for about 30 days). CullGrid does not empty Recently Deleted for you.</p>
+
+  <h2>Children</h2>
+  <p>CullGrid is not directed at children under 13.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, we will update this page and the “Last updated” date.</p>
+
+  <h2>Contact</h2>
+  <p>Privacy questions: <a href="mailto:moying.studio@outlook.com">moying.studio@outlook.com</a></p>
+
+  <footer>
+    <p><strong>Moying Studio</strong> · 东莞市常平创客汇网络技术工作室</p>
+    <p>CullGrid is not affiliated with, endorsed by, or sponsored by Apple Inc.</p>
+  </footer>
+</main>
+</body>
+</html>
