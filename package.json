@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler pages dev . --kv PURCHASES --compatibility-date=2026-09-01",
-    "test": "node scripts/test-payments.mjs",
+    "test": "node scripts/test-payments.mjs && node scripts/test-tattoo-check.mjs",
     "test:payments": "node scripts/test-payments.mjs",
+    "test:tattoo": "node scripts/test-tattoo-check.mjs",
     "indexnow": "node scripts/indexnow.mjs"
   },
   "devDependencies": {

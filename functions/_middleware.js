@@ -14,7 +14,7 @@ const BLOCKED_PATHS = new Set([
   "/pins/batch1.csv",
 ]);
 
-const BLOCKED_PREFIXES = ["/scripts/", "/tools/", "/functions/"];
+const BLOCKED_PREFIXES = ["/scripts/", "/tools/", "/functions/", "/research/"];
 
 function isInternal(pathname) {
   const path = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;

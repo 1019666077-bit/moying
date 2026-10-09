@@ -1,5 +1,5 @@
 import { json } from "../lib/http.js";
-import { isToken, readPurchase, revokedKey, unlockWord } from "../lib/purchases.js";
+import { isToken, purchaseKind, readPurchase, revokedKey, unlockWord } from "../lib/purchases.js";
 
 export async function onRequestGet({ request, env }) {
   if (!env || !env.PURCHASES) return json({ error: "payments_unavailable" }, 503);
@@ -10,7 +10,11 @@ export async function onRequestGet({ request, env }) {
   if (await env.PURCHASES.get(revokedKey(token))) return json({ status: "refunded" });
 
   const record = await readPurchase(env, token);
-  if (!record || (record.status !== "paid" && record.status !== "pending" && record.status !== "refunded")) {
+  // Tattoo-check purchases use /api/tattoo-status; do not treat them as watermark unlocks.
+  if (!record || purchaseKind(record) === "tattoo-check") {
+    return json({ status: "unknown" });
+  }
+  if (record.status !== "paid" && record.status !== "pending" && record.status !== "refunded") {
     return json({ status: "unknown" });
   }
   if (record.status === "refunded") return json({ status: "refunded" });

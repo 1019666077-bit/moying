@@ -99,6 +99,23 @@ html, body {
 .field-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .field-head span, .slider span, .check span { font-size: 13px; color: var(--muted); letter-spacing: 0.06em; }
 #charCount.at-limit { color: #8a3b24; }
+.field textarea {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 16px;
+  background: #faf6ec;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.field textarea:focus {
+  outline: 2px solid rgba(180, 35, 24, 0.35);
+  outline-offset: 1px;
+}
 .field input[type="text"] {
   width: 100%;
   min-height: 44px;
@@ -329,3 +346,39 @@ button { font-family: inherit; cursor: pointer; }
 .char-card .glyph { font-size: 42px; line-height: 1.2; color: #1a1410; }
 .char-card .pinyin { font-size: 12px; color: var(--red); margin-top: 4px; }
 .char-card .mean { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* Tattoo-check report */
+.tattoo-check .pay { width: 100%; margin-top: 8px; }
+.report {
+  margin: 12px 0 8px;
+  padding: 14px 14px 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7f1e3;
+}
+.report-label { margin: 0; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+.report-chinese {
+  margin: 4px 0 10px;
+  font-size: 28px;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+}
+.report-verdict {
+  margin: 16px 0 8px !important;
+  font-size: 20px !important;
+  color: #5c3b12;
+}
+.report-verdict.problems { color: var(--red); }
+.issue-list {
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+.issue-list li {
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--line);
+  background: #faf6ec;
+}
+.issue-list li strong { display: block; font-size: 14px; margin-bottom: 4px; }
+.issue-list li p { margin: 0 !important; font-size: 13px !important; color: var(--muted) !important; }

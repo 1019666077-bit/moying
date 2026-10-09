@@ -23,6 +23,15 @@ export function paymentsConfigured(env) {
   );
 }
 
+// Tattoo-check reuses the same merchant/key/webhook/KV; it needs its own $9 product id.
+// DeepSeek is required to deliver the report after payment (checked at report time too).
+export function tattooPaymentsConfigured(env) {
+  return !!(
+    paymentsConfigured(env)
+    && env.WAFFO_TATTOO_PRODUCT_ID
+  );
+}
+
 export function normalizePem(value) {
   return String(value || "").replace(/\\n/g, "\n").replace(/\r/g, "").trim();
 }
@@ -193,13 +202,18 @@ export function successOrigin(request, env) {
   return "";
 }
 
-export async function createCheckoutSession(env, { token, successUrl }) {
+export async function createCheckoutSession(env, {
+  token,
+  successUrl,
+  productId = env.WAFFO_PRODUCT_ID,
+  metadata = { unlock: token },
+}) {
   const body = JSON.stringify({
-    productId: env.WAFFO_PRODUCT_ID,
+    productId,
     productType: "onetime",
     currency: "USD",
     successUrl,
-    metadata: { unlock: token },
+    metadata,
     orderMerchantExternalId: token,
     language: "en",
     expiresInSeconds: 2700,

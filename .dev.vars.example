@@ -3,7 +3,9 @@
 WAFFO_MODE=test
 WAFFO_MERCHANT_ID=
 WAFFO_PRODUCT_ID=
+WAFFO_TATTOO_PRODUCT_ID=
 WAFFO_PRIVATE_KEY=
 WAFFO_WEBHOOK_PUBLIC_KEY=
+DEEPSEEK_API_KEY=
 # Optional. Needed when the site you return to is not the origin serving the function.
 # PUBLIC_SITE_URL=https://mymoying.com

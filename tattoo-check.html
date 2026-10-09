@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Check your Chinese tattoo before you ink | Moying</title>
+  <meta name="description" content="Paste Chinese text you plan to tattoo. A $9 automated report lists problems a Chinese reader may notice — or says uncertain. Never marked OK to ink. Always ask a native speaker." />
+  <link rel="canonical" href="https://mymoying.com/tattoo-check" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Moying" />
+  <meta property="og:url" content="https://mymoying.com/tattoo-check" />
+  <meta property="og:title" content="Check your Chinese tattoo before you ink | Moying" />
+  <meta property="og:description" content="Paste Chinese text you plan to tattoo. A $9 report lists problems or says uncertain — never OK to ink." />
+  <meta property="og:image" content="https://mymoying.com/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Check your Chinese tattoo before you ink | Moying" />
+  <meta name="twitter:description" content="Paste Chinese text you plan to tattoo. A $9 report lists problems or says uncertain — never OK to ink." />
+  <meta name="twitter:image" content="https://mymoying.com/og.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <span class="seal-mini">墨</span>
+        <div>
+          <a class="brand-name" href="./" style="color: inherit; text-decoration: none;">Moying</a>
+          <p>English · Chinese brush</p>
+        </div>
+      </div>
+      <a class="ghost" href="./">Brush generator →</a>
+    </header>
+
+    <main class="article tattoo-check">
+      <h1>Check your Chinese tattoo before you ink</h1>
+      <p class="lead">Paste the Chinese characters you plan to tattoo. For $9 you get an automated risk report: problems a Chinese reader may notice, or uncertain — ask a native speaker. This service never says OK to ink.</p>
+
+      <div class="note" id="disclaimer">
+        <strong>Disclaimer:</strong> This report is informational only. There is no guarantee of accuracy. Moying is not liable for tattoo outcomes. Always consult a native speaker before inking.
+      </div>
+
+      <section id="formView">
+        <label class="field">
+          <span class="field-head"><span>Chinese text to check</span><span id="textCount" aria-live="polite">0/200</span></span>
+          <textarea id="chineseText" rows="3" maxlength="200" placeholder="Paste Chinese characters only — no images" required autocomplete="off"></textarea>
+        </label>
+        <p id="textHint" class="hint warn" hidden>Paste Chinese characters (汉字). English-only text cannot be checked.</p>
+
+        <label class="field">
+          <span class="field-head"><span>Intended meaning (optional)</span><span id="intentCount" aria-live="polite">0/500</span></span>
+          <textarea id="intendedMeaning" rows="2" maxlength="500" placeholder="e.g. free spirit, strength, my daughter’s name" autocomplete="off"></textarea>
+        </label>
+
+        <button id="btnPay" class="pay" type="button">Check before you ink · $9</button>
+        <p id="payNote" class="hint pay-note" role="status" aria-live="polite"></p>
+        <p class="hint price">One-time $9 digital report. No image upload. No “safe to ink” verdict — only problems found, or uncertain.</p>
+        <div class="trust">
+          <p>Sold by Moying. Payments are processed securely by Waffo.</p>
+          <p>Digital product: see <a href="terms">Terms</a>. Save your <code>?report=</code> link after payment.</p>
+        </div>
+      </section>
+
+      <section id="resultView" hidden>
+        <p id="resultStatus" class="hint" role="status" aria-live="polite">Loading your report…</p>
+        <div id="reportCard" class="report" hidden>
+          <p class="report-label">Your text</p>
+          <p id="reportText" class="report-chinese" lang="zh"></p>
+          <p id="reportIntentWrap" class="hint" hidden>Intended meaning: <span id="reportIntent"></span></p>
+
+          <h2 id="reportVerdict" class="report-verdict"></h2>
+          <p id="reportSummary"></p>
+
+          <div id="issuesBlock" hidden>
+            <h2>Issues</h2>
+            <ul id="issuesList" class="issue-list"></ul>
+          </div>
+
+          <div id="altsBlock" hidden>
+            <h2>Optional alternatives to discuss</h2>
+            <p class="hint">These are not approval to ink. Confirm every character with a native speaker.</p>
+            <ul id="altsList" class="issue-list"></ul>
+          </div>
+
+          <div class="note" id="reportDisclaimer">
+            <strong>Disclaimer:</strong> Informational only. No guarantee of accuracy. Moying is not liable for tattoo outcomes. Always consult a native speaker before inking.
+          </div>
+        </div>
+        <a class="cta" href="tattoo-check" id="checkAnother">Check another text</a>
+      </section>
+
+      <h2>What you get</h2>
+      <p>A plain-English note on how a Chinese reader may read your characters, a list of issues when something looks wrong for your intent, and optional alternative wording to discuss — never labeled OK to ink. If nothing glaring shows up, the verdict is still <em>Uncertain — ask a native speaker</em>.</p>
+
+      <div class="pill-row">
+        <a class="pill" href="chinese-calligraphy-tattoo-ideas">Tattoo ideas</a>
+        <a class="pill" href="./">Brush generator</a>
+        <a class="pill" href="meaning-of-chinese-characters">Character meanings</a>
+      </div>
+    </main>
+
+    <footer class="legal">
+      <a href="./">Generator</a>
+      <a href="terms">Terms</a>
+      <a href="privacy">Privacy</a>
+    </footer>
+  </div>
+  <script src="tattoo-check.js"></script>
+  <script data-goatcounter="https://mymoying.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
