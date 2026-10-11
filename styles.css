@@ -402,3 +402,17 @@ button { font-family: inherit; cursor: pointer; }
   color: #3a2f24;
 }
 .steps li { margin-bottom: 6px; }
+
+.cta-ghost-link {
+  display: block;
+  margin: 0;
+  padding: 13px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink) !important;
+}
