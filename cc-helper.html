@@ -3,126 +3,346 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Bot Bridge / CC Helper · Local Claude Code for Cursor &amp; Grok Bot | Moying</title>
-  <meta name="description" content="Free thin Cursor/Grok Bot plugin (skills + soft hooks) plus a Windows desktop Helper for realtime Claude Code dispatch. Free loop vs Pro budget caps, stall timeout, Bark/webhook." />
+  <title>CC Helper — Bot Bridge for Cursor</title>
+  <meta name="description" content="CC Helper (Bot Bridge) is a free thin Cursor plugin — skills and hooks — plus a local Windows desktop Helper. Free is the dispatch loop. Pro adds a hard budget cap, timeout kill, and Bark or webhook alerts." />
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://mymoying.com/cc-helper" />
-  <link rel="icon" href="favicon.ico" sizes="any" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="theme-color" content="#efe4cc" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Moying" />
   <meta property="og:url" content="https://mymoying.com/cc-helper" />
-  <meta property="og:title" content="Bot Bridge / CC Helper · Local Claude Code control" />
-  <meta property="og:description" content="Free plugin for Cursor and Grok Bot. Desktop Helper for realtime progress. Pro adds hard budget caps, stall timeout, and Bark/webhook alerts." />
-  <meta property="og:image" content="https://mymoying.com/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Bot Bridge / CC Helper" />
-  <meta name="twitter:description" content="Free Cursor/Grok Bot plugin + Windows Helper for realtime Claude Code. Pro: budget cap, stall kill, Bark/webhook." />
-  <meta name="twitter:image" content="https://mymoying.com/og.png" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta property="og:title" content="CC Helper — Bot Bridge for Cursor" />
+  <meta property="og:description" content="Free thin Cursor plugin plus a local Windows Helper. Free dispatch loop. Pro: budget cap, timeout kill, Bark or webhook." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CC Helper — Bot Bridge for Cursor" />
+  <meta name="twitter:description" content="Free thin Cursor plugin plus a local Windows Helper. Free dispatch loop. Pro: budget cap, timeout kill, Bark or webhook." />
+  <link rel="stylesheet" href="/styles.css" />
+  <script>
+    try {
+      if (localStorage.getItem("cc-helper-lang") === "zh") document.documentElement.lang = "zh-Hans";
+    } catch (e) {}
+  </script>
 </head>
 <body>
-  <div class="app">
+  <div class="app product">
     <header class="top">
-      <a class="brand" href="./" style="text-decoration:none;color:inherit">
+      <a class="brand" href="/">
         <span class="seal-mini" aria-hidden="true">墨</span>
         <div>
           <span class="brand-name">Moying</span>
-          <p>Tools · Studio</p>
+          <p><span class="en">Bot Bridge</span><span class="zh">本机派活</span></p>
         </div>
       </a>
-      <a class="ghost" href="https://github.com/1019666077-bit/cc-helper-plugin">Free plugin →</a>
+      <button type="button" id="lang" class="ghost" aria-pressed="false">中文</button>
     </header>
 
-    <main class="article">
-      <p class="zh-gloss">中文名：CC Helper · 产品名 Bot Bridge</p>
-      <h1>Bot Bridge / CC Helper</h1>
-      <p class="lead">Let Cursor or Grok Bot hand real work to Claude Code on your Windows PC — with a free thin plugin for discovery, and a local desktop Helper for realtime control.</p>
-      <p class="zh-gloss">用免费薄插件让机器人会派活；真正的实时进度、监督和 Pro 硬限制，在本机桌面 Helper 里。</p>
+    <main class="sheet">
+      <p class="eyebrow"><span class="en">CC Helper</span><span class="zh">CC Helper · Bot Bridge</span></p>
+      <h1>
+        <span class="en">Hand work from Cursor to your own Windows machine.</span>
+        <span class="zh">把 Cursor 里的活，派到你自己的 Windows 电脑上。</span>
+      </h1>
+      <p>
+        <span class="en">CC Helper (Bot Bridge) is a free thin Cursor plugin — skills and hooks — plus a local desktop Helper that supervises the run. The plugin is the playbook. The Helper is what actually runs the task and shows progress.</span>
+        <span class="zh">CC Helper（Bot Bridge）是一个免费的薄 Cursor 插件（skills 和 hooks），加上本机桌面 Helper。插件是派活说明书。Helper 才真正执行任务，并看着进度。</span>
+      </p>
+      <p>
+        <span class="en"><strong>Free</strong> is the dispatch loop: write a task, run it, read status, stop it. <strong>Pro</strong> adds a hard budget cap, a timeout that kills a stuck run, and Bark or webhook alerts.</span>
+        <span class="zh"><strong>Free</strong> 是派活闭环：写入任务、执行、读状态、停止。<strong>Pro</strong> 加上预算硬顶、超时判死，以及 Bark 或 webhook 通知。</span>
+      </p>
+
+      <nav class="jump" aria-label="On this page">
+        <a href="#loop"><span class="en">The loop</span><span class="zh">闭环</span></a>
+        <a href="#layers"><span class="en">Two parts</span><span class="zh">两层</span></a>
+        <a href="#compare"><span class="en">Free vs Pro</span><span class="zh">Free 与 Pro</span></a>
+        <a href="#get"><span class="en">Download</span><span class="zh">下载</span></a>
+        <a href="#faq"><span class="en">FAQ</span><span class="zh">常见问题</span></a>
+      </nav>
 
       <div class="cta-row">
-        <a class="cta" href="https://github.com/1019666077-bit/cc-helper-plugin">Get the free plugin</a>
-        <span class="cta cta-disabled" aria-disabled="true">Download Helper · Coming soon</span>
-        <span class="cta cta-ghost" aria-disabled="true">Buy Pro · Coming soon</span>
+        <a class="cta" href="https://github.com/1019666077-bit/cc-helper-plugin" rel="noopener">
+          <span class="en">Get the free plugin</span>
+          <span class="zh">获取免费插件</span>
+        </a>
+        <a class="cta-line" href="#download">
+          <span class="en">Download Helper</span>
+          <span class="zh">下载 Helper</span>
+        </a>
+        <a class="cta-line" href="#activate">
+          <span class="en">Buy an activation code</span>
+          <span class="zh">购买激活码</span>
+        </a>
       </div>
-      <p class="caption">Plugin is MIT and free. Desktop installer and license checkout are not live yet — placeholders only.</p>
+      <p class="caption">
+        <span class="en">The plugin is MIT and free to install now. The Helper download and the activation-code checkout are placeholders until Waffo is connected.</span>
+        <span class="zh">插件是 MIT，现在就能装。Helper 下载和激活码结账还是占位，等 Waffo 接上后再换成真实入口。</span>
+      </p>
 
-      <h2>Two layers</h2>
-      <p class="zh-gloss">两层：市场薄插件 + 本机 Helper</p>
-      <p><strong>Free marketplace plugin</strong> — skills, rules, and soft hooks. It teaches the bot how to write inbox JSON, poll status, and stop a job. Soft tips only: it does <em>not</em> hard-block risky shells. Submitted to the Cursor Marketplace; install from Marketplace / Connect Apps when listed, or clone into <code>~/.cursor/plugins/local/cc-helper</code>.</p>
-      <p><strong>Desktop Helper (Windows)</strong> — tray / daemon with a progress panel. This is what actually runs and watches Claude Code in realtime. Without it, the plugin is only the playbook layer.</p>
+      <h2 id="loop">
+        <span class="en">The dispatch loop</span>
+        <span class="zh">派活闭环</span>
+      </h2>
+      <p>
+        <span class="en">A bot that has the plugin writes a task on your machine. The desktop Helper runs it. The bot reads the result, or stops the run.</span>
+        <span class="zh">装了插件的机器人把任务写到你的电脑上。桌面 Helper 执行。机器人读结果，或者把这次运行停掉。</span>
+      </p>
+      <ol class="loop">
+        <li>
+          <span class="n">1</span>
+          <strong><span class="en">Write</span><span class="zh">写入</span></strong>
+          <p>
+            <span class="en">One JSON file in <code>%USERPROFILE%\cc-helper\inbox\</code>.</span>
+            <span class="zh">一份 JSON，放进 <code>%USERPROFILE%\cc-helper\inbox\</code>。</span>
+          </p>
+        </li>
+        <li>
+          <span class="n">2</span>
+          <strong><span class="en">Run</span><span class="zh">执行</span></strong>
+          <p>
+            <span class="en">The Helper runs Claude Code or the Cursor CLI on that machine.</span>
+            <span class="zh">Helper 在这台电脑上运行 Claude Code 或 Cursor CLI。</span>
+          </p>
+        </li>
+        <li>
+          <span class="n">3</span>
+          <strong><span class="en">Watch</span><span class="zh">看进度</span></strong>
+          <p>
+            <span class="en"><code>running\</code> gets <code>status.json</code> and <code>progress.md</code>. Finished work moves to <code>done\</code>.</span>
+            <span class="zh"><code>running\</code> 里有 <code>status.json</code> 和 <code>progress.md</code>。结束后进入 <code>done\</code>。</span>
+          </p>
+        </li>
+        <li>
+          <span class="n">4</span>
+          <strong><span class="en">Stop</span><span class="zh">停止</span></strong>
+          <p>
+            <span class="en">Write <code>stop</code> into <code>control\&lt;task-id&gt;.cmd</code>.</span>
+            <span class="zh">往 <code>control\&lt;task-id&gt;.cmd</code> 写入 <code>stop</code>。</span>
+          </p>
+        </li>
+      </ol>
+      <pre><code>{
+  "id": "example-001",
+  "title": "smoke write hello",
+  "prompt": "Create hello.txt with HELLO_OK in the workspace root and stop."
+}</code></pre>
+      <p class="caption">
+        <span class="en">Use a new id for every task. Do not put API keys in the JSON.</span>
+        <span class="zh">每个任务用新的 id。不要把 API key 写进 JSON。</span>
+      </p>
 
-      <h2>Free vs Pro</h2>
-      <p class="zh-gloss">Free 派活闭环 · Pro 预算硬顶、超时判死、手机通知</p>
+      <h2 id="layers">
+        <span class="en">Two parts</span>
+        <span class="zh">两层</span>
+      </h2>
+      <div class="layers">
+        <article class="layer">
+          <p class="kicker"><span class="en">Free · MIT</span><span class="zh">免费 · MIT</span></p>
+          <h3><span class="en">Thin Cursor plugin</span><span class="zh">薄 Cursor 插件</span></h3>
+          <p>
+            <span class="en">Skills, a safety rule, and a soft shell hook. The <code>cc-helper-dispatch</code> skill tells the bot how to write the inbox file, poll status, and stop. <code>check-cc-helper</code> looks for a local install. The hook only warns on a few risky shell patterns — it does not block the editor.</span>
+            <span class="zh">Skills、一条安全规则，和一个软的 shell hook。<code>cc-helper-dispatch</code> 教机器人怎么写 inbox、轮询状态、停止任务。<code>check-cc-helper</code> 检查本机是否已安装。hook 只对少数危险 shell 模式给出警告，不会拦住编辑器。</span>
+          </p>
+          <p>
+            <span class="en">The plugin does <strong>not</strong> include the daemon, the tray, the realtime panel, Bark, webhooks, or budget caps.</span>
+            <span class="zh">插件<strong>不含</strong>常驻进程、托盘、实时面板、Bark、webhook，也不含预算上限。</span>
+          </p>
+        </article>
+        <article class="layer">
+          <p class="kicker"><span class="en">Windows · local</span><span class="zh">Windows · 本机</span></p>
+          <h3><span class="en">Desktop Helper</span><span class="zh">桌面 Helper</span></h3>
+          <p>
+            <span class="en">The always-on tray and daemon. This is the realtime supervisor: it runs the task, shows progress, and keeps hard-block on by default. Without it, the plugin is only instructions.</span>
+            <span class="zh">常驻托盘和 daemon。这是实时监督：它跑任务、显示进度，并且默认打开硬拦截。没有它，插件只是一份说明书。</span>
+          </p>
+          <p>
+            <span class="en">Pro on this same install adds the hard budget cap, the timeout kill, and Bark or webhook alerts.</span>
+            <span class="zh">同一套安装上的 Pro，再加上预算硬顶、超时判死，以及 Bark 或 webhook。</span>
+          </p>
+        </article>
+      </div>
+
+      <h2 id="compare">
+        <span class="en">Free vs Pro</span>
+        <span class="zh">Free 与 Pro</span>
+      </h2>
       <div class="plan-table-wrap">
         <table class="plan-table">
           <thead>
-            <tr><th></th><th>Free</th><th>Pro</th></tr>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Free</th>
+              <th scope="col">Pro</th>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Dispatch loop</th>
-              <td>Send task → poll status → stop</td>
-              <td>Same</td>
+              <th scope="row"><span class="en">Dispatch loop</span><span class="zh">派活闭环</span></th>
+              <td><span class="en">Write, run, status, stop</span><span class="zh">写入、执行、状态、停止</span></td>
+              <td><span class="en">Same</span><span class="zh">相同</span></td>
             </tr>
             <tr>
-              <th scope="row">Realtime panel</th>
-              <td>With desktop Helper</td>
-              <td>With desktop Helper</td>
+              <th scope="row"><span class="en">Realtime panel</span><span class="zh">实时面板</span></th>
+              <td><span class="en">With the desktop Helper</span><span class="zh">装上桌面 Helper 之后</span></td>
+              <td><span class="en">With the desktop Helper</span><span class="zh">装上桌面 Helper 之后</span></td>
             </tr>
             <tr>
-              <th scope="row">Token / budget cap</th>
-              <td>Soft guidance only</td>
-              <td>Hard stop when the cap hits</td>
+              <th scope="row"><span class="en">Budget hard cap</span><span class="zh">预算硬顶</span></th>
+              <td><span class="en">No cap</span><span class="zh">没有上限</span></td>
+              <td><span class="en">Stops the run when the cap hits</span><span class="zh">碰到上限就停</span></td>
             </tr>
             <tr>
-              <th scope="row">Stall timeout</th>
+              <th scope="row"><span class="en">Timeout kill</span><span class="zh">超时判死</span></th>
               <td>—</td>
-              <td>Kill a hung job after N minutes</td>
+              <td><span class="en">A run past the limit is marked dead and stopped</span><span class="zh">超过时限就判死并停掉</span></td>
             </tr>
             <tr>
-              <th scope="row">Phone alerts</th>
+              <th scope="row"><span class="en">Bark / webhook</span><span class="zh">Bark / webhook</span></th>
               <td>—</td>
-              <td>Bark and/or webhook on blockers</td>
+              <td><span class="en">Bark or a webhook</span><span class="zh">Bark 或 webhook</span></td>
             </tr>
             <tr>
-              <th scope="row">Price (planned)</th>
-              <td>$0</td>
-              <td>~$49 / year or $79 lifetime</td>
+              <th scope="row"><span class="en">How you get it</span><span class="zh">怎么获得</span></th>
+              <td><span class="en">$0 plugin on GitHub</span><span class="zh">GitHub 上的免费插件</span></td>
+              <td><span class="en">Activation code. Checkout is not open yet.</span><span class="zh">激活码。结账尚未开通。</span></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <h2>How it fits together</h2>
-      <ol class="steps">
-        <li>Install the free plugin in Cursor or Grok Bot.</li>
-        <li>Install the Windows Helper and keep the tray running (when the download is available).</li>
-        <li>Ask the bot to dispatch with the <code>cc-helper-dispatch</code> skill.</li>
-        <li>Watch progress locally; Pro users get hard caps and Bark/webhook when something blocks.</li>
+      <h2 id="setup">
+        <span class="en">Set up</span>
+        <span class="zh">安装</span>
+      </h2>
+      <ol class="loop">
+        <li>
+          <span class="n">1</span>
+          <strong><span class="en">Add the plugin</span><span class="zh">加上插件</span></strong>
+          <p>
+            <span class="en">Clone <a href="https://github.com/1019666077-bit/cc-helper-plugin">cc-helper-plugin</a> into <code>~/.cursor/plugins/local/cc-helper</code> and reload Cursor. When it is listed, you can also install it from the Cursor Marketplace or Grok Bot Connect Apps.</span>
+            <span class="zh">把 <a href="https://github.com/1019666077-bit/cc-helper-plugin">cc-helper-plugin</a> 克隆到 <code>~/.cursor/plugins/local/cc-helper</code>，然后重新加载 Cursor。市场上架之后，也可以从 Cursor Marketplace 或 Grok Bot Connect Apps 安装。</span>
+          </p>
+        </li>
+        <li>
+          <span class="n">2</span>
+          <strong><span class="en">Start the Helper</span><span class="zh">启动 Helper</span></strong>
+          <p>
+            <span class="en">Install the Windows desktop Helper and leave the tray running. The plugin cannot start that daemon for you.</span>
+            <span class="zh">安装 Windows 桌面 Helper，并让托盘保持运行。插件自己启动不了那个 daemon。</span>
+          </p>
+        </li>
+        <li>
+          <span class="n">3</span>
+          <strong><span class="en">Dispatch</span><span class="zh">派活</span></strong>
+          <p>
+            <span class="en">Ask the bot to use <code>cc-helper-dispatch</code>. It checks for <code>%USERPROFILE%\cc-helper\daemon.js</code> before it writes a task.</span>
+            <span class="zh">让机器人使用 <code>cc-helper-dispatch</code>。它会先确认 <code>%USERPROFILE%\cc-helper\daemon.js</code> 在，再写任务。</span>
+          </p>
+        </li>
       </ol>
 
-      <div class="note">
-        <strong>Marketplace note.</strong> Cursor publisher terms require marketplace plugins to be free. We don’t sell the plugin. Paid Pro is only the local Helper license, sold on this site (coming soon via Waffo).
+      <h2 id="get">
+        <span class="en">Download and activation</span>
+        <span class="zh">下载与激活</span>
+      </h2>
+      <div class="layers">
+        <article class="layer" id="download">
+          <p class="kicker"><span class="en">Placeholder</span><span class="zh">占位</span></p>
+          <h3><span class="en">Desktop Helper</span><span class="zh">桌面 Helper</span></h3>
+          <p>
+            <span class="en">The Windows installer is not published on this page yet. This entry is reserved for the download.</span>
+            <span class="zh">Windows 安装包还没有挂到这个页面上。这个入口留给下载。</span>
+          </p>
+          <p><a class="cta-line" href="mailto:moying.studio@outlook.com?subject=CC%20Helper%20download"><span class="en">Email for the installer</span><span class="zh">邮件索取安装包</span></a></p>
+        </article>
+        <article class="layer" id="activate">
+          <p class="kicker"><span class="en">Placeholder · Waffo</span><span class="zh">占位 · Waffo</span></p>
+          <h3><span class="en">Pro activation code</span><span class="zh">Pro 激活码</span></h3>
+          <p>
+            <span class="en">Buying a code will open Waffo checkout from this card. It is not connected yet, so there is no price and no charge here.</span>
+            <span class="zh">购买激活码之后，会从这张卡片打开 Waffo 结账。现在还没接上，所以这里没有价格，也不会扣款。</span>
+          </p>
+          <p><a class="cta-line" href="mailto:moying.studio@outlook.com?subject=CC%20Helper%20activation%20code"><span class="en">Email about a code</span><span class="zh">邮件询问激活码</span></a></p>
+        </article>
       </div>
 
-      <h2>Links</h2>
-      <div class="pill-row">
-        <a class="pill" href="https://github.com/1019666077-bit/cc-helper-plugin">Plugin on GitHub</a>
-        <a class="pill" href="./">Moying calligraphy</a>
-        <a class="pill" href="mailto:moying.studio@outlook.com">moying.studio@outlook.com</a>
+      <div class="note">
+        <p>
+          <span class="en">The plugin stays free. Pro is a license for the local Helper, sold on this site once checkout is live. We do not sell the plugin.</span>
+          <span class="zh">插件保持免费。Pro 是本机 Helper 的许可证，等结账开通后在本站出售。我们不卖插件。</span>
+        </p>
+      </div>
+
+      <h2 id="faq">
+        <span class="en">FAQ</span>
+        <span class="zh">常见问题</span>
+      </h2>
+      <div class="faq">
+        <details>
+          <summary><span class="en">Is the plugin enough by itself?</span><span class="zh">只装插件够不够？</span></summary>
+          <p class="en">No. The plugin teaches the bot how to write a task, read status, and stop. Running the task and watching it in real time needs the desktop Helper on your Windows machine.</p>
+          <p class="zh">不够。插件只教机器人怎么写任务、读状态、停止。真正执行和实时监督，需要你 Windows 电脑上的桌面 Helper。</p>
+        </details>
+        <details>
+          <summary><span class="en">What does Free include?</span><span class="zh">Free 包含什么？</span></summary>
+          <p class="en">The MIT plugin, and — once the Helper is installed — the dispatch loop: write, run, watch progress, stop. Free does not enforce a budget cap, does not kill a timed-out run, and does not send Bark or webhook alerts.</p>
+          <p class="zh">MIT 插件，以及装上 Helper 之后的派活闭环：写入、执行、看进度、停止。Free 不设预算硬顶，不会超时判死，也不发送 Bark 或 webhook。</p>
+        </details>
+        <details>
+          <summary><span class="en">What does Pro add?</span><span class="zh">Pro 多什么？</span></summary>
+          <p class="en">Three controls on the desktop Helper. A hard budget cap stops the run when the ceiling is hit. A timeout marks an over-limit run dead and stops it. Bark or a webhook can alert you. You turn these on with an activation code.</p>
+          <p class="zh">桌面 Helper 上的三样控制。预算硬顶：碰到上限就停。超时判死：超过时限就判定已死并停掉。Bark 或 webhook 可以通知你。用激活码打开。</p>
+        </details>
+        <details>
+          <summary><span class="en">Which systems does it support?</span><span class="zh">支持哪些系统？</span></summary>
+          <p class="en">The desktop Helper is a local Windows install (daemon and tray). Add the plugin in the Cursor that will dispatch, on the machine where that Windows profile lives.</p>
+          <p class="zh">桌面 Helper 是 Windows 本机安装（daemon 和托盘）。把插件加到负责派活的 Cursor 上，也就是这份 Windows 用户目录所在的电脑。</p>
+        </details>
+        <details>
+          <summary><span class="en">Where do tasks go?</span><span class="zh">任务存在哪里？</span></summary>
+          <p class="en">Under <code>%USERPROFILE%\cc-helper\</code> on your PC. This page does not receive task text, prompts, or keys. Do not paste secrets into task JSON or logs.</p>
+          <p class="zh">在你电脑的 <code>%USERPROFILE%\cc-helper\</code> 下面。这个页面不接收任务正文、提示词或密钥。不要把秘密写进任务 JSON 或日志。</p>
+        </details>
+        <details>
+          <summary><span class="en">Is this part of Cursor, Claude, or Bark?</span><span class="zh">它属于 Cursor、Claude 或 Bark 吗？</span></summary>
+          <p class="en">No. CC Helper is an independent tool from Moying Studio. Cursor, Claude, and Bark are trademarks of their owners.</p>
+          <p class="zh">不是。CC Helper 是 Moying Studio 的独立工具。Cursor、Claude 和 Bark 是各自权利人的商标。</p>
+        </details>
       </div>
     </main>
 
     <footer class="legal">
-      <a href="./">Moying</a>
-      <a href="terms">Terms</a>
-      <a href="privacy">Privacy</a>
+      <a href="/">Moying</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="https://github.com/1019666077-bit/cc-helper-plugin" rel="noopener">Plugin</a>
+      <a href="mailto:moying.studio@outlook.com">moying.studio@outlook.com</a>
     </footer>
   </div>
+  <script>
+    (function () {
+      var KEY = "cc-helper-lang";
+      var titles = {
+        en: "CC Helper — Bot Bridge for Cursor",
+        zh: "CC Helper — 从 Cursor 把活派到你的电脑"
+      };
+      var btn = document.getElementById("lang");
+      function apply(lang) {
+        var zh = lang === "zh";
+        document.documentElement.lang = zh ? "zh-Hans" : "en";
+        document.title = titles[zh ? "zh" : "en"];
+        btn.textContent = zh ? "English" : "中文";
+        btn.setAttribute("aria-pressed", zh ? "true" : "false");
+        try { localStorage.setItem(KEY, zh ? "zh" : "en"); } catch (e) {}
+      }
+      apply(document.documentElement.lang.indexOf("zh") === 0 ? "zh" : "en");
+      btn.addEventListener("click", function () {
+        apply(document.documentElement.lang.indexOf("zh") === 0 ? "en" : "zh");
+      });
+    })();
+  </script>
   <script data-goatcounter="https://mymoying.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
