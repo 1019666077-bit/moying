@@ -329,3 +329,76 @@ button { font-family: inherit; cursor: pointer; }
 .char-card .glyph { font-size: 42px; line-height: 1.2; color: #1a1410; }
 .char-card .pinyin { font-size: 12px; color: var(--red); margin-top: 4px; }
 .char-card .mean { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* CC Helper / Bot Bridge landing */
+.zh-gloss {
+  margin: 0 0 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.cta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0 4px;
+}
+.cta-row .cta { margin: 0; }
+.cta-disabled,
+.cta-ghost {
+  display: block;
+  padding: 13px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  cursor: not-allowed;
+  user-select: none;
+}
+.cta-disabled {
+  background: #c9b89a;
+  color: #5c4e3a;
+}
+.cta-ghost {
+  background: transparent;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+}
+.plan-table-wrap { overflow-x: auto; margin: 12px 0 8px; }
+.plan-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #f7f1e3;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.plan-table th,
+.plan-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  color: #3a2f24;
+}
+.plan-table thead th {
+  background: #efe4cc;
+  font-weight: 600;
+}
+.plan-table tbody th {
+  font-weight: 600;
+  white-space: nowrap;
+  width: 34%;
+}
+.plan-table tr:last-child th,
+.plan-table tr:last-child td { border-bottom: none; }
+.steps {
+  margin: 0 0 12px;
+  padding-left: 1.2em;
+  font-size: 14px;
+  line-height: 1.72;
+  color: #3a2f24;
+}
+.steps li { margin-bottom: 6px; }
