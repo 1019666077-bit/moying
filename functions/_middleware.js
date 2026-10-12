@@ -16,6 +16,14 @@ const BLOCKED_PATHS = new Set([
 
 const BLOCKED_PREFIXES = ["/scripts/", "/tools/", "/functions/"];
 
+// Product landings moved to botbridge.dev; keep old URLs working for Cursor review.
+const PRODUCT_REDIRECTS = {
+  "/cc-helper": "https://botbridge.dev/cc-helper",
+  "/webcam": "https://botbridge.dev/webcam",
+  "/obsidian": "https://botbridge.dev/obsidian",
+  "/app-bridge": "https://botbridge.dev/app-bridge",
+};
+
 function isInternal(pathname) {
   const path = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
   if (BLOCKED_PATHS.has(path)) return true;
@@ -25,6 +33,11 @@ function isInternal(pathname) {
 export async function onRequest(context) {
   try {
     const { pathname } = new URL(context.request.url);
+    const path = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+    const dest = PRODUCT_REDIRECTS[path];
+    if (dest) {
+      return Response.redirect(dest, 301);
+    }
     if (isInternal(pathname)) {
       return new Response("Not Found", {
         status: 404,
