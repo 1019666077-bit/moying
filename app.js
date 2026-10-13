@@ -644,7 +644,9 @@
     p.fill = `rgb(${ink.r},${ink.g},${ink.b})`;
     ctx.globalAlpha = snap.style === "gong" ? 0.96 : 0.94;
     p.draw(ctx);
-    scratchDry(ctx, p, fleckAmount(snap), rng);
+    // Latin letters stay solid ink: the dry-brush carve (scratchDry) tore the
+    // strokes apart at small sizes. The Chinese characters keep their brush
+    // texture from the Ma Shan Zheng outlines (paintHanzi is unchanged).
     ctx.restore();
   }
 
